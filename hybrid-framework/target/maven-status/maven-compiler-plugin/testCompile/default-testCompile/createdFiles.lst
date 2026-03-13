@@ -1,0 +1,4 @@
+com\automation\tests\SampleLoginTestTest.class
+com\automation\steps\CommonStepDefinitions.class
+com\automation\runners\CucumberTestRunner.class
+com\automation\steps\SampleLoginTestStepDefinitions.class

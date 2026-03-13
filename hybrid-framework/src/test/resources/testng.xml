@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Hybrid Playwright Test Suite" parallel="methods" thread-count="3">
+    <test name="Smoke Tests" group-by-instances="true">
+        <groups>
+            <run>
+                <include name="smoke"/>
+            </run>
+        </groups>
+        <packages>
+            <package name="com.automation.tests"/>
+        </packages>
+    </test>
+</suite>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Cucumber BDD Test Suite">
+    <test name="BDD Tests">
+        <classes>
+            <class name="com.automation.runners.CucumberTestRunner"/>
+        </classes>
+    </test>
+</suite>

@@ -1,0 +1,4 @@
+com\automation\pages\SampleLoginTestPage.class
+com\automation\base\BaseTestManager.class
+com\automation\standalone\SampleLoginTestStandalone.class
+com\automation\standalone\ProductSearchTestStandalone.class
