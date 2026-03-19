@@ -33,6 +33,13 @@ public class BaseTestManager {
         // Set headless to true by default for CI/CD environments (GitHub Actions, etc.)
         // Override with -Dheadless=false for local testing with visible browser
         this.headless = Boolean.parseBoolean(config.getProperty("headless", "true"));
+        
+        logger.info("=====================================");
+        logger.info("BaseTestManager Configuration:");
+        logger.info("  Browser Type: {}", browserType);
+        logger.info("  Headless Mode: {} ({})", headless, headless ? "No GUI" : "With GUI");
+        logger.info("  System Property 'headless': {}", config.getProperty("headless", "NOT SET - using default"));
+        logger.info("=====================================");
     }
     
     /**
@@ -60,10 +67,12 @@ public class BaseTestManager {
             logger.info("Playwright instance created in {} ms", playwrightCreationTime);
             
             BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions()
-                    .setHeadless(false)  // Force visible browser - non-headless mode
+                    .setHeadless(headless)  // Use headless variable from configuration
                     .setSlowMo(100);     // Slight delay for better visibility
             
-            logger.info("Launching {} browser in NON-HEADLESS MODE (visible)...", browserType);
+            logger.info("Launching {} browser in {} MODE...", 
+                    browserType, 
+                    headless ? "HEADLESS" : "HEADED (VISIBLE)");
             startTime = System.currentTimeMillis();
             
             browser = switch (browserType.toLowerCase()) {
