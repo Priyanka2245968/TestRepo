@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.automation</groupId>
-    <artifactId>hybrid-playwright-framework</artifactId>
+    <artifactId>TESTREPO</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -140,7 +140,8 @@
                 </configuration>
             </plugin>
 
-            <!-- Cucumber Reports -->
+            <!-- Cucumber Reports - DISABLED by default, enable when running Cucumber tests -->
+            <!-- 
             <plugin>
                 <groupId>net.masterthought</groupId>
                 <artifactId>maven-cucumber-reporting</artifactId>
@@ -155,7 +156,7 @@
                         <configuration>
                             <projectName>Hybrid Playwright Framework</projectName>
                             <outputDirectory>${project.build.directory}/cucumber-reports</outputDirectory>
-                            <inputDirectory>${project.build.directory}/cucumber-reports</inputDirectory>
+                            <inputDirectory>${project.build.directory}/cucumber-json</inputDirectory>
                             <jsonFiles>
                                 <param>**/*.json</param>
                             </jsonFiles>
@@ -163,6 +164,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
 
             <!-- Allure Reports -->
             <plugin>
@@ -201,6 +203,41 @@
             <properties>
                 <testng.suite>src/test/resources/cucumber.xml</testng.suite>
             </properties>
+        </profile>
+        <profile>
+            <id>download-browsers</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <!-- Download Playwright browsers on first build -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                        <version>3.4.1</version>
+                        <executions>
+                            <execution>
+                                <id>enforce-playwright-browsers</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>enforce</goal>
+                                </goals>
+                                <configuration>
+                                    <rules>
+                                        <requireProperty>
+                                            <property>env.PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD</property>
+                                            <regex>^$|^0$</regex>
+                                            <regexMessage>Set PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=0 to download browsers</regexMessage>
+                                        </requireProperty>
+                                    </rules>
+                                    <skip>true</skip>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 </project>

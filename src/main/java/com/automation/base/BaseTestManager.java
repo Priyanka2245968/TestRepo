@@ -30,6 +30,7 @@ public class BaseTestManager {
     public BaseTestManager() {
         this.config = loadConfiguration();
         this.browserType = config.getProperty("browser", "chromium");
+        // Set headless to false by default to see the browser
         this.headless = Boolean.parseBoolean(config.getProperty("headless", "false"));
     }
     
@@ -40,39 +41,68 @@ public class BaseTestManager {
     public void initializeBrowser() {
         logger.info("Initializing Playwright browser: {}", browserType);
         
-        playwright = Playwright.create();
-        
-        BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions()
-                .setHeadless(headless)
-                .setSlowMo(100); // Slight delay for better visibility
-        
-        browser = switch (browserType.toLowerCase()) {
-            case "firefox" -> playwright.firefox().launch(launchOptions);
-            case "webkit", "safari" -> playwright.webkit().launch(launchOptions);
-            case "edge" -> playwright.chromium().launch(launchOptions.setChannel("msedge"));
-            default -> playwright.chromium().launch(launchOptions);
-        };
-        
-        // Create context with common options
-        Browser.NewContextOptions contextOptions = new Browser.NewContextOptions()
-                .setViewportSize(1920, 1080)
-                .setRecordVideoDir(Paths.get("target/videos"))
-                .setRecordVideoSize(1920, 1080);
-        
-        context = browser.newContext(contextOptions);
-        
-        // Enable tracing for debugging
-        context.tracing().start(new Tracing.StartOptions()
-                .setScreenshots(true)
-                .setSnapshots(true));
-        
-        page = context.newPage();
-        
-        // Set default timeouts
-        page.setDefaultTimeout(30000);
-        page.setDefaultNavigationTimeout(60000);
-        
-        logger.info("Browser initialized successfully");
+        try {
+            // Set environment variables for browser download
+            if (System.getenv("PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD") == null) {
+                logger.info("Setting PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD to 0 to enable browser downloads");
+                // Note: Environment variables set in Java will not affect subprocess downloads
+                // Users should set this before running: $env:PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=0
+            }
+            
+            // Add timeout mechanism for Playwright creation
+            long startTime = System.currentTimeMillis();
+            logger.info("Creating Playwright instance...");
+            
+            playwright = Playwright.create();
+            
+            long playwrightCreationTime = System.currentTimeMillis() - startTime;
+            logger.info("Playwright instance created in {} ms", playwrightCreationTime);
+            
+            BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions()
+                    .setHeadless(false)  // Force visible browser - non-headless mode
+                    .setSlowMo(100);     // Slight delay for better visibility
+            
+            logger.info("Launching {} browser in NON-HEADLESS MODE (visible)...", browserType);
+            startTime = System.currentTimeMillis();
+            
+            browser = switch (browserType.toLowerCase()) {
+                case "firefox" -> playwright.firefox().launch(launchOptions);
+                case "webkit", "safari" -> playwright.webkit().launch(launchOptions);
+                case "edge" -> playwright.chromium().launch(launchOptions.setChannel("msedge"));
+                default -> playwright.chromium().launch(launchOptions);
+            };
+            
+            long browserLaunchTime = System.currentTimeMillis() - startTime;
+            logger.info("{} browser launched successfully in {} ms", browserType, browserLaunchTime);
+            
+            // Create context with common options
+            Browser.NewContextOptions contextOptions = new Browser.NewContextOptions()
+                    .setViewportSize(1920, 1080)
+                    .setRecordVideoDir(Paths.get("target/videos"))
+                    .setRecordVideoSize(1920, 1080);
+            
+            context = browser.newContext(contextOptions);
+            
+            // Enable tracing for debugging
+            context.tracing().start(new Tracing.StartOptions()
+                    .setScreenshots(true)
+                    .setSnapshots(true));
+            
+            page = context.newPage();
+            
+            // Set default timeouts
+            page.setDefaultTimeout(30000);
+            page.setDefaultNavigationTimeout(60000);
+            
+            logger.info("Browser initialized successfully");
+            
+        } catch (Exception e) {
+            logger.error("Failed to initialize browser. This might be due to browser binary download issues.", e);
+            logger.error("SOLUTION: Before running tests, execute this command in PowerShell:");
+            logger.error("$env:PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=0 ; java -cp path\\to\\playwright.jar com.microsoft.playwright.CLI install");
+            logger.error("Or install browsers manually: playwright install");
+            throw new RuntimeException("Browser initialization failed. Please ensure browser binaries are downloaded.", e);
+        }
     }
     
     /**
