@@ -375,21 +375,34 @@ public class BaseTestManager {
     }
     
     /**
-     * Load configuration from properties
+     * Load configuration from properties with system property override support
      */
     private Properties loadConfiguration() {
         Properties props = new Properties();
         try {
             // Set defaults
             props.setProperty("browser", "chromium");
-            props.setProperty("headless", "false");
+            props.setProperty("headless", "true");  // Default to headless for CI/CD
             props.setProperty("timeout", "30000");
+            
+            // Override with system properties if provided (e.g., -Dbrowser=firefox -Dheadless=false)
+            String browserSystem = System.getProperty("browser");
+            if (browserSystem != null && !browserSystem.trim().isEmpty()) {
+                props.setProperty("browser", browserSystem);
+                logger.info("Browser overridden via system property: {}", browserSystem);
+            }
+            
+            String headlessSystem = System.getProperty("headless");
+            if (headlessSystem != null && !headlessSystem.trim().isEmpty()) {
+                props.setProperty("headless", headlessSystem);
+                logger.info("Headless mode overridden via system property: {}", headlessSystem);
+            }
             
             // Load from file if exists
             // props.load(getClass().getResourceAsStream("/config.properties"));
             
         } catch (Exception e) {
-            logger.warn("Could not load configuration, using defaults");
+            logger.warn("Could not load configuration, using defaults", e);
         }
         
         return props;
