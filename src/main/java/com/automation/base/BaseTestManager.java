@@ -30,8 +30,9 @@ public class BaseTestManager {
     public BaseTestManager() {
         this.config = loadConfiguration();
         this.browserType = config.getProperty("browser", "chromium");
-        // Set headless to false by default to see the browser
-        this.headless = Boolean.parseBoolean(config.getProperty("headless", "false"));
+        // Set headless to true by default for CI/CD environments (GitHub Actions, etc.)
+        // Override with -Dheadless=false for local testing with visible browser
+        this.headless = Boolean.parseBoolean(config.getProperty("headless", "true"));
     }
     
     /**
