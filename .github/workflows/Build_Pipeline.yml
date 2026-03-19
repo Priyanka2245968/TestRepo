@@ -30,8 +30,8 @@ jobs:
       - name: Build Project
         run: mvn clean compile -DskipTests
 
-      - name: Run Tests
-        run: mvn test -Dheadless=true -Dbrowser=chromium
+      - name: Run Tests from testng.xml
+        run: mvn test -Dheadless=true -Dbrowser=chromium -Dtestng.suite=src/test/resources/testng.xml
         continue-on-error: true
 
       - name: Upload Test Reports

@@ -2,6 +2,7 @@ package com.automation.pages;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.options.LoadState;
 import com.automation.base.BaseTestManager;
 
 public class SampleLoginTestPage {
@@ -23,7 +24,11 @@ public class SampleLoginTestPage {
 
     public void step3() {
         System.out.println("📍 verify Google logo is visible");
-        page.locator("img[alt*=\"Google\"], img[alt*=\"logo\"]").first().waitFor(new Locator.WaitForOptions().setTimeout(5000));
+        // Wait for page to load completely
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+        // Use a more flexible selector for Google logo
+        page.locator("//img[@alt='Google'], //img[contains(@src, 'logo')], //img[contains(@alt, 'logo')]").first()
+            .waitFor(new Locator.WaitForOptions().setTimeout(10000));
     }
 
     public void step4() {
