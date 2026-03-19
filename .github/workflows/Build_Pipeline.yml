@@ -36,13 +36,30 @@ jobs:
       - name: Compile project
         run: mvn clean compile -DskipTests
 
-      - name: Run tests
-        run: mvn test -Dheadless=true -Dbrowser=chromium
+      - name: Run tests from testng.xml
+        run: mvn test -Dheadless=true -Dbrowser=chromium -Dtestng.suite=src/test/resources/testng.xml
         continue-on-error: true
 
+      - name: Check if Allure results exist
+        id: check_allure
+        run: |
+          if [ -d "target/allure-results" ] && [ "$(ls -A target/allure-results)" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
       - name: Generate Allure Report
-        if: always()
+        if: always() && steps.check_allure.outputs.exists == 'true'
         run: mvn allure:report
+        continue-on-error: true
+
+      - name: Generate HTML Report from TestNG Results
+        if: always()
+        run: |
+          mkdir -p target/test-reports
+          mvn surefire-report:report -DincludeFailureDetail=true
         continue-on-error: true
 
       - name: Upload test results
@@ -51,8 +68,31 @@ jobs:
         with:
           name: test-results
           path: |
-            target/allure-results/
             target/surefire-reports/
+          retention-days: 30
+
+      - name: Upload TestNG HTML Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: testng-html-report
+          path: target/site/
+          retention-days: 30
+
+      - name: Upload Allure results (if available)
+        if: always() && steps.check_allure.outputs.exists == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: target/allure-results/
+          retention-days: 30
+
+      - name: Upload Allure Report (if available)
+        if: always() && steps.check_allure.outputs.exists == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: target/site/allure-maven-plugin/
           retention-days: 30
 
       - name: Publish test results
@@ -71,18 +111,38 @@ jobs:
             const fs = require('fs');
             const path = require('path');
             
-            let testSummary = '## Build Pipeline Results\n\n';
+            let testSummary = '## 📊 Build Pipeline Results\n\n';
             
+            // Check for TestNG results
             const surefireDir = 'target/surefire-reports';
             if (fs.existsSync(surefireDir)) {
               const files = fs.readdirSync(surefireDir).filter(f => f.endsWith('.xml'));
               if (files.length > 0) {
-                testSummary += '✅ Test reports generated\n';
-                testSummary += `- Found ${files.length} test result file(s)\n`;
+                testSummary += '### ✅ Test Execution\n';
+                testSummary += `- Test reports generated: ${files.length} file(s)\n`;
               }
             }
             
-            testSummary += '\n**Build Status:** ✅ Complete\n';
+            // Check for Allure results
+            const allureDir = 'target/allure-results';
+            if (fs.existsSync(allureDir) && fs.readdirSync(allureDir).length > 0) {
+              testSummary += '### 📈 Allure Report\n';
+              testSummary += '- ✅ Allure report generated successfully\n';
+            }
+            
+            // Check for HTML report
+            const htmlReportDir = 'target/site';
+            if (fs.existsSync(htmlReportDir) && fs.readdirSync(htmlReportDir).length > 0) {
+              testSummary += '### 📄 HTML Report\n';
+              testSummary += '- ✅ TestNG HTML report generated\n';
+            }
+            
+            testSummary += '\n### 🔗 Artifacts\n';
+            testSummary += '- Download artifacts from the build workflow to view detailed reports\n';
+            testSummary += '  - `test-results` - Surefire XML reports\n';
+            testSummary += '  - `testng-html-report` - HTML test report\n';
+            testSummary += '  - `allure-report` - Allure visual reports (if tests ran)\n\n';
+            testSummary += '**Build Status:** ✅ Complete\n';
             
             github.rest.issues.createComment({
               issue_number: context.issue.number,

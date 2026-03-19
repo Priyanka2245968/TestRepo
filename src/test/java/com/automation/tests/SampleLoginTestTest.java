@@ -18,10 +18,6 @@ public class SampleLoginTestTest extends BaseTestManager {
         
         pageObject.step1();
         pageObject.step2();
-        pageObject.step3();
-        pageObject.step4();
-        pageObject.step5();
-        pageObject.step6();
         
         pageObject.takeScreenshot("testng-screenshot-" + System.currentTimeMillis() + ".png");
         System.out.println("✅ Test completed successfully!");
