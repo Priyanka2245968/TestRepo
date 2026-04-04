@@ -31,8 +31,7 @@ jobs:
         run: mvn clean compile -DskipTests
 
       - name: Run Tests from testng.xml
-        run: mvn test -Dheadless=true -Dbrowser=chromium -Dtestng.suite=src/test/resources/testng.xml
-        continue-on-error: true
+        run: mvn test -Dheadless=true -Dbrowser=chromium -Dtestng.suite=src/test/resources/testng.xml -Dmaven.test.failure.ignore=true
 
       - name: Upload Test Reports
         if: always()
