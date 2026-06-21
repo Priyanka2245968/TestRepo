@@ -16,6 +16,12 @@ Feature: Wikipedia Search
 
   Scenario: Boundary/Edge Case - Long Search Query
     Given I am on the Wikipedia homepage
-    When I enter "A very long query of 500+ characters" in the search field
+    When I enter a very long query of 500+ characters in the search field
     And I click the search button
-    Then I should see the search results for "A very long query of 500+ characters"
+    Then I should see the search results for the very long query
+
+  # Scenario to generate a very long query string
+  Scenario: Generate Long Query String
+    Given a string of length 500
+    When I concatenate it with "A very long query of "
+    Then I should have a query string of 500+ characters
