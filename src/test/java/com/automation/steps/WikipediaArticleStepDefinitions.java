@@ -7,6 +7,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.testng.Assert;
 
 public class WikipediaArticleStepDefinitions {
     private BaseTestManager testManager;
@@ -28,27 +29,27 @@ public class WikipediaArticleStepDefinitions {
     public void executeStep(String stepDescription) throws Exception {
         switch (stepDescription) {
             case "Enter 'HTML Tutorial' in the search field":
-                testManager.getPage().locator("#searchInput").first().fill("HTML Tutorial");
+                pageObject.enterSearchQuery("HTML Tutorial");
                 break;
             case "Click the 'Search' button":
-                testManager.getPage().locator("#searchButton").first().click();
+                pageObject.clickSearchButton();
                 break;
             case "Click the first search result link":
-                testManager.getPage().locator(".mw-search-results li a").first().click();
+                pageObject.clickFirstSearchResult();
                 break;
             default:
-                throw new IllegalArgumentException("Unknown step: " + stepDescription);
+                throw new IllegalArgumentException("Invalid step description: " + stepDescription);
         }
     }
 
-    @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() throws Exception {
-        pageObject.verifyArticlePageLoaded("HTML Tutorial - Wikipedia");
-        pageObject.takeScreenshot("wikipedia_article");
+    @Then("I should see the {string} page")
+    public void iShouldSeeThePage(String expectedTitle) {
+        pageObject.verifyArticlePageLoaded(expectedTitle);
+        Assert.assertTrue(testManager.getPage().url().contains(expectedTitle.replace(" ", "_")), "Article URL does not match expected title");
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         testManager.closeBrowser();
     }
 }

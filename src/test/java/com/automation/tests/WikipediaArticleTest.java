@@ -2,6 +2,7 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.WikipediaArticlePage;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class WikipediaArticleTest extends BaseTestManager {
@@ -13,25 +14,26 @@ public class WikipediaArticleTest extends BaseTestManager {
         String expectedArticleTitle = "HTML Tutorial - Wikipedia";
 
         testManager.getPage().navigate(url);
-        System.out.println("📍 Navigated to " + url);
-
-        testManager.getPage().locator("#searchInput").first().fill(searchQuery);
-        System.out.println("📍 Entered search query: " + searchQuery);
-
-        testManager.getPage().locator("#searchButton").first().click();
-        System.out.println("📍 Clicked search button");
-
-        testManager.getPage().locator(".mw-search-results").first().waitFor();
-        System.out.println("📍 Verified search results page is loaded");
-
-        testManager.getPage().locator(".mw-search-results li a").first().click();
-        System.out.println("📍 Clicked first search result link");
+        System.out.println("\ud83d\udccd Navigated to " + url);
 
         WikipediaArticlePage articlePage = new WikipediaArticlePage(testManager);
+        articlePage.enterSearchQuery(searchQuery);
+        System.out.println("\ud83d\udccd Entered search query: " + searchQuery);
+
+        articlePage.clickSearchButton();
+        System.out.println("\ud83d\udccd Clicked search button");
+
+        testManager.getPage().locator(".mw-search-results").first().waitFor();
+        System.out.println("\ud83d\udccd Verified search results page is loaded");
+
+        articlePage.clickFirstSearchResult();
+        System.out.println("\ud83d\udccd Clicked first search result link");
+
         articlePage.verifyArticlePageLoaded(expectedArticleTitle);
-        System.out.println("📍 Verified Wikipedia article page is loaded");
+        System.out.println("\ud83d\udccd Verified Wikipedia article page is loaded");
+
+        Assert.assertTrue(testManager.getPage().url().contains(expectedArticleTitle.replace(" ", "_")), "Article URL does not match expected title");
 
         articlePage.takeScreenshot("wikipedia_article");
-        System.out.println("📍 Captured screenshot of Wikipedia article page");
     }
 }
