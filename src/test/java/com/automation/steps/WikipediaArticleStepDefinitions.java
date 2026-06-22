@@ -40,12 +40,12 @@ public class WikipediaArticleStepDefinitions {
     }
 
     @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() throws Exception {
-        pageObject.takeScreenshot("wikipedia_test_completed.png");
+    public void theTestShouldCompleteSuccessfully() {
+        // No assertions needed for this step
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         testManager.closeBrowser();
     }
 }

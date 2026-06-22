@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 public class WikipediaArticleTest extends BaseTestManager {
 
     @Test
-    public void happyPath_SearchAndViewWikipediaArticle() {
+    public void searchAndViewWikipediaArticle_HappyPath_ArticleDisplayed() {
         WikipediaArticlePage page = new WikipediaArticlePage(this);
         page.navigateToWikipedia("https://www.wikipedia.org/");
         page.searchWikipedia("HTML");
@@ -16,7 +16,7 @@ public class WikipediaArticleTest extends BaseTestManager {
     }
 
     @Test
-    public void negativeTest_InvalidInput_BlankSearchField() {
+    public void searchWikipedia_InvalidInput_BlankSearchField_ErrorMessageDisplayed() {
         WikipediaArticlePage page = new WikipediaArticlePage(this);
         page.navigateToWikipedia("https://www.wikipedia.org/");
         page.searchWikipedia("");
@@ -25,12 +25,12 @@ public class WikipediaArticleTest extends BaseTestManager {
     }
 
     @Test
-    public void negativeTest_BoundaryCase_MaximumSearchLength() {
+    public void searchWikipedia_BoundaryCase_MaximumSearchLength_ErrorMessageDisplayed() {
         WikipediaArticlePage page = new WikipediaArticlePage(this);
         String longSearchTerm = "a".repeat(500);
         page.navigateToWikipedia("https://www.wikipedia.org/");
         page.searchWikipedia(longSearchTerm);
         page.verifyErrorMessage("No results found for " + longSearchTerm + ". Try different keywords.");
-        page.takeScreenshot("wikipedia_long_search_no_results.png");
+        page.takeScreenshot("wikipedia_long_search_error.png");
     }
 }
