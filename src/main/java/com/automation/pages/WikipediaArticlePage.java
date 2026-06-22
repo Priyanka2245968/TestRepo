@@ -13,7 +13,7 @@ public class WikipediaArticlePage {
 
     private final Locator searchInput = page.locator("#searchInput");
     private final Locator searchButton = page.locator("button[type='submit']");
-    private final Locator pythonProgrammingLanguageLink = page.locator("#vector-main-menu-dropdown-checkbox");
+    private final Locator pythonProgrammingLanguageLink = page.locator("a[title='Python (programming language)']");
 
     public void searchWikipedia(String query) {
         searchInput.fill(query);
@@ -26,5 +26,13 @@ public class WikipediaArticlePage {
 
     public String getPageTitle() {
         return page.title();
+    }
+
+    public String getPageUrl() {
+        return page.url();
+    }
+
+    public String getPageContent() {
+        return page.content();
     }
 }

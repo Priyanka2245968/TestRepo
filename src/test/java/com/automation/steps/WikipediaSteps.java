@@ -6,6 +6,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.testng.Assert.assertTrue;
 
 public class WikipediaSteps extends BaseTestManager {
     private WikipediaArticlePage wikipediaPage;
@@ -28,6 +29,7 @@ public class WikipediaSteps extends BaseTestManager {
 
     @Then("I should see the Python Programming Language article")
     public void verifyPythonProgrammingLanguageArticle() {
-        assertThat(wikipediaPage.getPageTitle()).contains("Python (programming language)");
+        assertTrue(wikipediaPage.getPageUrl().contains("Python_(programming_language)"));
+        assertTrue(wikipediaPage.getPageContent().contains("Python is an interpreted high-level general-purpose programming language"));
     }
 }
