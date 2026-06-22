@@ -1,40 +1,40 @@
 package com.automation.pages;
 
 import com.automation.base.BaseTestManager;
-import com.microsoft.playwright.Page;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
 
 public class WikipediaArticlePage {
-    private final BaseTestManager testManager;
-    private final Page page;
+    private final WebDriver driver;
 
-    public WikipediaArticlePage(BaseTestManager testManager) {
-        this.testManager = testManager;
-        this.page = testManager.getPage();
+    public WikipediaArticlePage(WebDriver driver) {
+        this.driver = driver;
     }
 
     public void navigateToWikipedia(String url) {
-        System.out.println("📍 Navigating to " + url);
-        page.navigate(url);
+        driver.get(url);
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+            .until(ExpectedConditions.presenceOfElementLocated(By.name("search")));
     }
 
     public void searchWikipedia(String query) {
-        System.out.println("📍 Searching Wikipedia for '" + query + "'");
-        page.locator("input[name='search']").fill(query);
-        page.locator("button[type='submit']").click();
+        driver.findElement(By.name("search")).sendKeys(query);
+        driver.findElement(By.cssSelector("button[type='submit']")).click();
     }
 
     public void clickSearchResult(String title) {
-        System.out.println("📍 Clicking search result '" + title + "'");
-        page.locator("a:has-text('" + title + "')").first().click();
+        driver.findElement(By.xpath("//a[text()='" + title + "']")).click();
     }
 
     public void verifyArticleTitle(String title) {
-        System.out.println("📍 Verifying article title '" + title + "'");
-        page.locator("h1:has-text('" + title + "')").isVisible();
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+            .until(ExpectedConditions.textToBePresentInElementLocated(By.tagName("h1"), title));
     }
 
     public void takeScreenshot(String filename) {
-        System.out.println("📸 Taking screenshot: " + filename);
-        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(com.microsoft.playwright.utils.Utils.map("screenshots/" + filename + ".png")));
+        // Implement screenshot logic
     }
 }
