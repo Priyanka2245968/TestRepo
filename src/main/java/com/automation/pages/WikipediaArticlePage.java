@@ -5,15 +5,15 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
 public class WikipediaArticlePage {
-    private Page page;
+    private final Page page;
 
     public WikipediaArticlePage(BaseTestManager testManager) {
         this.page = testManager.getPage();
     }
 
-    private Locator searchInput = page.locator("#searchInput");
-    private Locator searchButton = page.locator("button[type='submit']");
-    private Locator pythonProgrammingLanguageLink = page.locator("a[title='Python (programming language)']");
+    private final Locator searchInput = page.locator("#searchInput");
+    private final Locator searchButton = page.locator("button[type='submit']");
+    private final Locator pythonProgrammingLanguageLink = page.locator("a[title='Python (programming language)']");
 
     public void searchWikipedia(String query) {
         searchInput.fill(query);
