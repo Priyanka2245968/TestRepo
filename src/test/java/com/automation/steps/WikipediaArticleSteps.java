@@ -5,6 +5,7 @@ import com.automation.base.BaseTestManager;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.testng.Assert;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class WikipediaArticleSteps extends BaseTestManager {
@@ -32,5 +33,17 @@ public class WikipediaArticleSteps extends BaseTestManager {
     @Then("I should see the {string} article page")
     public void verifyArticlePage(String articleTitle) {
         assertThat(page).hasTitle(articleTitle);
+    }
+
+    @Then("I should see an error message {string}")
+    public void verifyErrorMessage(String expectedErrorMessage) {
+        String actualErrorMessage = page.locator(".error-message").textContent();
+        Assert.assertEquals(actualErrorMessage, expectedErrorMessage);
+    }
+
+    @Then("I should see search results for the truncated search")
+    public void verifyTruncatedSearchResults() {
+        String truncatedSearchTerm = "This is a very long string with exactly 300 characters. This is a very long string with exactly 300 characters. This is a very long string with exactly 300 characters. This is a very long string with exactly 300 characters. This is a very long string with exactly 300 char";
+        assertThat(page).hasURL("https://www.wikipedia.org/wiki/Special:Search?search=" + truncatedSearchTerm);
     }
 }

@@ -11,9 +11,9 @@ public class WikipediaArticlePage {
         this.page = testManager.getPage();
     }
 
-    private final Locator searchInput = page.locator("#searchInput");
+    private final Locator searchInput = page.locator("input[name='search']");
     private final Locator searchButton = page.locator("button[type='submit']");
-    private final Locator htmlLink = page.locator("a[href='/wiki/Main_Page']");
+    private final Locator htmlLink = page.locator("a:has-text('HTML')");
 
     public void enterSearchText(String text) {
         searchInput.fill(text);
