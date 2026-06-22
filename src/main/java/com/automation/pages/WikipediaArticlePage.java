@@ -4,6 +4,9 @@ import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
+import org.testng.Assert;
+
+import java.nio.file.Paths;
 
 public class WikipediaArticlePage {
     private Page page;
@@ -22,13 +25,13 @@ public class WikipediaArticlePage {
     }
 
     public void openArticle(String articleTitle) {
-        page.locator("//a[text()='" + articleTitle + "']").first().click();
+        page.locator("//a[contains(text(), '" + articleTitle + "')]").first().click();
     }
 
     public void verifyArticleDisplayed(String articleTitle) {
         page.waitForLoadState(LoadState.NETWORKIDLE);
         Locator articleTitleLocator = page.locator("//h1[contains(@class, 'firstHeading')]");
-        assertThat(articleTitleLocator).containsText(articleTitle);
+        Assert.assertTrue(articleTitleLocator.textContent().contains(articleTitle), "Article title not displayed correctly");
     }
 
     public void takeScreenshot(String filename) {

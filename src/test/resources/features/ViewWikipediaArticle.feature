@@ -10,7 +10,7 @@ Feature: View Wikipedia Article
   Scenario: Invalid Input - Blank Search
     Given I navigate to "https://www.wikipedia.org/"
     When I search for "" topic
-    Then An error message "Please enter a topic to search" appears
+    Then An error message "Please enter a topic to search" is displayed
 
   Scenario: Boundary Case - Maximum Search Length
     Given I navigate to "https://www.wikipedia.org/"
