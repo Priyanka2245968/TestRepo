@@ -10,9 +10,9 @@ Feature: Wikipedia Search
   Scenario: Invalid Input - Empty Search Field
     Given I am on the Wikipedia homepage
     When I search for ""
-    Then I should see the search results page
+    Then I should not see the search results page
 
   Scenario: Boundary Case - Maximum Search Length
     Given I am on the Wikipedia homepage
-    When I search for "abcde...xyz (500 characters)"
+    When I search for a string with 500 characters
     Then I should see the search results page

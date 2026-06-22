@@ -6,6 +6,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.WebDriver;
 import pages.WikipediaSearchPage;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class WikipediaSearchSteps {
@@ -33,6 +34,11 @@ public class WikipediaSearchSteps {
         assertTrue(searchPage.isSearchResultsDisplayed());
     }
 
+    @Then("I should not see the search results page")
+    public void verifyNoSearchResultsPage() {
+        assertFalse(searchPage.isSearchResultsDisplayed());
+    }
+
     @When("I click the HTML Tutorial link")
     public void clickHtmlTutorialLink() {
         searchPage.clickHtmlTutorialLink();
@@ -41,5 +47,10 @@ public class WikipediaSearchSteps {
     @Then("I should see the HTML Tutorial page")
     public void verifyHtmlTutorialPage() {
         assertTrue(searchPage.isHtmlTutorialPageDisplayed());
+    }
+
+    @After
+    public void tearDown() {
+        driver.quit();
     }
 }

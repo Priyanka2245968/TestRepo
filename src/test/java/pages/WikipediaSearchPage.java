@@ -15,7 +15,7 @@ public class WikipediaSearchPage {
     @FindBy(xpath = "//button[contains(normalize-space(.),'Search')]")
     private WebElement searchButton;
 
-    @FindBy(css = "button[type='submit']")
+    @FindBy(id = "ca-html")
     private WebElement htmlTutorialLink;
 
     public WikipediaSearchPage(WebDriver driver) {
