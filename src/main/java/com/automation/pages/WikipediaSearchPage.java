@@ -3,11 +3,9 @@ package com.automation.pages;
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import org.openqa.selenium.WebDriver; // BROKEN ON PURPOSE
 import com.microsoft.playwright.options.LoadState;
 
 public class WikipediaSearchPage {
-    private WebDriver __brokenDriver; // BROKEN ON PURPOSE
     private Page page;
 
     public WikipediaSearchPage(BaseTestManager testManager) {
