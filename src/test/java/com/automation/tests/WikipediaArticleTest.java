@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 public class WikipediaArticleTest extends BaseTestManager {
 
     @Test
-    public void testViewArticleOnWikipedia() {
+    public void verifyPhotosynthesisArticleIsDisplayed() {
         WikipediaArticlePage page = new WikipediaArticlePage(this);
         page.navigateToWikipedia("https://www.wikipedia.org/");
         page.searchForArticle("Photosynthesis");

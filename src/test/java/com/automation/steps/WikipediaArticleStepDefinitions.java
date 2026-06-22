@@ -7,8 +7,13 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import static com.automation.utils.WaitUtils.waitForElementToBeVisible;
 
 public class WikipediaArticleStepDefinitions {
+    private static final Logger logger = LogManager.getLogger(WikipediaArticleStepDefinitions.class);
     private BaseTestManager testManager;
     private WikipediaArticlePage pageObject;
 
@@ -35,20 +40,25 @@ public class WikipediaArticleStepDefinitions {
                 break;
             case "3":
                 boolean isArticleDisplayed = pageObject.isArticleDisplayed(description);
-                System.out.println("Article '" + description + "' is displayed: " + isArticleDisplayed);
+                logger.info("Article '" + description + "' is displayed: " + isArticleDisplayed);
                 break;
             default:
-                throw new Exception("Invalid step number: " + stepNumber);
+                logger.warn("Unknown step number: " + stepNumber);
+                throw new IllegalArgumentException("Invalid step number: " + stepNumber);
         }
     }
 
-    @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() throws Exception {
-        pageObject.takeScreenshot("wikipedia-article-test.png");
+    @Then("I verify that the article {string} is displayed")
+    public void verifyArticleIsDisplayed(String articleTitle) {
+        boolean isArticleDisplayed = pageObject.isArticleDisplayed(articleTitle);
+        if (!isArticleDisplayed) {
+            logger.error("Article '" + articleTitle + "' is not displayed");
+        }
+        waitForElementToBeVisible(pageObject.getPage().locator("//h1[contains(., '" + articleTitle + "')]"));
     }
 
     @After
-    public void tearDown() throws Exception {
-        testManager.closeBrowser();
+    public void tearDown() {
+        testManager.quitBrowser();
     }
 }

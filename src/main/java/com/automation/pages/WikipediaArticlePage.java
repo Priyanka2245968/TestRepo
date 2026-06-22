@@ -2,8 +2,13 @@ package com.automation.pages;
 
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Page;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import static com.automation.utils.WaitUtils.waitForElementToBeVisible;
 
 public class WikipediaArticlePage {
+    private static final Logger logger = LogManager.getLogger(WikipediaArticlePage.class);
     private final BaseTestManager testManager;
     private final Page page;
 
@@ -13,28 +18,26 @@ public class WikipediaArticlePage {
     }
 
     public void navigateToWikipedia(String url) {
-        System.out.println("📍 Navigating to " + url);
+        logger.info("Navigating to " + url);
         page.navigate(url);
     }
 
     public void searchForArticle(String query) {
-        System.out.println("📍 Searching for '" + query + "'");
-        page.locator("#searchInput").fill(query);
-        page.locator("#searchButton").click();
+        logger.info("Searching for '" + query + "'");
+        waitForElementToBeVisible(page.locator("#searchInput")).fill(query);
+        waitForElementToBeVisible(page.locator("#searchButton")).click();
     }
 
     public void openArticle(String articleTitle) {
-        System.out.println("📍 Opening article: " + articleTitle);
-        page.locator("//a[contains(@title, '" + articleTitle + "')]").first().click();
+        logger.info("Opening article: " + articleTitle);
+        waitForElementToBeVisible(page.locator("//a[contains(@title, '" + articleTitle + "')]")).first().click();
     }
 
     public boolean isArticleDisplayed(String articleTitle) {
-        System.out.println("📍 Verifying article: " + articleTitle);
-        return page.locator("//h1[contains(., '" + articleTitle + "')]").isVisible();
+        logger.info("Verifying article: " + articleTitle);
+        return waitForElementToBeVisible(page.locator("//h1[contains(., '" + articleTitle + "')]")).isVisible();
     }
 
     public void takeScreenshot(String filename) {
-        System.out.println("📸 Taking screenshot: " + filename);
-        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(com.microsoft.playwright.impl.Playwright.getBrowserType().defaultBrowserContext().traceViewer().source().saveAs(filename)));
-    }
-}
+        logger.info("Taking screenshot: " + filename);
+        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(com.microsoft.playwright.impl
