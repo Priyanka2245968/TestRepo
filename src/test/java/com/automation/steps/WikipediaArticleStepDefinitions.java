@@ -19,30 +19,29 @@ public class WikipediaArticleStepDefinitions {
         pageObject = new WikipediaArticlePage(testManager);
     }
 
-    @Given("I navigate to {string}")
-    public void iNavigateTo(String url) throws Exception {
-        testManager.getPage().navigate(url);
+    @Given("I navigate to Wikipedia")
+    public void iNavigateToWikipedia() {
+        pageObject.navigateToWikipedia();
     }
 
-    @When("I execute step {int}: {string}")
-    public void executeStep(int stepNum, String description) throws Exception {
-        switch (stepNum) {
-            case 1 -> pageObject.navigateToWikipedia();
-            case 2 -> pageObject.searchWikipedia("Python programming language");
-            case 3 -> pageObject.clickSearchButton();
-            case 4 -> pageObject.clickArticleLink("Python (programming language)");
-            case 5 -> pageObject.verifyArticlePageLoaded();
-            default -> throw new Exception("Invalid step number: " + stepNum);
-        }
+    @When("I search for {string}")
+    public void iSearchFor(String query) {
+        pageObject.searchWikipedia(query);
+        pageObject.clickSearchButton();
     }
 
-    @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() throws Exception {
-        pageObject.takeScreenshot("wikipedia-article-test-" + System.currentTimeMillis() + ".png");
+    @When("I click on the {string} article link")
+    public void iClickOnTheArticleLink(String articleTitle) {
+        pageObject.clickArticleLink(articleTitle);
+    }
+
+    @Then("I should see the {string} article page")
+    public void iShouldSeeTheArticlePage(String expectedTitle) {
+        pageObject.verifyArticlePageLoaded(expectedTitle);
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         testManager.closeBrowser();
     }
 }

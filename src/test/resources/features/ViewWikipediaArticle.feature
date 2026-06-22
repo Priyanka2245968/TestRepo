@@ -6,10 +6,18 @@ Feature: View Article on Wikipedia
   So that I can learn about a topic
 
   Scenario: Happy Path - View Article on Wikipedia
-    Given I navigate to "https://www.wikipedia.org/"
-    When I execute step 1: "Navigate to https://www.wikipedia.org/"
-    When I execute step 2: "In the 'Search Wikipedia' field, enter 'Python programming language'"
-    When I execute step 3: "Click the 'Search Wikipedia' button or press Enter"
-    When I execute step 4: "From the search results, click the 'Python (programming language)' link"
-    When I execute step 5: "Verify the article page has loaded successfully"
-    Then the test should complete successfully
+    Given I navigate to Wikipedia
+    When I search for "Python programming language"
+    And I click on the "Python (programming language)" article link
+    Then I should see the "Python (programming language) - Wikipedia" article page
+
+  Scenario: Negative Case - Invalid Search Query
+    Given I navigate to Wikipedia
+    When I search for "@#$%^&*()"
+    Then I should see a message indicating no results found
+
+  Scenario: Negative Case - Article Not Found
+    Given I navigate to Wikipedia
+    When I search for "Non-existent article title"
+    And I click on the "Non-existent article title" article link
+    Then I should see a message indicating the article does not exist
