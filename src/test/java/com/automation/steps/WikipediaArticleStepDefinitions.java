@@ -7,6 +7,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.testng.Assert;
 
 public class WikipediaArticleStepDefinitions {
     private BaseTestManager testManager;
@@ -40,7 +41,7 @@ public class WikipediaArticleStepDefinitions {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         testManager.closeBrowser();
     }
 }

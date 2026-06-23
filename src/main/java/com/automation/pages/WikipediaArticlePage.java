@@ -17,13 +17,13 @@ public class WikipediaArticlePage {
     }
 
     public void searchForTopic(String topic) {
-        page.locator("input[name='search']").first().fill(topic);
-        page.locator("button[type='submit']").first().click();
+        page.locator("input[name='search']").fill(topic);
+        page.locator("button[type='submit']").click();
     }
 
     public void clickSearchResult(String resultLink) {
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        page.locator("//a[contains(., '" + resultLink + "')]").first().click();
+        page.locator("//a[contains(text(), '" + resultLink + "')]").first().click();
     }
 
     public void takeScreenshot(String filename) {
