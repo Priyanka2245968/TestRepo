@@ -1,0 +1,37 @@
+package com.automation.pages;
+
+import com.automation.base.BaseTestManager;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
+
+public class WikipediaArticlePage {
+    private Page page;
+
+    public WikipediaArticlePage(BaseTestManager testManager) {
+        this.page = testManager.getPage();
+    }
+
+    public void navigateToWikipedia() {
+        page.navigate("https://www.wikipedia.org/");
+    }
+
+    public void searchForArticle(String query) {
+        page.locator("input[name='search']").first().fill(query);
+        page.locator("button[type='submit']").first().click();
+    }
+
+    public void openArticle(String articleTitle) {
+        page.locator("//a[text()='" + articleTitle + "']").first().click();
+    }
+
+    public void verifyArticlePageLoaded() {
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+        Locator articleTitleLocator = page.locator("//h1[@id='firstHeading']");
+        assertThat(articleTitleLocator).isVisible();
+    }
+
+    public void takeScreenshot(String filename) {
+        page.screenshot(new com.microsoft.playwright.Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    }
+}
