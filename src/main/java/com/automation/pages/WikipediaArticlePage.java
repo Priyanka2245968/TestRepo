@@ -4,7 +4,7 @@ import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
-import org.testng.Assert;
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class WikipediaArticlePage {
     private Page page;
@@ -29,8 +29,8 @@ public class WikipediaArticlePage {
     public void verifyArticlePageLoaded(String expectedTitle) {
         page.waitForLoadState(LoadState.NETWORKIDLE);
         Locator articleTitleLocator = page.locator("//h1[@id='firstHeading']");
-        Assert.assertTrue(articleTitleLocator.isVisible(), "Article page not loaded");
-        Assert.assertEquals(articleTitleLocator.textContent(), expectedTitle, "Incorrect article title");
+        assertThat(articleTitleLocator).isVisible();
+        assertThat(articleTitleLocator).hasText(expectedTitle);
     }
 
     public void takeScreenshot(String filename) {
