@@ -1,4 +1,4 @@
-package com.automation.tests;
+package com.automation.apiTests;
 
 import com.automation.utils.ApiUtils;
 import com.fasterxml.jackson.databind.JsonNode;
