@@ -205,6 +205,12 @@
             </properties>
         </profile>
         <profile>
+            <id>api</id>
+            <properties>
+                <testng.suite>src/test/resources/api.xml</testng.suite>
+            </properties>
+        </profile>
+        <profile>
             <id>download-browsers</id>
             <activation>
                 <activeByDefault>true</activeByDefault>

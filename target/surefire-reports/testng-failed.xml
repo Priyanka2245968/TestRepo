@@ -3,13 +3,17 @@
 <suite name="Failed suite [Surefire suite]" verbose="0">
   <test thread-count="5" name="Surefire test(failed)" verbose="0">
     <classes>
-      <class name="com.automation.tests.SampleLoginTestTest">
+      <class name="com.automation.tests.SampleApiTest">
         <methods>
-          <include name="initializeBrowser"/>
-          <include name="closeBrowser"/>
-          <include name="testSampleLoginTest"/>
+          <include name="getPostsByUser_returnsFilteredList"/>
+          <include name="createPost_returnsCreatedResource"/>
+          <include name="tearDown"/>
+          <include name="setUp"/>
+          <include name="deletePost_succeeds"/>
+          <include name="updatePost_returnsUpdatedResource"/>
+          <include name="getSinglePost_returnsExpectedPost"/>
         </methods>
-      </class> <!-- com.automation.tests.SampleLoginTestTest -->
+      </class> <!-- com.automation.tests.SampleApiTest -->
     </classes>
   </test> <!-- Surefire test(failed) -->
 </suite> <!-- Failed suite [Surefire suite] -->

@@ -9,45 +9,14 @@
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
 <tr><th colspan="8">Surefire suite</th></tr>
-<tr><td><a href="#t0">Surefire test</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num attn">1</td><td class="num">18,033</td><td></td><td></td></tr>
+<tr><td><a href="#t0">Surefire test</a></td><td class="num">5</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">27,877</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Surefire suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Surefire test &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">com.automation.tests.SampleLoginTestTest</td><td><a href="#m0">testSampleLoginTest</a></td><td rowspan="1">1761345962206</td><td rowspan="1">12294</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Surefire suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Surefire test &#8212; passed</th></tr><tr class="passedeven"><td rowspan="5">com.automation.tests.SampleApiTest</td><td><a href="#m0">createPost_returnsCreatedResource</a></td><td rowspan="1">1782307383049</td><td rowspan="1">1282</td></tr><tr class="passedeven"><td><a href="#m1">deletePost_succeeds</a></td><td rowspan="1">1782307384878</td><td rowspan="1">1060</td></tr><tr class="passedeven"><td><a href="#m2">getPostsByUser_returnsFilteredList</a></td><td rowspan="1">1782307385945</td><td rowspan="1">734</td></tr><tr class="passedeven"><td><a href="#m3">getSinglePost_returnsExpectedPost</a></td><td rowspan="1">1782307386683</td><td rowspan="1">302</td></tr><tr class="passedeven"><td><a href="#m4">updatePost_returnsUpdatedResource</a></td><td rowspan="1">1782307386989</td><td rowspan="1">938</td></tr></tbody>
 </table>
-<h2>Surefire test</h2><h3 id="m0">com.automation.tests.SampleLoginTestTest#testSampleLoginTest</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">com.microsoft.playwright.TimeoutError: Error {
-  message=&apos;Timeout 5000ms exceeded.
-  name=&apos;TimeoutError
-  stack=&apos;TimeoutError: Timeout 5000ms exceeded.
-    at ProgressController.run (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\progress.js:68:28)
-    at FrameDispatcher._runCommand (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\dispatchers\dispatcher.js:95:31)
-    at DispatcherConnection.dispatch (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\dispatchers\dispatcher.js:329:39)
-}
-Call log:
--   - waiting for locator(&quot;img[alt*=\&quot;Google\&quot;], img[alt*=\&quot;logo\&quot;]&quot;).first() to be visible
-
-	at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:52)
-	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:138)
-	at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:131)
-	at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:124)
-	at com.microsoft.playwright.impl.FrameImpl.waitForSelectorImpl(FrameImpl.java:985)
-	at com.microsoft.playwright.impl.LocatorImpl.waitFor(LocatorImpl.java:625)
-	at com.automation.pages.SampleLoginTestPage.step3(SampleLoginTestPage.java:26)
-	at com.automation.tests.SampleLoginTestTest.testSampleLoginTest(SampleLoginTestTest.java:21)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-Caused by: com.microsoft.playwright.TimeoutError: Error {
-  message=&apos;Timeout 5000ms exceeded.
-  name=&apos;TimeoutError
-  stack=&apos;TimeoutError: Timeout 5000ms exceeded.
-    at ProgressController.run (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\progress.js:68:28)
-    at FrameDispatcher._runCommand (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\dispatchers\dispatcher.js:95:31)
-    at DispatcherConnection.dispatch (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\dispatchers\dispatcher.js:329:39)
-}
-Call log:
--   - waiting for locator(&quot;img[alt*=\&quot;Google\&quot;], img[alt*=\&quot;logo\&quot;]&quot;).first() to be visible
-
-	at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:257)
-	at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:214)
-	at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:136)
-	... 37 more
-... Removed 30 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>Surefire test</h2><h3 id="m0">com.automation.tests.SampleApiTest#createPost_returnsCreatedResource</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m1">com.automation.tests.SampleApiTest#deletePost_succeeds</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m2">com.automation.tests.SampleApiTest#getPostsByUser_returnsFilteredList</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m3">com.automation.tests.SampleApiTest#getSinglePost_returnsExpectedPost</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m4">com.automation.tests.SampleApiTest#updatePost_returnsUpdatedResource</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>

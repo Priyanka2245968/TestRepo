@@ -1,108 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="0" failed="1" skipped="0">
+<testng-results ignored="0" total="5" passed="5" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-10-25T04:15:57 IST" name="Surefire suite" finished-at="2025-10-25T04:16:15 IST" duration-ms="18033">
+  <suite started-at="2026-06-24T18:52:40 IST" name="Surefire suite" finished-at="2026-06-24T18:53:08 IST" duration-ms="27877">
     <groups>
     </groups>
-    <test started-at="2025-10-25T04:15:57 IST" name="Surefire test" finished-at="2025-10-25T04:16:15 IST" duration-ms="18033">
-      <class name="com.automation.tests.SampleLoginTestTest">
-        <test-method is-config="true" signature="initializeBrowser()[pri:0, instance:com.automation.tests.SampleLoginTestTest@6c4906d3]" started-at="2025-10-25T04:15:57 IST" name="initializeBrowser" finished-at="2025-10-25T04:16:02 IST" duration-ms="4670" status="PASS">
+    <test started-at="2026-06-24T18:52:40 IST" name="Surefire test" finished-at="2026-06-24T18:53:08 IST" duration-ms="27877">
+      <class name="com.automation.tests.SampleApiTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.automation.tests.SampleApiTest@2a8448fa]" started-at="2026-06-24T18:52:40 IST" name="setUp" finished-at="2026-06-24T18:53:03 IST" duration-ms="22462" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- initializeBrowser -->
-        <test-method signature="testSampleLoginTest()[pri:0, instance:com.automation.tests.SampleLoginTestTest@6c4906d3]" started-at="2025-10-25T04:16:02 IST" name="testSampleLoginTest" finished-at="2025-10-25T04:16:14 IST" duration-ms="12294" status="FAIL">
-          <exception class="com.microsoft.playwright.TimeoutError">
-            <message>
-              <![CDATA[Error {
-  message='Timeout 5000ms exceeded.
-  name='TimeoutError
-  stack='TimeoutError: Timeout 5000ms exceeded.
-    at ProgressController.run (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\progress.js:68:28)
-    at FrameDispatcher._runCommand (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\dispatchers\dispatcher.js:95:31)
-    at DispatcherConnection.dispatch (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\dispatchers\dispatcher.js:329:39)
-}
-Call log:
--   - waiting for locator("img[alt*=\"Google\"], img[alt*=\"logo\"]").first() to be visible
-]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[com.microsoft.playwright.TimeoutError: Error {
-  message='Timeout 5000ms exceeded.
-  name='TimeoutError
-  stack='TimeoutError: Timeout 5000ms exceeded.
-    at ProgressController.run (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\progress.js:68:28)
-    at FrameDispatcher._runCommand (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\dispatchers\dispatcher.js:95:31)
-    at DispatcherConnection.dispatch (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\dispatchers\dispatcher.js:329:39)
-}
-Call log:
--   - waiting for locator("img[alt*=\"Google\"], img[alt*=\"logo\"]").first() to be visible
-
-at com.microsoft.playwright.impl.WaitableResult.get(WaitableResult.java:52)
-at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:138)
-at com.microsoft.playwright.impl.Connection.sendMessage(Connection.java:131)
-at com.microsoft.playwright.impl.ChannelOwner.sendMessage(ChannelOwner.java:124)
-at com.microsoft.playwright.impl.FrameImpl.waitForSelectorImpl(FrameImpl.java:985)
-at com.microsoft.playwright.impl.LocatorImpl.waitFor(LocatorImpl.java:625)
-at com.automation.pages.SampleLoginTestPage.step3(SampleLoginTestPage.java:26)
-at com.automation.tests.SampleLoginTestTest.testSampleLoginTest(SampleLoginTestTest.java:21)
-at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
-at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:686)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
-at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
-at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:992)
-at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
-at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
-at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
-at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-at org.testng.TestRunner.privateRun(TestRunner.java:739)
-at org.testng.TestRunner.run(TestRunner.java:614)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
-at org.testng.SuiteRunner.run(SuiteRunner.java:312)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
-at org.testng.TestNG.runSuites(TestNG.java:1112)
-at org.testng.TestNG.run(TestNG.java:1079)
-at org.apache.maven.surefire.testng.TestNGExecutor.run(TestNGExecutor.java:155)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.executeSingleClass(TestNGDirectoryTestSuite.java:102)
-at org.apache.maven.surefire.testng.TestNGDirectoryTestSuite.execute(TestNGDirectoryTestSuite.java:91)
-at org.apache.maven.surefire.testng.TestNGProvider.invoke(TestNGProvider.java:137)
-at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
-at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
-at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
-at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
-Caused by: com.microsoft.playwright.TimeoutError: Error {
-  message='Timeout 5000ms exceeded.
-  name='TimeoutError
-  stack='TimeoutError: Timeout 5000ms exceeded.
-    at ProgressController.run (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\progress.js:68:28)
-    at FrameDispatcher._runCommand (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\dispatchers\dispatcher.js:95:31)
-    at DispatcherConnection.dispatch (C:\Users\193704\AppData\Local\Temp\playwright-java-4598477838628068337\package\lib\server\dispatchers\dispatcher.js:329:39)
-}
-Call log:
--   - waiting for locator("img[alt*=\"Google\"], img[alt*=\"logo\"]").first() to be visible
-
-at com.microsoft.playwright.impl.Connection.dispatch(Connection.java:257)
-at com.microsoft.playwright.impl.Connection.processOneMessage(Connection.java:214)
-at com.microsoft.playwright.impl.ChannelOwner.runUntil(ChannelOwner.java:136)
-... 37 more
-]]>
-            </full-stacktrace>
-          </exception> <!-- com.microsoft.playwright.TimeoutError -->
+        </test-method> <!-- setUp -->
+        <test-method signature="createPost_returnsCreatedResource()[pri:0, instance:com.automation.tests.SampleApiTest@2a8448fa]" started-at="2026-06-24T18:53:03 IST" name="createPost_returnsCreatedResource" description="POST /posts should create a resource and echo back the payload with a new id" finished-at="2026-06-24T18:53:04 IST" duration-ms="1282" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testSampleLoginTest -->
-        <test-method is-config="true" signature="closeBrowser()[pri:0, instance:com.automation.tests.SampleLoginTestTest@6c4906d3]" started-at="2025-10-25T04:16:14 IST" name="closeBrowser" finished-at="2025-10-25T04:16:15 IST" duration-ms="851" status="PASS">
+        </test-method> <!-- createPost_returnsCreatedResource -->
+        <test-method signature="deletePost_succeeds()[pri:0, instance:com.automation.tests.SampleApiTest@2a8448fa]" started-at="2026-06-24T18:53:04 IST" name="deletePost_succeeds" description="DELETE /posts/1 should succeed" finished-at="2026-06-24T18:53:05 IST" duration-ms="1060" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- closeBrowser -->
-      </class> <!-- com.automation.tests.SampleLoginTestTest -->
+        </test-method> <!-- deletePost_succeeds -->
+        <test-method signature="getPostsByUser_returnsFilteredList()[pri:0, instance:com.automation.tests.SampleApiTest@2a8448fa]" started-at="2026-06-24T18:53:05 IST" name="getPostsByUser_returnsFilteredList" description="GET /posts with a userId query parameter should return only that user&#039;s posts" finished-at="2026-06-24T18:53:06 IST" duration-ms="734" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getPostsByUser_returnsFilteredList -->
+        <test-method signature="getSinglePost_returnsExpectedPost()[pri:0, instance:com.automation.tests.SampleApiTest@2a8448fa]" started-at="2026-06-24T18:53:06 IST" name="getSinglePost_returnsExpectedPost" description="GET /posts/1 should return a single post with the expected schema" finished-at="2026-06-24T18:53:06 IST" duration-ms="302" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- getSinglePost_returnsExpectedPost -->
+        <test-method signature="updatePost_returnsUpdatedResource()[pri:0, instance:com.automation.tests.SampleApiTest@2a8448fa]" started-at="2026-06-24T18:53:06 IST" name="updatePost_returnsUpdatedResource" description="PUT /posts/1 should update an existing resource" finished-at="2026-06-24T18:53:07 IST" duration-ms="938" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- updatePost_returnsUpdatedResource -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.automation.tests.SampleApiTest@2a8448fa]" started-at="2026-06-24T18:53:07 IST" name="tearDown" finished-at="2026-06-24T18:53:08 IST" duration-ms="469" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.automation.tests.SampleApiTest -->
     </test> <!-- Surefire test -->
   </suite> <!-- Surefire suite -->
 </testng-results>
