@@ -6,6 +6,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import static org.testng.Assert.assertTrue;
+
 public class WikipediaSearchSteps {
     private final WikipediaSearchPage wikipediaPage;
 
@@ -36,5 +38,15 @@ public class WikipediaSearchSteps {
     @Then("I should see the HTML article page")
     public void verifyHtmlArticle() {
         wikipediaPage.verifyHtmlArticle();
+    }
+
+    @Then("I should see no search results")
+    public void verifyNoSearchResults() {
+        assertTrue(wikipediaPage.getPage().locator(".mw-search-nonefound").isVisible());
+    }
+
+    @Then("I should see search results for special characters")
+    public void verifySpecialCharactersSearchResults() {
+        assertTrue(wikipediaPage.getPage().locator(".mw-search-results").isVisible());
     }
 }
