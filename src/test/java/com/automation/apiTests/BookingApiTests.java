@@ -2,7 +2,6 @@ package com.automation.apiTests;
 
 import com.automation.base.BaseTestManager;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import org.testng.annotations.BeforeClass;
@@ -24,7 +23,7 @@ public class BookingApiTests {
         apiContext = BaseTestManager.getPlaywrightContext().request();
     }
 
-    @Test(description = "BOK-25-TC-01 - Positive — Create a new booking")
+    @Test(description = "BOK-25-TC-01 - Positive \u2014 Create a new booking")
     public void createBookingPositive() {
         Map<String, Object> body = new HashMap<>();
         body.put("firstname", "Swarup");
@@ -37,9 +36,8 @@ public class BookingApiTests {
         body.put("bookingdates", dates);
         body.put("additionalneeds", "Breakfast");
 
-        APIResponse response = apiContext.post(baseUrl + "/booking", APIRequest.BodyType.JSON, body);
-        int statusCode = response.statusCode();
-        assertEquals(statusCode, 200, "Failed to create booking");
+        APIResponse response = apiContext.post(baseUrl + "/booking", com.microsoft.playwright.APIRequest.newContext(body));
+        assertEquals(response.statusText(), "OK", "Failed to create booking");
 
         JsonNode responseBody = response.json();
         assertNotNull(responseBody.get("bookingid"), "Booking ID is null");

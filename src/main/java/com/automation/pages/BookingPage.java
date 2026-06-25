@@ -2,29 +2,30 @@ package com.automation.pages;
 
 import com.automation.base.BaseTestManager;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
+import com.microsoft.playwright.Page;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 public class BookingPage {
-    private BaseTestManager testManager;
+    private Page page;
     private APIRequestContext apiContext;
     private String baseUrl = "https://restful-booker.herokuapp.com";
 
     public BookingPage(BaseTestManager testManager) {
-        this.testManager = testManager;
+        this.page = testManager.getPage();
         this.apiContext = testManager.getPlaywrightContext().request();
     }
 
     public void createBooking() {
-        System.out.println("📍 Creating a new booking");
+        System.out.println("\ud83d\udccd Creating a new booking");
         Map<String, Object> body = new HashMap<>();
         body.put("firstname", "Swarup");
         body.put("lastname", "Roy");
@@ -36,9 +37,8 @@ public class BookingPage {
         body.put("bookingdates", dates);
         body.put("additionalneeds", "Breakfast");
 
-        APIResponse response = apiContext.post(baseUrl + "/booking", APIRequest.BodyType.JSON, body);
-        int statusCode = response.statusCode();
-        assertEquals(statusCode, 200, "Failed to create booking");
+        APIResponse response = apiContext.post(baseUrl + "/booking", com.microsoft.playwright.APIRequest.newContext(body));
+        assertEquals(response.statusText(), "OK", "Failed to create booking");
 
         JsonNode responseBody = response.json();
         assertNotNull(responseBody.get("bookingid"), "Booking ID is null");
