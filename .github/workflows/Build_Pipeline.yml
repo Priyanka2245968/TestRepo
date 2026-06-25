@@ -5,9 +5,13 @@ on:
     branches:
       - main
       - develop
+    paths:
+      - 'src/test/java/com/automation/tests/**'
   push:
     branches:
       - main
+    paths:
+      - 'src/test/java/com/automation/tests/**'
 
 jobs:
   build:

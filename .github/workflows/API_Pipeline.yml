@@ -5,9 +5,13 @@ on:
     branches:
       - main
       - develop
+    paths:
+      - 'src/test/java/com/automation/apiTests/**'
   push:
     branches:
       - main
+    paths:
+      - 'src/test/java/com/automation/apiTests/**'
   workflow_dispatch:
 
 jobs:
