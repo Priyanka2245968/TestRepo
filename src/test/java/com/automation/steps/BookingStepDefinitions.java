@@ -2,6 +2,7 @@ package com.automation.steps;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.BookingPage;
+import com.microsoft.playwright.Browser;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
@@ -11,11 +12,12 @@ import io.cucumber.java.en.When;
 public class BookingStepDefinitions {
     private BaseTestManager testManager;
     private BookingPage bookingPage;
+    private Browser browser;
 
     @Before
     public void setUp() throws Exception {
         testManager = new BaseTestManager();
-        testManager.initializeBrowser();
+        browser = testManager.initializeBrowser();
         bookingPage = new BookingPage(testManager);
     }
 
@@ -43,11 +45,11 @@ public class BookingStepDefinitions {
 
     @Then("the test should complete successfully")
     public void theTestShouldCompleteSuccessfully() throws Exception {
-        bookingPage.takeScreenshot("booking_test_result");
+        // No assertions needed
     }
 
     @After
-    public void tearDown() throws Exception {
-        testManager.closeBrowser();
+    public void tearDown() {
+        browser.close();
     }
 }
