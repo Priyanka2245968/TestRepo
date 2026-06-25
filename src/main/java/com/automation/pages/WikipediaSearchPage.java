@@ -46,4 +46,8 @@ public class WikipediaSearchPage {
     public void verifyHtmlArticle() {
         assertThat(page).hasTitle("HTML - Wikipedia");
     }
+
+    public Page getPage() {
+        return page;
+    }
 }
