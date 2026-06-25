@@ -18,6 +18,7 @@ public class WikipediaSearchPage {
     private final Locator searchButton = page.locator("button[type='submit']");
     private final Locator htmlLink = page.locator("a[href='/wiki/HTML']");
     private final Locator searchResults = page.locator(".mw-search-results");
+    private final Locator noSearchResults = page.locator(".mw-search-nonefound");
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org/");
@@ -32,6 +33,10 @@ public class WikipediaSearchPage {
     public void verifySearchResults(String term) {
         assertThat(page).hasTitle(term + " - Search results - Wikipedia");
         assertThat(searchResults).isVisible();
+    }
+
+    public void verifyNoSearchResults() {
+        assertThat(noSearchResults).isVisible();
     }
 
     public void clickHtmlLink() {
