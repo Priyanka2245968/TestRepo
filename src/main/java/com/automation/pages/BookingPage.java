@@ -21,7 +21,7 @@ public class BookingPage {
 
     public BookingPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
-        this.apiContext = testManager.getPlaywrightContext().request();
+        this.apiContext = testManager.getContext().request();
     }
 
     public void createBooking() {
@@ -37,7 +37,7 @@ public class BookingPage {
         body.put("bookingdates", dates);
         body.put("additionalneeds", "Breakfast");
 
-        APIResponse response = apiContext.post(baseUrl + "/booking", com.microsoft.playwright.APIRequest.newContext(body));
+        APIResponse response = apiContext.post(baseUrl + "/booking", body);
         assertEquals(response.statusText(), "OK", "Failed to create booking");
 
         JsonNode responseBody = response.json();
