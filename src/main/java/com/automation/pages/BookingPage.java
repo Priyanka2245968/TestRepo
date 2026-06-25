@@ -37,7 +37,7 @@ public class BookingPage {
         body.put("bookingdates", dates);
         body.put("additionalneeds", "Breakfast");
 
-        APIResponse response = apiContext.post(baseUrl + "/booking", body);
+        APIResponse response = apiContext.post(baseUrl + "/booking", com.microsoft.playwright.playwright.APIRequestContext.create().setData(body).build());
         assertEquals(response.statusText(), "OK", "Failed to create booking");
 
         JsonNode responseBody = response.json();
