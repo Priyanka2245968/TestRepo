@@ -1,0 +1,35 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run API Tests (api.xml)",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "-Papi",
+                "clean",
+                "test"
+            ],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the TestNG API suite (src/test/resources/api.xml) via the Maven 'api' profile."
+        },
+        {
+            "label": "Run UI Tests (testng.xml)",
+            "type": "shell",
+            "command": "mvn",
+            "args": [
+                "clean",
+                "test",
+                "-Dheadless=true",
+                "-Dbrowser=chromium"
+            ],
+            "group": "test",
+            "problemMatcher": [],
+            "detail": "Runs the default TestNG UI suite (src/test/resources/testng.xml)."
+        }
+    ]
+}
