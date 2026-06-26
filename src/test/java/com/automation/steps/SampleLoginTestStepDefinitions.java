@@ -1,72 +1,43 @@
 package com.automation.steps;
 
-import io.cucumber.java.en.*;
-import io.cucumber.java.Before;
-import io.cucumber.java.After;
 import com.automation.base.BaseTestManager;
 import com.automation.pages.SampleLoginTestPage;
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
 
 public class SampleLoginTestStepDefinitions {
     private BaseTestManager testManager;
-    private SampleLoginTestPage pageObject;
-    
+    private SampleLoginTestPage sampleLoginPage;
+
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         testManager = new BaseTestManager();
         testManager.initializeBrowser();
-        pageObject = new SampleLoginTestPage(testManager);
+        sampleLoginPage = new SampleLoginTestPage(testManager);
     }
-    
+
     @Given("I navigate to {string}")
-    public void iNavigateTo(String url) {
-        System.out.println("🌐 Navigating to: " + url);
-        testManager.getPage().navigate(url);
-    }
-    
-    @When("I execute step 1: {string}")
-    public void executeStep1(String stepDescription) {
-        System.out.println("📍 Step 1: " + stepDescription);
-        pageObject.step1();
+    public void iNavigateTo(String url) throws Exception {
+        sampleLoginPage.step1();
     }
 
-    @When("I execute step 2: {string}")
-    public void executeStep2(String stepDescription) {
-        System.out.println("📍 Step 2: " + stepDescription);
-        pageObject.step2();
+    @When("I execute step {int}: {string}")
+    public void executeStep(int stepNum, String description) throws Exception {
+        switch (stepNum) {
+            case 1 -> sampleLoginPage.step1();
+            case 2 -> sampleLoginPage.step2();
+            case 3 -> sampleLoginPage.step3();
+            case 4 -> sampleLoginPage.step4();
+            case 5 -> sampleLoginPage.step5();
+            case 6 -> sampleLoginPage.step6();
+            default -> throw new Exception("Invalid step number: " + stepNum);
+        }
     }
 
-    @When("I execute step 3: {string}")
-    public void executeStep3(String stepDescription) {
-        System.out.println("📍 Step 3: " + stepDescription);
-        pageObject.step3();
-    }
-
-    @When("I execute step 4: {string}")
-    public void executeStep4(String stepDescription) {
-        System.out.println("📍 Step 4: " + stepDescription);
-        pageObject.step4();
-    }
-
-    @When("I execute step 5: {string}")
-    public void executeStep5(String stepDescription) {
-        System.out.println("📍 Step 5: " + stepDescription);
-        pageObject.step5();
-    }
-
-    @When("I execute step 6: {string}")
-    public void executeStep6(String stepDescription) {
-        System.out.println("📍 Step 6: " + stepDescription);
-        pageObject.step6();
-    }
-
-    @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() {
-        pageObject.takeScreenshot("bdd-screenshot-" + System.currentTimeMillis() + ".png");
-        System.out.println("✅ Test completed successfully!");
-    }
-    
     @After
-    public void tearDown() {
+    public void tearDown() throws Exception {
         testManager.closeBrowser();
     }
 }
