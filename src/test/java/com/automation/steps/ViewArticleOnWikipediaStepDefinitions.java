@@ -21,7 +21,7 @@ public class ViewArticleOnWikipediaStepDefinitions {
 
     @Given("I navigate to {string}")
     public void iNavigateTo(String url) throws Exception {
-        testManager.getPage().navigate(url);
+        pageObject.step1("Navigate to " + url);
     }
 
     @When("I execute step {}: {string}")
@@ -37,8 +37,8 @@ public class ViewArticleOnWikipediaStepDefinitions {
     }
 
     @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() throws Exception {
-        pageObject.takeScreenshot("ViewArticleOnWikipedia");
+    public void theTestShouldCompleteSuccessfully() {
+        // No assertions needed for this step
     }
 
     @After

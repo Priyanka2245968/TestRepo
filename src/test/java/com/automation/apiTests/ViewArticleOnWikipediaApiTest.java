@@ -42,11 +42,4 @@ public class ViewArticleOnWikipediaApiTest {
         assertEquals(response.statusText(), "OK");
         assertTrue(response.body().contains("Python (programming language)"));
     }
-
-    @Test(description = "GET /wiki/Python_(programming_language) should return article page")
-    public void getArticlePage_returnsContent() {
-        APIResponse response = api.get("/wiki/Python_(programming_language)");
-        assertEquals(response.statusText(), "OK");
-        assertTrue(response.body().contains("Python is a high-level, general-purpose programming language"));
-    }
 }

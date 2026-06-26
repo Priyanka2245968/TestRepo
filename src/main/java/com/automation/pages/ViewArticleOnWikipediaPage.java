@@ -19,26 +19,24 @@ public class ViewArticleOnWikipediaPage {
 
     public void step2(String description) {
         System.out.println("📍 " + description);
-        page.locator("input[name='search']").first().fill("Python programming language");
+        Locator searchField = page.locator("input[name='search']");
+        searchField.fill("Python programming language");
+        searchField.press("Enter");
     }
 
     public void step3(String description) {
         System.out.println("📍 " + description);
-        page.locator("button[type='submit']").first().click();
+        Locator articleLink = page.locator("a:has-text(\"Python (programming language)\")");
+        articleLink.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void step4(String description) {
         System.out.println("📍 " + description);
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        page.locator("a:has-text('Python (programming language)')").first().click();
+        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get("article_python.png")));
     }
 
     public void step5(String description) {
         System.out.println("📍 " + description);
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-    }
-
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(filename + ".png"));
     }
 }
