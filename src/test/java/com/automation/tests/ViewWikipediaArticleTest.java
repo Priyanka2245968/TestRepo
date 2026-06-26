@@ -14,7 +14,7 @@ public class ViewWikipediaArticleTest extends BaseTestManager {
         page.navigateToWikipedia();
         page.searchForTopic("Photosynthesis");
         page.openArticle("Photosynthesis");
-        assertThat(page.page).hasTitle(containsString("Photosynthesis"));
+        assertThat(page.getPage()).hasTitle("Photosynthesis");
         page.takeScreenshot("photosynthesis_article.png");
     }
 }
