@@ -8,6 +8,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -33,7 +34,7 @@ public class ViewArticleOnWikipediaApiTest {
     public void getHomepage_returnsSuccessfully() {
         APIResponse response = api.get("/");
         assertEquals(response.statusText(), "OK");
-        assertTrue(new String(response.body()).contains("Search Wikipedia"));
+        assertThat(response.body()).containsText("Search Wikipedia");
     }
 
     @Test(description = "GET /?search=Python+programming+language should return search results")

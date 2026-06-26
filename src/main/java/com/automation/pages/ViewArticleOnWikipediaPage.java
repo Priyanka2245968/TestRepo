@@ -5,6 +5,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class ViewArticleOnWikipediaPage {
     private Page page;
 
@@ -26,13 +28,15 @@ public class ViewArticleOnWikipediaPage {
 
     public void step3(String description) {
         System.out.println("📍 " + description);
-        Locator articleLink = page.locator("a:has-text(\"Python (programming language)\")");
+        Locator articleLink = page.locator("a:has-text(\"Python (programming language)\")")
+            .waitFor(new Locator.WaitForOptions().setTimeout(10000));
         articleLink.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void step4(String description) {
         System.out.println("📍 " + description);
+        assertThat(page).hasTitle("Python (programming language) - Wikipedia");
         page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get("article_python.png")));
     }
 

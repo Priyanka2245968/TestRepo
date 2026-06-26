@@ -19,26 +19,24 @@ public class ViewArticleOnWikipediaStepDefinitions {
         pageObject = new ViewArticleOnWikipediaPage(testManager);
     }
 
-    @Given("I navigate to {string}")
-    public void iNavigateTo(String url) throws Exception {
-        pageObject.step1("Navigate to " + url);
+    @Given("I navigate to Wikipedia")
+    public void iNavigateToWikipedia() throws Exception {
+        pageObject.step1("Navigate to https://www.wikipedia.org/");
     }
 
-    @When("I execute step {}: {string}")
-    public void executeStep(int stepNum, String description) throws Exception {
-        switch (stepNum) {
-            case 1 -> pageObject.step1(description);
-            case 2 -> pageObject.step2(description);
-            case 3 -> pageObject.step3(description);
-            case 4 -> pageObject.step4(description);
-            case 5 -> pageObject.step5(description);
-            default -> throw new Exception("Invalid step number: " + stepNum);
-        }
+    @When("I search for {string}")
+    public void iSearchFor(String topic) throws Exception {
+        pageObject.step2("Search for " + topic);
     }
 
-    @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() {
-        // No assertions needed for this step
+    @When("I click on the {string} article link")
+    public void iClickOnTheArticleLink(String articleTitle) throws Exception {
+        pageObject.step3("Click on the " + articleTitle + " article link");
+    }
+
+    @Then("the {string} article page should load successfully")
+    public void theArticlePageShouldLoadSuccessfully(String articleTitle) throws Exception {
+        pageObject.step4("Verify the " + articleTitle + " article page loaded successfully");
     }
 
     @After
