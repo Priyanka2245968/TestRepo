@@ -7,6 +7,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.testng.Assert;
 
 public class WikipediaArticleStepDefinitions {
     private BaseTestManager testManager;
@@ -24,26 +25,30 @@ public class WikipediaArticleStepDefinitions {
         testManager.getPage().navigate(url);
     }
 
-    @When("I execute step {int}: {string}")
-    public void executeStep(int stepNum, String description) throws Exception {
-        switch (stepNum) {
-            case 1 -> pageObject.navigateToWikipedia();
-            case 2 -> pageObject.searchForArticle("Python programming language");
-            case 3 -> pageObject.clickSearchButton();
-            case 4 -> pageObject.verifySearchResults("Python programming language");
-            case 5 -> pageObject.clickFirstResult();
-            case 6 -> pageObject.verifyArticleLoaded("Python (programming language)");
-            default -> throw new Exception("Invalid step number: " + stepNum);
-        }
+    @When("I search for {string} on Wikipedia")
+    public void iSearchForOnWikipedia(String query) {
+        pageObject.navigateToWikipedia();
+        pageObject.searchForArticle(query);
+        pageObject.clickSearchButton();
     }
 
-    @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() throws Exception {
-        pageObject.takeScreenshot("wikipedia_article.png");
+    @Then("I should see search results for {string}")
+    public void iShouldSeeSearchResultsFor(String query) {
+        pageObject.verifySearchResults(query);
+    }
+
+    @When("I click the first search result")
+    public void iClickTheFirstSearchResult() {
+        pageObject.clickFirstResult();
+    }
+
+    @Then("I should see the article {string} loaded")
+    public void iShouldSeeTheArticleLoaded(String expectedTitle) {
+        pageObject.verifyArticleLoaded(expectedTitle);
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         testManager.closeBrowser();
     }
 }
