@@ -17,12 +17,14 @@ public class WikipediaArticlePage {
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org/");
         page.waitForLoadState(LoadState.NETWORKIDLE);
+        assertThat(page.locator("#searchInput")).isVisible();
     }
 
     public void searchForTerm(String term) {
-        page.locator("#searchInput").fill(term);
-        page.locator("#searchButton").click();
+        page.locator("input[name='search']").fill(term);
+        page.locator("button[type='submit']").click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
+        assertThat(page.locator(".mw-search-results")).isVisible();
     }
 
     public void clickTopSearchResult() {

@@ -41,7 +41,7 @@ public class WikipediaArticleStepDefinitions {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         testManager.closeBrowser();
     }
 }
