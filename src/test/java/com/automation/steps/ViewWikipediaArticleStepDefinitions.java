@@ -8,6 +8,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.Map;
+
 public class ViewWikipediaArticleStepDefinitions {
     private BaseTestManager testManager;
     private WikipediaArticlePage pageObject;
@@ -21,16 +23,17 @@ public class ViewWikipediaArticleStepDefinitions {
 
     @Given("I navigate to {string}")
     public void iNavigateTo(String url) throws Exception {
-        testManager.getPage().navigate(url);
+        pageObject.navigateToWikipedia();
     }
 
-    @When("I execute step {int}: {string}")
-    public void executeStep(int stepNum, String desc) throws Exception {
-        switch (stepNum) {
-            case 1 -> pageObject.navigateToWikipedia();
-            case 2 -> pageObject.searchForArticle("Python programming language");
-            case 3 -> pageObject.openArticle("Python (programming language)");
-            case 4 -> pageObject.verifyArticleLoaded();
+    @When("I perform the following steps:")
+    public void performSteps(Map<Integer, String> steps) throws Exception {
+        for (Map.Entry<Integer, String> step : steps.entrySet()) {
+            switch (step.getKey()) {
+                case 1 -> pageObject.searchForArticle("Python programming language");
+                case 2 -> pageObject.openArticle("Python (programming language)");
+                case 3 -> pageObject.verifyArticleLoaded("Python (programming language) - Wikipedia");
+            }
         }
     }
 

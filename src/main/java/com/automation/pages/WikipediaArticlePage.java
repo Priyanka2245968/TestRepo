@@ -27,9 +27,9 @@ public class WikipediaArticlePage {
         page.locator("//a[contains(@title, '" + articleTitle + "')]").first().click();
     }
 
-    public void verifyArticleLoaded() {
+    public void verifyArticleLoaded(String expectedTitle) {
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(page).hasTitle("Python (programming language) - Wikipedia");
+        assertThat(page).hasTitle(expectedTitle);
     }
 
     public void takeScreenshot(String filename) {
