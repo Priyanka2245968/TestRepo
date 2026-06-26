@@ -33,13 +33,13 @@ public class ViewArticleOnWikipediaApiTest {
     public void getHomepage_returnsSuccessfully() {
         APIResponse response = api.get("/");
         assertEquals(response.statusText(), "OK");
-        assertTrue(response.body().contains("Search Wikipedia"));
+        assertTrue(new String(response.body()).contains("Search Wikipedia"));
     }
 
     @Test(description = "GET /?search=Python+programming+language should return search results")
     public void searchForTopic_returnsResults() {
         APIResponse response = api.get("/?search=Python+programming+language");
         assertEquals(response.statusText(), "OK");
-        assertTrue(response.body().contains("Python (programming language)"));
+        assertTrue(new String(response.body()).contains("Python (programming language)"));
     }
 }
