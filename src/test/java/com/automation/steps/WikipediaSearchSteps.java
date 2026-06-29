@@ -42,6 +42,6 @@ public class WikipediaSearchSteps {
 
     @Then("I should see no search results")
     public void verifyNoSearchResults() {
-        assertTrue(wikipediaPage.getPage().locator("div.mw-search-nonefound").isVisible());
+        assertTrue(wikipediaPage.page.locator("div.mw-search-nonefound").isVisible());
     }
 }
