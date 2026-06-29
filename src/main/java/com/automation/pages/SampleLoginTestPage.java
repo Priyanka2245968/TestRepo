@@ -15,34 +15,34 @@ public class SampleLoginTestPage {
     }
     
     public void step1() {
-        System.out.println("📍 Navigate to https://www.google.com");
+        System.out.println("\ud83d\udccd Navigate to https://www.google.com");
         page.navigate("https://www.google.com");
     }
 
     public void step2() {
-        System.out.println("📍 navigate to Google homepage");
+        System.out.println("\ud83d\udccd navigate to Google homepage");
         page.navigate("https://www.google.com");
     }
 
     public void step3() {
-        System.out.println("📍 verify Google logo is visible");
+        System.out.println("\ud83d\udccd verify Google logo is visible");
         page.waitForLoadState(LoadState.NETWORKIDLE);
         assertThat(page.locator("//img[@alt='Google'], //img[contains(@src, 'logo')], //img[contains(@alt, 'logo')]")
                 .first()).isVisible();
     }
 
     public void step4() {
-        System.out.println("📍 verify search box is present");
+        System.out.println("\ud83d\udccd verify search box is present");
         assertThat(page.locator("textarea[name=\"q\"], input[name=\"q\"]").first()).isVisible();
     }
 
     public void step5() {
-        System.out.println("📍 enter \"baby doll\" in the search box");
+        System.out.println("\ud83d\udccd enter \"baby doll\" in the search box");
         page.locator("textarea[name=\"q\"], input[name=\"q\"]").first().fill("baby doll");
     }
 
     public void step6() {
-        System.out.println("📍 click on the search box");
+        System.out.println("\ud83d\udccd click on the search box");
         page.locator("input[type=\"submit\"][name=\"btnK\"], button[type=\"submit\"]").first().click();
     }
 
