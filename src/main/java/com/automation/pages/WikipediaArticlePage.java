@@ -15,7 +15,7 @@ public class WikipediaArticlePage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("input[name='search']");
         this.searchButton = page.locator("button[type='submit']");
-        this.photosynthesisLink = page.locator("a:has-text('Photosynthesis')");
+        this.photosynthesisLink = page.locator("a[href='/wiki/Photosynthesis']");
     }
 
     public void navigateToWikipedia() {
@@ -31,7 +31,7 @@ public class WikipediaArticlePage {
 
     public void viewArticle() {
         photosynthesisLink.waitFor(new Locator.WaitForOptions().setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE));
-        photosynthesisLink.first().click();
+        photosynthesisLink.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
