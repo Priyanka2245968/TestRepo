@@ -30,6 +30,7 @@ public class WikipediaArticlePage {
     }
 
     public void viewArticle() {
+        photosynthesisLink.waitFor(new Locator.WaitForOptions().setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE));
         photosynthesisLink.first().click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
