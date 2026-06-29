@@ -5,8 +5,7 @@ import com.automation.base.BaseTestManager;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
 
 public class WikipediaSearchSteps {
     private final BaseTestManager testManager;
@@ -34,6 +33,6 @@ public class WikipediaSearchSteps {
 
     @Then("I should see the Python article page")
     public void verifyPythonArticlePage() {
-        assertThat(testManager.getPage()).hasURL("https://en.wikipedia.org/wiki/Python_(programming_language)");
+        PlaywrightAssertions.assertThat(testManager.getPage()).hasTitle("Python (programming language) - Wikipedia");
     }
 }

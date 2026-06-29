@@ -13,7 +13,7 @@ public class WikipediaSearchPage {
     }
 
     private final Locator searchInput = page.locator("#searchInput");
-    private final Locator searchButton = page.locator("button[type='submit']");
+    private final Locator searchButton = page.locator("#searchButton");
     private final Locator pythonLink = page.locator("#vector-main-menu-dropdown-checkbox");
 
     public void navigateToWikipedia() {
