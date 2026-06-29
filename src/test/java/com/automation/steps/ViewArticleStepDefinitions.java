@@ -8,6 +8,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class ViewArticleStepDefinitions {
     private BaseTestManager testManager;
     private WikipediaArticlePage pageObject;
@@ -19,33 +21,30 @@ public class ViewArticleStepDefinitions {
         pageObject = new WikipediaArticlePage(testManager);
     }
 
-    @Given("I navigate to {string}")
-    public void iNavigateTo(String url) throws Exception {
-        testManager.getPage().navigate(url);
+    @Given("I navigate to Wikipedia")
+    public void iNavigateToWikipedia() {
+        pageObject.navigateToWikipedia();
     }
 
-    @When("I execute step {int}: {string}")
-    public void executeStep(int stepNum, String desc) throws Exception {
-        switch (stepNum) {
-            case 1:
-                pageObject.navigateToWikipedia();
-                break;
-            case 2:
-                pageObject.searchForTerm("Photosynthesis");
-                break;
-            case 3:
-                pageObject.viewArticle();
-                break;
-        }
+    @When("I search for {string}")
+    public void iSearchFor(String term) {
+        pageObject.searchForTerm(term);
     }
 
-    @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() throws Exception {
-        pageObject.takeScreenshot("photosynthesis_article.png");
+    @When("I view the article")
+    public void iViewTheArticle() {
+        pageObject.viewArticle();
+    }
+
+    @Then("the article {string} should be displayed")
+    public void theArticleShouldBeDisplayed(String title) {
+        assertThat(testManager.getPage()).hasURL("https://en.wikipedia.org/wiki/" + title);
+        assertThat(testManager.getPage()).hasTitle(title + " - Wikipedia");
+        pageObject.takeScreenshot(title.replace(" ", "_") + "_article.png");
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         testManager.closeBrowser();
     }
 }

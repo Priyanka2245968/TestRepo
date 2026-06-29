@@ -14,6 +14,7 @@ public class ViewArticleTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForTerm("Photosynthesis");
         pageObject.viewArticle();
+        assertThat(page).hasURL("https://en.wikipedia.org/wiki/Photosynthesis");
         assertThat(page).hasTitle("Photosynthesis - Wikipedia");
         pageObject.takeScreenshot("photosynthesis_article.png");
     }
