@@ -15,7 +15,7 @@ public class WikipediaArticlePage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("input[name='search']");
         this.searchButton = page.locator("button[type='submit']");
-        this.photosynthesisLink = page.locator("a:has-text('Photosynthesis')").first();
+        this.photosynthesisLink = page.locator("a:has-text('Photosynthesis')");
     }
 
     public void navigateToWikipedia() {
@@ -30,7 +30,7 @@ public class WikipediaArticlePage {
     }
 
     public void viewArticle() {
-        photosynthesisLink.click();
+        photosynthesisLink.first().click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
