@@ -3,7 +3,6 @@ package com.automation.apiTests;
 import com.automation.base.BaseTestManager;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.microsoft.playwright.APIRequest;
 import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import org.testng.Assert;
@@ -21,7 +20,7 @@ public class BookingApiTest extends BaseTestManager {
 
     @BeforeClass(alwaysRun = true)
     public void setUp() {
-        apiContext = context.newContext().request();
+        apiContext = context.request();
         objectMapper = new ObjectMapper();
     }
 
@@ -42,9 +41,7 @@ public class BookingApiTest extends BaseTestManager {
         payload.put("bookingdates", Map.of("checkin", "2023-06-01", "checkout", "2023-06-05"));
         payload.put("additionalneeds", "Breakfast");
 
-        APIRequest request = apiContext.newRequest()
-                .post(BASE_URL + "/booking", playwright -> playwright.data(objectMapper.writeValueAsString(payload)));
-        APIResponse response = request.get();
+        APIResponse response = apiContext.post(BASE_URL + "/booking", playwright -> playwright.data(objectMapper.writeValueAsString(payload)));
         int statusCode = response.statusCode();
         JsonNode responseBody = objectMapper.readTree(response.body());
 
