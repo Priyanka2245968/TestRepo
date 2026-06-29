@@ -14,14 +14,14 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BookingApiTest {
+public class BookingApiTest extends BaseTestManager {
     private static final String BASE_URL = "https://restful-booker.herokuapp.com";
     private APIRequestContext apiContext;
     private ObjectMapper objectMapper;
 
     @BeforeClass(alwaysRun = true)
     public void setUp() {
-        apiContext = BaseTestManager.getApiRequestContext();
+        apiContext = getApiRequestContext();
         objectMapper = new ObjectMapper();
     }
 
