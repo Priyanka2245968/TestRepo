@@ -21,7 +21,7 @@ public class BookingApiTest extends BaseTestManager {
 
     @BeforeClass(alwaysRun = true)
     public void setUp() {
-        apiContext = context.request();
+        apiContext = context.newContext().request();
         objectMapper = new ObjectMapper();
     }
 
