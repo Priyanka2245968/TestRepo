@@ -21,7 +21,7 @@ public class BookingApiTest extends BaseTestManager {
 
     @BeforeClass(alwaysRun = true)
     public void setUp() {
-        apiContext = getApiRequestContext();
+        apiContext = context.request();
         objectMapper = new ObjectMapper();
     }
 
@@ -42,7 +42,8 @@ public class BookingApiTest extends BaseTestManager {
         payload.put("bookingdates", Map.of("checkin", "2023-06-01", "checkout", "2023-06-05"));
         payload.put("additionalneeds", "Breakfast");
 
-        APIRequest request = apiContext.post(BASE_URL + "/booking", playwright -> playwright.data(objectMapper.writeValueAsString(payload)));
+        APIRequest request = apiContext.newRequest()
+                .post(BASE_URL + "/booking", playwright -> playwright.data(objectMapper.writeValueAsString(payload)));
         APIResponse response = request.get();
         int statusCode = response.statusCode();
         JsonNode responseBody = objectMapper.readTree(response.body());
