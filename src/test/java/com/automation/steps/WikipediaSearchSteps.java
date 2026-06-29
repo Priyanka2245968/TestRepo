@@ -6,10 +6,10 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import static org.testng.Assert.assertTrue;
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class WikipediaSearchSteps {
-    private WikipediaSearchPage wikipediaPage;
+    private final WikipediaSearchPage wikipediaPage;
 
     public WikipediaSearchSteps(BaseTestManager testManager) {
         this.wikipediaPage = new WikipediaSearchPage(testManager);
@@ -42,6 +42,6 @@ public class WikipediaSearchSteps {
 
     @Then("I should see no search results")
     public void verifyNoSearchResults() {
-        assertTrue(wikipediaPage.page.locator("div.mw-search-nonefound").isVisible());
+        assertThat(wikipediaPage.page.locator("div.mw-search-nonefound")).isVisible();
     }
 }

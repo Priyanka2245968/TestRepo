@@ -8,7 +8,7 @@ import com.microsoft.playwright.options.LoadState;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class WikipediaSearchPage {
-    private Page page;
+    private final Page page;
 
     public WikipediaSearchPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
