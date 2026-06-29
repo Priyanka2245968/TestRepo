@@ -6,7 +6,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
 public class WikipediaArticlePage {
-    private Page page;
+    private final Page page;
     private final Locator searchInput;
     private final Locator searchButton;
     private final Locator photosynthesisLink;
@@ -15,7 +15,7 @@ public class WikipediaArticlePage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("input[name='search']");
         this.searchButton = page.locator("button[type='submit']");
-        this.photosynthesisLink = page.locator("a:has-text('Photosynthesis')");
+        this.photosynthesisLink = page.locator("a:has-text('Photosynthesis')").first();
     }
 
     public void navigateToWikipedia() {
