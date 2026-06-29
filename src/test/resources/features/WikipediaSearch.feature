@@ -11,9 +11,9 @@ Feature: Wikipedia Search
   Scenario: Empty search field
     Given I navigate to Wikipedia
     When I search for ""
-    Then I should see search results
+    Then I should see no search results
 
-  Scenario: Maximum search length
+  Scenario: Long search term
     Given I navigate to Wikipedia
     When I search for "A string of 500 characters"
     Then I should see search results

@@ -14,9 +14,9 @@ public class WikipediaSearchPage {
         this.page = testManager.getPage();
     }
 
-    private final Locator searchInput = page.locator("#searchInput");
+    private final Locator searchInput = page.locator("input[name='search']");
     private final Locator searchButton = page.locator("button[type='submit']");
-    private final Locator firstSearchResult = page.locator("a[href='/wiki/Main_Page']");
+    private final Locator firstSearchResult = page.locator("div.mw-search-results li.mw-search-result:first-child a");
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org");
@@ -30,6 +30,7 @@ public class WikipediaSearchPage {
 
     public void verifySearchResultsLoaded() {
         assertThat(page).hasURL("https://en.wikipedia.org/wiki/Special:Search");
+        assertThat(page.locator("div.mw-search-results")).isVisible();
     }
 
     public void clickFirstSearchResult() {
@@ -38,5 +39,6 @@ public class WikipediaSearchPage {
 
     public void verifyArticlePageLoaded(String articleTitle) {
         assertThat(page).hasURL("https://en.wikipedia.org/wiki/" + articleTitle);
+        assertThat(page.locator("h1#firstHeading")).containsText(articleTitle);
     }
 }
