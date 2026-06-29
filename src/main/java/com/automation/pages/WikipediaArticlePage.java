@@ -15,7 +15,7 @@ public class WikipediaArticlePage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("input[name='search']");
         this.searchButton = page.locator("button[type='submit']");
-        this.photosynthesisLink = page.locator("a[href='/wiki/Photosynthesis']");
+        this.photosynthesisLink = page.locator("a[href='/wiki/Photosynthesis']").first();
     }
 
     public void navigateToWikipedia() {
