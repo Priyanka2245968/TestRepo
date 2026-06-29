@@ -33,9 +33,4 @@ public class SampleLoginTestStepDefinitions {
             default -> throw new IllegalArgumentException("Invalid step number: " + stepNumber);
         }
     }
-
-    @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() {
-        // No action needed, this is a placeholder step
-    }
 }
