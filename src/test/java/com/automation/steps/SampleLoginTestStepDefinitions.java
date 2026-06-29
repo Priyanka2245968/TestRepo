@@ -5,8 +5,6 @@ import com.automation.base.BaseTestManager;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-
 public class SampleLoginTestStepDefinitions {
     private final BaseTestManager testManager;
     private final SampleLoginTestPage loginPage;
