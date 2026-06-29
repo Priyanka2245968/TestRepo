@@ -6,19 +6,22 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
 public class WikipediaSearchPage {
-    private final Page page;
+    private Page page;
 
     public WikipediaSearchPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
     }
 
-    private final Locator searchInput = page.locator("#searchInput");
-    private final Locator searchButton = page.locator("#searchButton");
-    private final Locator pythonLink = page.locator("#vector-main-menu-dropdown-checkbox");
+    private Locator searchInput;
+    private Locator searchButton;
+    private Locator pythonLink;
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org");
         page.waitForLoadState(LoadState.NETWORKIDLE);
+        searchInput = page.locator("#searchInput");
+        searchButton = page.locator("#searchButton");
+        pythonLink = page.locator("#vector-main-menu-dropdown-checkbox");
     }
 
     public void searchForTerm(String term) {
