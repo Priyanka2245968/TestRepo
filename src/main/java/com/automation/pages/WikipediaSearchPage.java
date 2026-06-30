@@ -7,13 +7,14 @@ import com.microsoft.playwright.options.LoadState;
 
 public class WikipediaSearchPage {
     private final Page page;
+    private final Locator searchButton;
+    private final Locator searchField;
 
     public WikipediaSearchPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
+        this.searchButton = page.locator("button[type='submit']");
+        this.searchField = page.locator("#ooui-php-1");
     }
-
-    private final Locator searchButton = page.locator("button[type='submit']");
-    private final Locator searchField = page.locator("#ooui-php-1");
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org");
