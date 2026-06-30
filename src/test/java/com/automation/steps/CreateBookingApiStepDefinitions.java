@@ -24,7 +24,6 @@ public class CreateBookingApiStepDefinitions {
 
     public CreateBookingApiStepDefinitions() {
         baseTestManager = new BaseTestManager();
-        baseTestManager.initializePlaywrightContext();
         objectMapper = new ObjectMapper();
     }
 
