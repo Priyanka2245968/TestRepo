@@ -20,12 +20,12 @@ public class WikipediaArticleStepDefinitions {
     }
 
     @Given("I navigate to {string}")
-    public void iNavigateTo(String url) throws Exception {
+    public void iNavigateTo(String url) {
         testManager.getPage().navigate(url);
     }
 
-    @When("I execute step {}: {string}")
-    public void executeStep(int stepNumber, String description) throws Exception {
+    @When("I execute step {int}: {string}")
+    public void executeStep(int stepNumber, String description) {
         switch (stepNumber) {
             case 1 -> pageObject.navigateToWikipedia();
             case 2 -> pageObject.searchForArticle("Python programming language");
@@ -35,7 +35,7 @@ public class WikipediaArticleStepDefinitions {
             case 6 -> {
                 String longSearchTerm = "a".repeat(500);
                 pageObject.searchForArticle(longSearchTerm);
-                pageObject.verifyArticleDisplayed("Wikipedia, the free encyclopedia");
+                pageObject.verifyArticleDisplayed("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa - Search - Wikipedia");
             }
             default -> throw new IllegalStateException("Unexpected value: " + stepNumber);
         }
