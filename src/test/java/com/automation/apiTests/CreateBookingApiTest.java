@@ -3,6 +3,7 @@ package com.automation.apiTests;
 import com.automation.base.BaseTestManager;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.microsoft.playwright.APIResponse;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -21,13 +22,11 @@ public class CreateBookingApiTest extends BaseTestManager {
 
     @BeforeClass(alwaysRun = true)
     public void setUp() {
-        initializePlaywrightContext();
         objectMapper = new ObjectMapper();
     }
 
     @AfterClass(alwaysRun = true)
     public void tearDown() {
-        closePlaywrightContext();
     }
 
     @Test(description = "BOK-25-TC-01 - Positive — Create a new booking with valid payload")
@@ -43,17 +42,18 @@ public class CreateBookingApiTest extends BaseTestManager {
         payload.put("bookingdates", bookingDates);
         payload.put("additionalneeds", "Breakfast");
 
-        JsonNode response = sendPostRequest(BASE_URL + "/booking", payload);
+        APIResponse response = apiContext.post(BASE_URL + "/booking", payload);
+        JsonNode responseJson = new ObjectMapper().readTree(response.text());
 
-        assertNotNull(response);
-        assertTrue(response.has("bookingid"));
-        assertEquals(response.get("booking").get("firstname").asText(), "Swarup");
-        assertEquals(response.get("booking").get("lastname").asText(), "Roy");
-        assertEquals(response.get("booking").get("totalprice").asInt(), 12000);
-        assertTrue(response.get("booking").get("depositpaid").asBoolean());
-        assertEquals(response.get("booking").get("bookingdates").get("checkin").asText(), "2026-07-10");
-        assertEquals(response.get("booking").get("bookingdates").get("checkout").asText(), "2026-07-12");
-        assertEquals(response.get("booking").get("additionalneeds").asText(), "Breakfast");
+        assertNotNull(responseJson);
+        assertTrue(responseJson.has("bookingid"));
+        assertEquals(responseJson.get("booking").get("firstname").asText(), "Swarup");
+        assertEquals(responseJson.get("booking").get("lastname").asText(), "Roy");
+        assertEquals(responseJson.get("booking").get("totalprice").asInt(), 12000);
+        assertTrue(responseJson.get("booking").get("depositpaid").asBoolean());
+        assertEquals(responseJson.get("booking").get("bookingdates").get("checkin").asText(), "2026-07-10");
+        assertEquals(responseJson.get("booking").get("bookingdates").get("checkout").asText(), "2026-07-12");
+        assertEquals(responseJson.get("booking").get("additionalneeds").asText(), "Breakfast");
     }
 
     // Add more test cases as needed

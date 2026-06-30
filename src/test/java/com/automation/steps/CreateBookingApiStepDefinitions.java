@@ -22,13 +22,11 @@ public class CreateBookingApiStepDefinitions extends BaseTestManager {
     private JsonNode response;
 
     public CreateBookingApiStepDefinitions() {
-        initializePlaywrightContext();
         objectMapper = new ObjectMapper();
     }
 
     @After
     public void tearDown() {
-        closePlaywrightContext();
     }
 
     @Given("I navigate to {string}")
@@ -53,7 +51,7 @@ public class CreateBookingApiStepDefinitions extends BaseTestManager {
                 }
             }
         }
-        response = sendPostRequest("https://restful-booker.herokuapp.com" + endpoint, payload);
+        response = new ObjectMapper().readTree(apiContext.post("https://restful-booker.herokuapp.com" + endpoint, payload).text());
     }
 
     @Then("the response should have a {string} field")
