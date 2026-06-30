@@ -17,7 +17,6 @@ public class WikipediaSearchPage {
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org");
-        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void clickSearchButton() {
