@@ -1,12 +1,14 @@
 package com.automation.pages;
 
-import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 import com.automation.base.BaseTestManager;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class SampleLoginTestPage {
-    private Page page;
+    private final Page page;
     
     public SampleLoginTestPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
@@ -24,16 +26,13 @@ public class SampleLoginTestPage {
 
     public void step3() {
         System.out.println("📍 verify Google logo is visible");
-        // Wait for page to load completely
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        // Use a more flexible selector for Google logo
-        page.locator("//img[@alt='Google'], //img[contains(@src, 'logo')], //img[contains(@alt, 'logo')]").first()
-            .waitFor(new Locator.WaitForOptions().setTimeout(10000));
+        assertThat(page.locator("//img[@alt='Google'], //img[contains(@src, 'logo')], //img[contains(@alt, 'logo')]").first()).isVisible();
     }
 
     public void step4() {
         System.out.println("📍 verify search box is present");
-        page.locator("textarea[name=\"q\"], input[name=\"q\"]").first().waitFor(new Locator.WaitForOptions().setTimeout(5000));
+        assertThat(page.locator("textarea[name=\"q\"], input[name=\"q\"]").first()).isVisible();
     }
 
     public void step5() {
@@ -48,6 +47,5 @@ public class SampleLoginTestPage {
 
     public void takeScreenshot(String filename) {
         page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
-        System.out.println("📸 Screenshot saved: " + filename);
     }
 }
