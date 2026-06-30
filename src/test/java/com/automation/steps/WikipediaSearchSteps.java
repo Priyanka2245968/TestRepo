@@ -39,11 +39,11 @@ public class WikipediaSearchSteps {
 
     @Then("the search results page should be displayed")
     public void verifySearchResultsPage() {
-        assertThat(wikipediaPage.page).hasTitle("Search results");
+        assertThat(wikipediaPage.getPage()).hasTitle("Search results");
     }
 
     @Then("an error message {string} should be displayed")
     public void verifyErrorMessage(String expectedErrorMessage) {
-        assertThat(wikipediaPage.page).containsText(expectedErrorMessage);
+        assertThat(wikipediaPage.getPage()).containsText(expectedErrorMessage);
     }
 }
