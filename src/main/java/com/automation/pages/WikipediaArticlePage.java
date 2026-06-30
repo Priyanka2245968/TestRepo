@@ -26,7 +26,7 @@ public class WikipediaArticlePage {
     }
 
     public void openArticle(String articleTitle) {
-        page.locator("a:has-text('" + articleTitle + "')").click();
+        page.locator("a:has-text('" + articleTitle + "')").first().click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
