@@ -4,6 +4,8 @@ import com.automation.base.BaseTestManager;
 import com.automation.pages.WikipediaArticlePage;
 import org.testng.annotations.Test;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class WikipediaArticleTest extends BaseTestManager {
 
     @Test
@@ -21,8 +23,8 @@ public class WikipediaArticleTest extends BaseTestManager {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("");
-        assertThat(page).hasTitle("Wikipedia, the free encyclopedia");
-        page.takeScreenshot("negative-invalid-input-empty-search-field.png");
+        assertThat(getPage()).hasTitle("Wikipedia, the free encyclopedia");
+        pageObject.takeScreenshot("negative-invalid-input-empty-search-field.png");
     }
 
     @Test
@@ -31,7 +33,7 @@ public class WikipediaArticleTest extends BaseTestManager {
         String longSearchTerm = "a".repeat(500);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle(longSearchTerm);
-        assertThat(page).hasTitle("Search results - Wikipedia");
-        page.takeScreenshot("negative-boundary-maximum-search-length.png");
+        assertThat(getPage()).hasTitle("Wikipedia, the free encyclopedia");
+        pageObject.takeScreenshot("negative-boundary-maximum-search-length.png");
     }
 }

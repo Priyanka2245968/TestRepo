@@ -35,17 +35,14 @@ public class WikipediaArticleStepDefinitions {
             case 6 -> {
                 String longSearchTerm = "a".repeat(500);
                 pageObject.searchForArticle(longSearchTerm);
+                pageObject.verifyArticleDisplayed("Wikipedia, the free encyclopedia");
             }
+            default -> throw new IllegalStateException("Unexpected value: " + stepNumber);
         }
     }
 
-    @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() throws Exception {
-        pageObject.takeScreenshot("test-completed.png");
-    }
-
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         testManager.closeBrowser();
     }
 }
