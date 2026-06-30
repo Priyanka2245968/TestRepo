@@ -17,22 +17,18 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-public class CreateBookingApiStepDefinitions {
-    private BaseTestManager baseTestManager;
+public class CreateBookingApiStepDefinitions extends BaseTestManager {
     private ObjectMapper objectMapper;
     private JsonNode response;
 
     public CreateBookingApiStepDefinitions() {
-        baseTestManager = new BaseTestManager();
-        baseTestManager.initializePlaywrightContext();
+        initializePlaywrightContext();
         objectMapper = new ObjectMapper();
     }
 
     @After
     public void tearDown() {
-        if (baseTestManager != null) {
-            baseTestManager.closePlaywrightContext();
-        }
+        closePlaywrightContext();
     }
 
     @Given("I navigate to {string}")
@@ -57,7 +53,7 @@ public class CreateBookingApiStepDefinitions {
                 }
             }
         }
-        response = baseTestManager.sendPostRequest("https://restful-booker.herokuapp.com" + endpoint, payload);
+        response = sendPostRequest("https://restful-booker.herokuapp.com" + endpoint, payload);
     }
 
     @Then("the response should have a {string} field")

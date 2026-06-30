@@ -15,23 +15,19 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
-public class CreateBookingApiTest {
+public class CreateBookingApiTest extends BaseTestManager {
     private static final String BASE_URL = "https://restful-booker.herokuapp.com";
-    private BaseTestManager baseTestManager;
     private ObjectMapper objectMapper;
 
     @BeforeClass(alwaysRun = true)
     public void setUp() {
-        baseTestManager = new BaseTestManager();
-        baseTestManager.initializePlaywrightContext();
+        initializePlaywrightContext();
         objectMapper = new ObjectMapper();
     }
 
     @AfterClass(alwaysRun = true)
     public void tearDown() {
-        if (baseTestManager != null) {
-            baseTestManager.closePlaywrightContext();
-        }
+        closePlaywrightContext();
     }
 
     @Test(description = "BOK-25-TC-01 - Positive — Create a new booking with valid payload")
@@ -47,7 +43,7 @@ public class CreateBookingApiTest {
         payload.put("bookingdates", bookingDates);
         payload.put("additionalneeds", "Breakfast");
 
-        JsonNode response = baseTestManager.sendPostRequest(BASE_URL + "/booking", payload);
+        JsonNode response = sendPostRequest(BASE_URL + "/booking", payload);
 
         assertNotNull(response);
         assertTrue(response.has("bookingid"));
