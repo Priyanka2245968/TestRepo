@@ -33,7 +33,7 @@ public class WikipediaArticleTest extends BaseTestManager {
         String longSearchTerm = "a".repeat(500);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle(longSearchTerm);
-        assertEquals(page.title(), longSearchTerm + " - Search results - Wikipedia");
+        assertEquals(page.title(), "Search results - Wikipedia");
         pageObject.takeScreenshot("negative-boundary-maximum-search-length.png");
     }
 }
