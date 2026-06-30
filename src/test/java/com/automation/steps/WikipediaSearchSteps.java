@@ -7,8 +7,10 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.testng.Assert;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class WikipediaSearchSteps {
-    private WikipediaSearchPage wikipediaPage;
+    private final WikipediaSearchPage wikipediaPage;
 
     public WikipediaSearchSteps(BaseTestManager testManager) {
         this.wikipediaPage = new WikipediaSearchPage(testManager);
@@ -37,13 +39,11 @@ public class WikipediaSearchSteps {
 
     @Then("the search results page should be displayed")
     public void verifySearchResultsPage() {
-        // Add appropriate assertions to verify the search results page
-        Assert.assertTrue(true, "Search results page verification is missing");
+        assertThat(wikipediaPage.page).hasTitle("Search results");
     }
 
     @Then("an error message {string} should be displayed")
     public void verifyErrorMessage(String expectedErrorMessage) {
-        // Add code to retrieve and assert the error message
-        Assert.fail("Error message verification is not implemented");
+        assertThat(wikipediaPage.page).containsText(expectedErrorMessage);
     }
 }

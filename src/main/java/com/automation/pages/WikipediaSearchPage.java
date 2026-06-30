@@ -6,7 +6,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
 public class WikipediaSearchPage {
-    private Page page;
+    private final Page page;
 
     public WikipediaSearchPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
