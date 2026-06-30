@@ -26,12 +26,12 @@ public class WikipediaArticlePage {
     }
 
     public void openArticle(String articleTitle) {
-        page.locator("#vector-main-menu-dropdown-checkbox").click();
+        page.locator("a:has-text('" + articleTitle + "')").click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
-    public void verifyArticleDisplayed(String articleTitle) {
-        assertThat(page).hasTitle(articleTitle);
+    public void verifyArticleDisplayed(String expectedTitle) {
+        assertThat(page).hasTitle(expectedTitle);
     }
 
     public void takeScreenshot(String filename) {

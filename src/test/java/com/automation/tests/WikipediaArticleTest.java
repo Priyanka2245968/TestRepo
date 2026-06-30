@@ -23,7 +23,7 @@ public class WikipediaArticleTest extends BaseTestManager {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("");
-        assertThat(getPage()).hasTitle("Wikipedia, the free encyclopedia");
+        assertThat(page).hasTitle("Wikipedia, the free encyclopedia");
         pageObject.takeScreenshot("negative-invalid-input-empty-search-field.png");
     }
 
@@ -33,7 +33,7 @@ public class WikipediaArticleTest extends BaseTestManager {
         String longSearchTerm = "a".repeat(500);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle(longSearchTerm);
-        assertThat(getPage()).hasTitle("Wikipedia, the free encyclopedia");
+        assertThat(page).hasTitle("Wikipedia, the free encyclopedia");
         pageObject.takeScreenshot("negative-boundary-maximum-search-length.png");
     }
 }
