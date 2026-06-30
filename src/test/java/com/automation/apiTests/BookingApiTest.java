@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class BookingApiTest {
@@ -47,10 +48,9 @@ public class BookingApiTest {
         payload.put("additionalneeds", "Breakfast");
 
         APIResponse response = apiUtils.post("/booking", payload);
-        int statusCode = response.statusCode();
-        JsonNode jsonResponse = response.json();
+        JsonNode jsonResponse = apiUtils.asJson(response);
 
-        assertEquals(statusCode, 200, "Failed to create a booking");
+        assertTrue(response.statusText().contains("OK"), "Failed to create a booking");
         assertTrue(jsonResponse.has("bookingid"), "Response does not contain a booking ID");
         LOGGER.info("Booking created successfully with ID: {}", jsonResponse.get("bookingid").asText());
     }
