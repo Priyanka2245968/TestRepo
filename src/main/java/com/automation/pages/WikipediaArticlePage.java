@@ -27,7 +27,7 @@ public class WikipediaArticlePage {
     }
 
     public Locator getSearchResultLink(String term) {
-        return page.locator(String.format("a:has-text('%s')", term));
+        return page.locator(String.format("//a[contains(text(), '%s')]", term));
     }
 
     public void takeScreenshot(String filename) {
