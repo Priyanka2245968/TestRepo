@@ -6,15 +6,15 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
 public class ViewArticleOnWikipediaPage {
-    private final Page page;
-    private final Locator searchInput;
-    private final Locator searchButton;
-    private final Locator photosynthesisLink;
-    private final Locator searchErrorMessage;
+    private Page page;
+    private Locator searchInput;
+    private Locator searchButton;
+    private Locator photosynthesisLink;
+    private Locator searchErrorMessage;
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
-        this.searchInput = page.locator("input[name='search']");
+        this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
         this.photosynthesisLink = page.locator("a[href='/wiki/Photosynthesis']");
         this.searchErrorMessage = page.locator(".mw-search-errorbox");
@@ -31,6 +31,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void clickSearchButton() {
         searchButton.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void clickPhotosynthesisLink() {
@@ -38,8 +39,11 @@ public class ViewArticleOnWikipediaPage {
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
-    public Page getPage() {
-        return page;
+    public String getSearchErrorMessage() {
+        return searchErrorMessage.textContent();
     }
 
-    public Locator getSearchErrorM
+    public void takeScreenshot(String fileName) {
+        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(fileName)));
+    }
+}
