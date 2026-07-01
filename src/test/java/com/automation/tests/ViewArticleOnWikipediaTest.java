@@ -5,7 +5,7 @@ import com.automation.pages.WikipediaArticlePage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.testng.Assert.assertTrue;
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
@@ -17,10 +17,10 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle(searchTerm);
-        pageObject.openArticle();
+        pageObject.openArticle(searchTerm.replace(" ", "_"));
         pageObject.takeScreenshot(screenshotFilename);
 
-        assertThat(page).hasURL("*" + searchTerm.replace(" ", "_") + "*");
+        assertTrue(page.url().contains(searchTerm.replace(" ", "_")));
     }
 
     @AfterMethod(alwaysRun = true)

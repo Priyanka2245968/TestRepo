@@ -12,13 +12,11 @@ public class WikipediaArticlePage {
     private final Page page;
     private final Locator searchInput;
     private final Locator searchButton;
-    private final Locator articleLink;
 
     public WikipediaArticlePage(BaseTestManager testManager) {
         this.page = testManager.getPage();
-        this.searchInput = page.locator("input[name='search']");
+        this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.articleLink = page.locator(".mw-search-results a").first();
     }
 
     public void navigateToWikipedia() {
@@ -31,7 +29,9 @@ public class WikipediaArticlePage {
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
-    public void openArticle() {
+    public void openArticle(String articleTitle) {
+        Locator articleLink = page.locator("#vector-main-menu-dropdown-checkbox").first();
+        articleLink.waitFor(new Locator.WaitForOptions().setTimeout(10000));
         articleLink.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
