@@ -31,7 +31,7 @@ public class WikipediaArticlePage {
     }
 
     public boolean isArticlePageLoaded(String articleTitle) {
-        return page.url().contains(articleTitle.replaceAll("\\s", "_")) && page.locator("h1").textContent().contains(articleTitle);
+        return page.url().contains(articleTitle.replaceAll(" ", "_")) && page.locator("h1").textContent().contains(articleTitle);
     }
 
     public Locator getTableOfContentsLocator() {

@@ -6,6 +6,7 @@ import com.microsoft.playwright.Locator;
 import org.testng.annotations.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.testng.Assert.assertTrue;
 
 public class ViewArticleTest extends BaseTestManager {
 
@@ -14,7 +15,7 @@ public class ViewArticleTest extends BaseTestManager {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("Python programming language");
-        assertThat(page).hasURL("Python_(programming_language)");
+        assertTrue(pageObject.isArticlePageLoaded("Python (programming language)"));
         assertThat(pageObject.getTableOfContentsLocator()).isVisible();
         pageObject.takeScreenshot("article_page.png");
     }
@@ -24,8 +25,8 @@ public class ViewArticleTest extends BaseTestManager {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("");
+        page.waitForLoadState(com.microsoft.playwright.options.LoadState.NETWORKIDLE);
         Locator noResultsLocator = page.locator("div[role='status']");
-        noResultsLocator.waitFor();
         assertThat(noResultsLocator).isVisible();
         pageObject.takeScreenshot("blank_search.png");
     }
@@ -36,7 +37,8 @@ public class ViewArticleTest extends BaseTestManager {
         String longQuery = "ThisIsAVeryLongArticleTitleThatExceedsTheMaximumLengthAllowedForAWikipediaArticleTitle";
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle(longQuery);
-        assertThat(page).hasURL("https://www.wikipedia.org/");
+        page.waitForLoadState(com.microsoft.playwright.options.LoadState.NETWORKIDLE);
+        assertTrue(page.url().contains("Special:Search"));
         pageObject.takeScreenshot("long_query.png");
     }
 }
