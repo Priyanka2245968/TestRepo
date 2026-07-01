@@ -2,7 +2,6 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticleOnWikipediaPage;
-import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
@@ -33,4 +32,12 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
     @Test
     public void testBoundaryLongSearchQuery() {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
-   
+        pageObject.navigateToWikipediaHomepage();
+        String longQuery = "This is a very long search query that exceeds the maximum length allowed by Wikipedia's search engine. It should trigger an error or truncation behavior.";
+        pageObject.searchForTopic(longQuery);
+        pageObject.clickSearchButton();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+        // Add assertions for the expected behavior with a long search query
+        pageObject.takeScreenshot("long-search-query.png");
+    }
+}
