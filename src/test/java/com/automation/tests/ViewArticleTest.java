@@ -14,7 +14,7 @@ public class ViewArticleTest extends BaseTestManager {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("Python programming language");
-        assertThat(pageObject.page).hasURL("Python_(programming_language)");
+        assertThat(page).hasURL("Python_(programming_language)");
         assertThat(pageObject.getTableOfContentsLocator()).isVisible();
         pageObject.takeScreenshot("article_page.png");
     }
@@ -36,7 +36,7 @@ public class ViewArticleTest extends BaseTestManager {
         String longQuery = "ThisIsAVeryLongArticleTitleThatExceedsTheMaximumLengthAllowedForAWikipediaArticleTitle";
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle(longQuery);
-        assertThat(pageObject.page).hasURL("https://www.wikipedia.org/");
+        assertThat(page).hasURL("https://www.wikipedia.org/");
         pageObject.takeScreenshot("long_query.png");
     }
 }

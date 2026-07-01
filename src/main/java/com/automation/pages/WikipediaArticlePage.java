@@ -10,11 +10,13 @@ import java.nio.file.Paths;
 public class WikipediaArticlePage {
     private final Page page;
     private final Locator searchInput, searchButton;
+    private final Locator tableOfContentsLocator;
 
     public WikipediaArticlePage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
+        this.tableOfContentsLocator = page.locator(".toc");
     }
 
     public void navigateToWikipedia() {
@@ -32,8 +34,12 @@ public class WikipediaArticlePage {
         return page.url().contains(articleTitle.replaceAll("\\s", "_")) && page.locator("h1").textContent().contains(articleTitle);
     }
 
+    public Locator getTableOfContentsLocator() {
+        return tableOfContentsLocator;
+    }
+
     public boolean isTableOfContentsVisible() {
-        return page.locator(".toc").isVisible();
+        return tableOfContentsLocator.isVisible();
     }
 
     public void takeScreenshot(String filename) {
