@@ -8,8 +8,6 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import static org.testng.Assert.assertTrue;
-
 public class ViewArticleOnWikipediaStepDefinitions {
     private BaseTestManager testManager;
     private WikipediaArticlePage pageObject;
@@ -38,7 +36,7 @@ public class ViewArticleOnWikipediaStepDefinitions {
 
     @Then("the test should complete successfully")
     public void theTestShouldCompleteSuccessfully() throws Exception {
-        assertTrue(pageObject.isArticleDisplayed("Python (programming language)"));
+        pageObject.verifyArticleDisplayed("Python (programming language)");
     }
 
     @After
