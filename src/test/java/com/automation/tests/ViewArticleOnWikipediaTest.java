@@ -2,6 +2,7 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticleOnWikipediaPage;
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
@@ -25,7 +26,8 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipediaHomepage();
         pageObject.clickSearchButton();
-        assertThat(pageObject.getSearchErrorMessage()).containsText("Please enter a search term");
+        Locator searchErrorMessage = pageObject.getSearchErrorMessage();
+        assertThat(searchErrorMessage).containsText("Please enter a search term");
         pageObject.takeScreenshot("search-empty-error.png");
     }
 
