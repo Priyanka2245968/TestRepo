@@ -13,7 +13,7 @@ public class WikipediaArticlePage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("input[name='search']");
         this.searchButton = page.locator("button[type='submit']");
-        this.articleLink = page.locator("#ca-view");
+        this.articleLink = page.locator("a[title='View the content page']");
     }
 
     public void navigateToWikipedia() {
@@ -33,7 +33,7 @@ public class WikipediaArticlePage {
     }
 
     public boolean isArticleDisplayed(String title) {
-        return page.locator("h1").textContent().contains(title);
+        return page.locator("h1").textContent().equals(title);
     }
 
     public void takeScreenshot(String filename) {

@@ -7,6 +7,7 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.testng.Assert;
 
 public class ViewArticleOnWikipediaStepDefinitions {
     private BaseTestManager testManager;
@@ -37,11 +38,10 @@ public class ViewArticleOnWikipediaStepDefinitions {
     @Then("the test should complete successfully")
     public void theTestShouldCompleteSuccessfully() throws Exception {
         Assert.assertTrue(pageObject.isArticleDisplayed("Python (programming language)"));
-        pageObject.takeScreenshot("wikipedia-article.png");
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         testManager.closeBrowser();
     }
 }
