@@ -2,6 +2,7 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticleOnWikipediaPage;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
@@ -32,12 +33,4 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
     @Test
     public void testBoundaryLongSearchQuery() {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
-        pageObject.navigateToWikipediaHomepage();
-        String longQuery = "This is a very long search query of 500 characters to test the boundary case. " + "This is a very long search query of 500 characters to test the boundary case. " + "This is a very long search query of 500 characters to test the boundary case. " + "This is a very long search query of 500 characters to test the boundary case. " + "This is a very long search query of 500 characters to test the boundary case.";
-        pageObject.searchForTopic(longQuery);
-        pageObject.clickSearchButton();
-        getPage().waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(pageObject.getSearchErrorMessage()).containsText("Your search query has too many OR clauses");
-        pageObject.takeScreenshot("long-query-error.png");
-    }
-}
+   

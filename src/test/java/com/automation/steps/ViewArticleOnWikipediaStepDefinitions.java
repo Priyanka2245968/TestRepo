@@ -8,6 +8,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class ViewArticleOnWikipediaStepDefinitions {
     private BaseTestManager testManager;
     private ViewArticleOnWikipediaPage pageObject;
@@ -29,19 +31,22 @@ public class ViewArticleOnWikipediaStepDefinitions {
         switch (stepNumber) {
             case 1 -> pageObject.searchForTopic("Photosynthesis");
             case 2 -> pageObject.clickSearchButton();
-            case 3 -> pageObject.clickPhotosynthesisLink();
+            case 3 -> {
+                pageObject.clickPhotosynthesisLink();
+                assertThat(testManager.getPage()).hasTitle("Photosynthesis - Wikipedia");
+            }
             // Add more cases for additional steps
             default -> throw new IllegalArgumentException("Invalid step number: " + stepNumber);
         }
     }
 
     @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() throws Exception {
-        pageObject.takeScreenshot("test-completed.png");
+    public void theTestShouldCompleteSuccessfully() {
+        // No additional assertions needed
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         testManager.closeBrowser();
     }
 }

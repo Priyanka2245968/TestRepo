@@ -14,7 +14,7 @@ public class ViewArticleOnWikipediaPage {
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
-        this.searchInput = page.locator("#searchInput");
+        this.searchInput = page.locator("input[name='search']");
         this.searchButton = page.locator("button[type='submit']");
         this.photosynthesisLink = page.locator("a[href='/wiki/Photosynthesis']");
         this.searchErrorMessage = page.locator(".mw-search-errorbox");
@@ -42,11 +42,4 @@ public class ViewArticleOnWikipediaPage {
         return page;
     }
 
-    public Locator getSearchErrorMessage() {
-        return searchErrorMessage;
-    }
-
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
-    }
-}
+    public Locator getSearchErrorM
