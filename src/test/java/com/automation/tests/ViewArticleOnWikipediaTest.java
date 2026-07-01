@@ -5,8 +5,6 @@ import com.automation.pages.WikipediaArticlePage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
-
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
     @Test
@@ -18,9 +16,8 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle(searchTerm);
         pageObject.openArticle(searchTerm.replace(" ", "_"));
+        pageObject.verifyArticleOpened(searchTerm);
         pageObject.takeScreenshot(screenshotFilename);
-
-        assertTrue(page.url().contains(searchTerm.replace(" ", "_")));
     }
 
     @AfterMethod(alwaysRun = true)

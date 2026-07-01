@@ -7,6 +7,8 @@ import com.microsoft.playwright.options.LoadState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class WikipediaArticlePage {
     private static final Logger logger = LoggerFactory.getLogger(WikipediaArticlePage.class);
     private final Page page;
@@ -21,6 +23,7 @@ public class WikipediaArticlePage {
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org/");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void searchForArticle(String searchTerm) {
@@ -34,6 +37,10 @@ public class WikipediaArticlePage {
         articleLink.waitFor(new Locator.WaitForOptions().setTimeout(10000));
         articleLink.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
+    }
+
+    public void verifyArticleOpened(String articleTitle) {
+        assertThat(page).hasURL("*" + articleTitle.replace(" ", "_") + "*");
     }
 
     public void takeScreenshot(String filename) {
