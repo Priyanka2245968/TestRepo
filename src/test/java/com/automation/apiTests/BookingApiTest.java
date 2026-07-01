@@ -93,5 +93,7 @@ public class BookingApiTest {
         int bookingId = 1;
         APIResponse response = api.delete("/booking/" + bookingId);
         assertTrue(response.status() >= 200 && response.status() < 300); // Assert success status class
+        JsonNode body = api.asJson(response);
+        assertTrue(body.get("deleted").asBoolean()); // Assert that the 'deleted' field is true
     }
 }
