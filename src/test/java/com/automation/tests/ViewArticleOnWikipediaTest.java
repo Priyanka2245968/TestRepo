@@ -25,6 +25,6 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
-        super.tearDown();
+        closeBrowser();
     }
 }
