@@ -2,8 +2,10 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.WikipediaArticlePage;
-import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
+
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
@@ -18,14 +20,11 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.openArticle();
         pageObject.takeScreenshot(screenshotFilename);
 
-        // Add assertions to verify the expected behavior
-        String currentUrl = getPage().url();
-        Assert.assertTrue(currentUrl.contains(searchTerm.replace(" ", "_")), "Article URL does not contain the search term");
+        assertThat(page).hasURL("*" + searchTerm.replace(" ", "_") + "*");
     }
 
-    @Override
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
-        // Add any cleanup or teardown steps here
         super.tearDown();
     }
 }
