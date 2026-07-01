@@ -20,8 +20,9 @@ public class ViewArticleOnWikipediaStepDefinitions {
     }
 
     @Given("I navigate to {string}")
-    public void iNavigateTo(String url) throws Exception {
+    public void iNavigateTo(String url) {
         testManager.getPage().navigate(url);
+        testManager.getPage().waitForLoadState(com.microsoft.playwright.options.LoadState.NETWORKIDLE);
     }
 
     @When("I execute step {int}: {string}")
@@ -35,8 +36,9 @@ public class ViewArticleOnWikipediaStepDefinitions {
     }
 
     @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() throws Exception {
+    public void theTestShouldCompleteSuccessfully() {
         pageObject.verifyArticleDisplayed("Python (programming language)");
+        pageObject.takeScreenshot("wikipedia-article.png");
     }
 
     @After

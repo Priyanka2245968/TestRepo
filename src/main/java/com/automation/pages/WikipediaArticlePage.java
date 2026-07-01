@@ -13,9 +13,9 @@ public class WikipediaArticlePage {
 
     public WikipediaArticlePage(BaseTestManager testManager) {
         this.page = testManager.getPage();
-        this.searchInput = page.locator("input[name='search']");
+        this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.articleLink = page.locator("a[title='View the content page']");
+        this.articleLink = page.locator("#vector-main-menu-dropdown-checkbox").first();
     }
 
     public void navigateToWikipedia() {
