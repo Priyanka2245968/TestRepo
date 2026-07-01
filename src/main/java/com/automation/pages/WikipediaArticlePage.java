@@ -5,6 +5,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class WikipediaArticlePage {
     private final Page page;
 
@@ -12,9 +14,9 @@ public class WikipediaArticlePage {
         this.page = testManager.getPage();
     }
 
-    private final Locator searchInput = page.locator("#searchInput");
-    private final Locator searchButton = page.locator("button[type='submit']");
-    private final Locator articleLink = page.locator("#vector-main-menu-dropdown-checkbox");
+    private final Locator searchInput = page.locator("[data-test-id='search-input']");
+    private final Locator searchButton = page.locator("[data-test-id='search-button']");
+    private final Locator articleLink = page.locator("[data-test-id='article-link']");
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org/");
@@ -34,7 +36,7 @@ public class WikipediaArticlePage {
 
     public void verifyArticlePageLoaded(String expectedTitle) {
         String actualTitle = page.title();
-        org.testng.Assert.assertEquals(actualTitle, expectedTitle);
+        assertThat(actualTitle).isEqualTo(expectedTitle);
     }
 
     public void takeScreenshot(String filename) {

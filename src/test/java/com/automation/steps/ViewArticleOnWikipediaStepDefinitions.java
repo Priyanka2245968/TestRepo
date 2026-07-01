@@ -19,28 +19,33 @@ public class ViewArticleOnWikipediaStepDefinitions {
         pageObject = new WikipediaArticlePage(testManager);
     }
 
-    @Given("I navigate to {string}")
-    public void iNavigateTo(String url) throws Exception {
-        testManager.getPage().navigate(url);
+    @Given("I am on the Wikipedia homepage")
+    public void iAmOnTheWikipediaHomepage() {
+        pageObject.navigateToWikipedia();
     }
 
-    @When("I execute step {int}: {string}")
-    public void executeStep(int stepNum, String description) throws Exception {
-        switch (stepNum) {
-            case 1 -> pageObject.navigateToWikipedia();
-            case 2 -> pageObject.searchForArticle("Python programming language");
-            case 3 -> pageObject.openArticle();
-            case 4 -> pageObject.verifyArticlePageLoaded("Python (programming language) - Wikipedia");
-        }
+    @When("I search for the article {string}")
+    public void iSearchForTheArticle(String articleName) {
+        pageObject.searchForArticle(articleName);
     }
 
-    @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() throws Exception {
-        pageObject.takeScreenshot("wikipedia-article-cucumber.png");
+    @When("I open the article")
+    public void iOpenTheArticle() {
+        pageObject.openArticle();
+    }
+
+    @Then("I should see the article {string}")
+    public void iShouldSeeTheArticle(String expectedTitle) {
+        pageObject.verifyArticlePageLoaded(expectedTitle);
+    }
+
+    @Then("I take a screenshot of the article page")
+    public void iTakeAScreenshotOfTheArticlePage() {
+        pageObject.takeScreenshot("wikipedia-article.png");
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         testManager.closeBrowser();
     }
 }
