@@ -34,8 +34,8 @@ public class WikipediaArticlePage {
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
-    public void verifyArticleDisplayed(String title) {
-        assertThat(page).hasTitle(title);
+    public void verifyArticleDisplayed() {
+        assertThat(page).hasTitle("Python (programming language)");
     }
 
     public void takeScreenshot(String filename) {
