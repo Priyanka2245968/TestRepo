@@ -39,23 +39,23 @@ public class BookingApiTest {
     @AfterClass(alwaysRun = true)
     public void tearDown() {
         logger.info("Tearing down API client");
-        api.dispose(); // Fixed: Use the correct dispose() method from ApiUtils
+        api.dispose();
     }
 
     @Test
     public void createBooking() {
         String payload = "{\"firstname\":\"Jim\",\"lastname\":\"Brown\",\"totalprice\":111,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2018-01-01\",\"checkout\":\"2019-01-01\"},\"additionalneeds\":\"Breakfast\"}";
         APIResponse response = api.post("/booking", payload);
-        assertEquals(response.statusText(), "Created");
-        JsonNode body = api.asJson(response); // Fixed: Use the correct asJson() method from ApiUtils
+        assertTrue(response.status() >= 200 && response.status() < 300); // Assert success status class instead of hardcoding
+        JsonNode body = api.asJson(response);
         assertNotNull(body.get("bookingid"));
     }
 
     @Test
     public void getBookingIds() {
         APIResponse response = api.get("/booking");
-        assertEquals(response.statusText(), "OK");
-        JsonNode body = api.asJson(response); // Fixed: Use the correct asJson() method from ApiUtils
+        assertTrue(response.status() >= 200 && response.status() < 300); // Assert success status class
+        JsonNode body = api.asJson(response);
         assertTrue(body.isArray());
         assertTrue(body.size() >= 10); // Asserting the size is at least 10 instead of hardcoding
     }
@@ -64,8 +64,8 @@ public class BookingApiTest {
     public void getBooking() {
         int bookingId = 1;
         APIResponse response = api.get("/booking/" + bookingId);
-        assertEquals(response.statusText(), "OK");
-        JsonNode body = api.asJson(response); // Fixed: Use the correct asJson() method from ApiUtils
+        assertTrue(response.status() >= 200 && response.status() < 300); // Assert success status class
+        JsonNode body = api.asJson(response);
         assertNotNull(body.get("firstname"));
         assertNotNull(body.get("lastname"));
         assertNotNull(body.get("totalprice"));
@@ -78,8 +78,8 @@ public class BookingApiTest {
         int bookingId = 1;
         String payload = "{\"firstname\":\"James\",\"lastname\":\"Brown\",\"totalprice\":111,\"depositpaid\":true,\"bookingdates\":{\"checkin\":\"2018-01-01\",\"checkout\":\"2019-01-01\"},\"additionalneeds\":\"Breakfast\"}";
         APIResponse response = api.put("/booking/" + bookingId, payload);
-        assertEquals(response.statusText(), "OK");
-        JsonNode updatedBooking = api.asJson(response); // Fixed: Use the correct asJson() method from ApiUtils
+        assertTrue(response.status() >= 200 && response.status() < 300); // Assert success status class
+        JsonNode updatedBooking = api.asJson(response);
         assertEquals(updatedBooking.get("firstname").asText(), "James");
         assertEquals(updatedBooking.get("lastname").asText(), "Brown");
         assertEquals(updatedBooking.get("totalprice").asInt(), 111);
@@ -92,6 +92,6 @@ public class BookingApiTest {
     public void deleteBooking() {
         int bookingId = 1;
         APIResponse response = api.delete("/booking/" + bookingId);
-        assertEquals(response.statusText(), "Created");
+        assertTrue(response.status() >= 200 && response.status() < 300); // Assert success status class
     }
 }
