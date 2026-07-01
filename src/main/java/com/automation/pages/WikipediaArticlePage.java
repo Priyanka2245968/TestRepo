@@ -19,6 +19,7 @@ public class WikipediaArticlePage {
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org/");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void searchForArticle(String query) {
