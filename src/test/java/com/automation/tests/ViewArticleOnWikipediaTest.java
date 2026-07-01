@@ -5,8 +5,6 @@ import com.automation.pages.WikipediaArticlePage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
-
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
     @Test
@@ -15,7 +13,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("Python programming language");
         pageObject.openArticle();
-        assertTrue(pageObject.isArticleDisplayed("Python (programming language)"));
+        pageObject.verifyArticleDisplayed("Python (programming language)");
         pageObject.takeScreenshot("wikipedia-article.png");
     }
 

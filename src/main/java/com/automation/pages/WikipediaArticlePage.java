@@ -5,6 +5,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class WikipediaArticlePage {
     private final Page page;
     private final Locator searchInput, searchButton, articleLink;
@@ -32,8 +34,8 @@ public class WikipediaArticlePage {
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
-    public boolean isArticleDisplayed(String title) {
-        return page.locator("h1").textContent().equals(title);
+    public void verifyArticleDisplayed(String title) {
+        assertThat(page).hasTitle(title);
     }
 
     public void takeScreenshot(String filename) {
