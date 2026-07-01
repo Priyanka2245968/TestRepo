@@ -40,7 +40,8 @@ public class WikipediaArticlePage {
     }
 
     public void verifyArticleOpened(String articleTitle) {
-        assertThat(page).hasURL("*" + articleTitle.replace(" ", "_") + "*");
+        String expectedUrl = "*" + articleTitle.replace(" ", "_") + "*";
+        assertThat(page).hasURL(expectedUrl);
     }
 
     public void takeScreenshot(String filename) {
