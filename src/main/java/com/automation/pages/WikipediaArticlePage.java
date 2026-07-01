@@ -4,8 +4,11 @@ import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WikipediaArticlePage {
+    private static final Logger logger = LoggerFactory.getLogger(WikipediaArticlePage.class);
     private final Page page;
     private final Locator searchInput;
     private final Locator searchButton;
@@ -34,6 +37,10 @@ public class WikipediaArticlePage {
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        try {
+            page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        } catch (Exception e) {
+            logger.error("Failed to take screenshot: {}", e.getMessage());
+        }
     }
 }
