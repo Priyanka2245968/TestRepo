@@ -2,6 +2,7 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.WikipediaArticlePage;
+import com.microsoft.playwright.Locator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
