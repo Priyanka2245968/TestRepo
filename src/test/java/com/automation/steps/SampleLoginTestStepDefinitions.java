@@ -14,11 +14,6 @@ public class SampleLoginTestStepDefinitions {
         this.loginPage = new SampleLoginTestPage(testManager);
     }
 
-    @Given("I navigate to {string}")
-    public void navigateToUrl(String url) {
-        testManager.getPage().navigate(url);
-    }
-
     @When("I execute step {int}: {string}")
     public void executeStep(int stepNumber, String stepDescription) {
         switch (stepNumber) {
