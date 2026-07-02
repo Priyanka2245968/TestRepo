@@ -5,6 +5,7 @@ import com.automation.base.BaseTestManager;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -35,5 +36,7 @@ public class WikipediaSteps {
     @Then("I should see the HTML table article page")
     public void verifyHtmlTableArticlePage() {
         assertThat(testManager.getPage()).hasTitle("HTML table - Wikipedia");
+        assertThat(testManager.getPage().locator("#toc")).isVisible();
+        assertThat(testManager.getPage().locator("#mw-content-text > div.mw-parser-output > table")).isVisible();
     }
 }

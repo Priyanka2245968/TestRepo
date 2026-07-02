@@ -11,9 +11,9 @@ public class WikipediaArticlePage {
         this.page = testManager.getPage();
     }
 
-    private final Locator searchInput = page.locator("#searchInput");
-    private final Locator searchButton = page.locator("button[type='submit']");
-    private final Locator htmlTableLink = page.locator("a[href='/wiki/Main_Page']");
+    private final Locator searchInput = page.locator("input[name='search']");
+    private final Locator searchButton = page.locator("button[type='submit'][data-testid='search-button']");
+    private final Locator htmlTableLink = page.locator("a[href='/wiki/HTML_table']");
 
     public void searchWikipedia(String query) {
         searchInput.fill(query);
