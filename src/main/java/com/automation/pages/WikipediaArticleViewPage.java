@@ -18,8 +18,8 @@ public class WikipediaArticleViewPage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.blankSearchErrorMessage = page.locator("//div[contains(@class,'mw-message-box')]");
-        this.noResultsMessage = page.locator("//div[contains(@class,'mw-search-nonefound')]");
+        this.blankSearchErrorMessage = page.locator(".mw-message-box");
+        this.noResultsMessage = page.locator(".mw-search-nonefound");
     }
 
     public void navigateToWikipedia() {
@@ -50,11 +50,7 @@ public class WikipediaArticleViewPage {
         return noResultsMessage;
     }
 
-    public void waitForNoResultsPage() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-    }
-
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
+    public void takeScreenshot(String fileName) {
+        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(Paths.get(fileName)));
     }
 }

@@ -20,13 +20,12 @@ public class ViewArticleOnWikipediaPage {
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
         this.searchResultsContainer = page.locator(".mw-search-results");
-        this.noResultsMessage = page.locator("//div[contains(@class,'mw-search-nonefound')]");
-        this.searchErrorMessage = page.locator("//div[contains(@class,'mw-message-box')]");
+        this.noResultsMessage = page.locator(".mw-search-nonefound");
+        this.searchErrorMessage = page.locator(".mw-message-box");
     }
 
     public void navigateToWikipediaHomepage() {
         page.navigate("https://www.wikipedia.org");
-        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void searchForTerm(String term) {
@@ -50,7 +49,7 @@ public class ViewArticleOnWikipediaPage {
         return searchErrorMessage;
     }
 
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
+    public void takeScreenshot(String fileName) {
+        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(Paths.get(fileName)));
     }
 }
