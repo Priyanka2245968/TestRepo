@@ -2,8 +2,6 @@ package com.automation.apiTests;
 
 import com.automation.utils.ApiUtils;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.microsoft.playwright.APIRequest;
-import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +22,6 @@ public class BookingApiTest {
     private static final String API_TOKEN = System.getProperty("apiToken", "");
 
     private ApiUtils api;
-    private APIRequestContext requestContext;
 
     @BeforeClass(alwaysRun = true)
     public void setUp() {
@@ -33,7 +30,6 @@ public class BookingApiTest {
             headers.put("Authorization", "Bearer " + API_TOKEN);
         }
         api = new ApiUtils(BASE_URL, headers);
-        requestContext = api.getRequestContext();
     }
 
     @AfterClass(alwaysRun = true)
@@ -51,12 +47,11 @@ public class BookingApiTest {
         body.put("bookingdates", Map.of("checkin", "2023-05-01", "checkout", "2023-05-05"));
         body.put("additionalneeds", "Breakfast");
 
-        APIRequest request = requestContext.post("/booking", APIRequest.bodyFromJson(body));
-        APIResponse response = request.raise();
+        APIResponse response = api.post("/booking", body);
 
         try {
             assertEquals(response.status(), 200, "Failed to create a new booking");
-            JsonNode responseBody = response.json();
+            JsonNode responseBody = api.asJson(response);
             assertTrue(responseBody.has("bookingid"), "Response does not contain a booking ID");
             logger.info("New booking created with ID: {}", responseBody.get("bookingid").asText());
         } catch (Exception e) {
