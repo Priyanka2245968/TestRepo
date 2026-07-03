@@ -6,6 +6,8 @@ import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import org.testng.annotations.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 
 public class ViewArticleTest extends BaseTestManager {
 
@@ -14,7 +16,7 @@ public class ViewArticleTest extends BaseTestManager {
         ViewArticlePage pageObject = new ViewArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("Baby Doll");
-        assertThat(pageObject.page.locator("#firstHeading")).containsText("Baby Doll");
+        assertEquals(pageObject.getArticleTitle(), "Baby Doll");
         pageObject.takeScreenshot("happy-path-primary-flow.png");
     }
 
@@ -23,7 +25,7 @@ public class ViewArticleTest extends BaseTestManager {
         ViewArticlePage pageObject = new ViewArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("!@#$%^&*()");
-        assertThat(pageObject.page.locator("#firstHeading")).not().containsText("!@#$%^&*()");
+        assertFalse(pageObject.getArticleTitle().contains("!@#$%^&*()"));
         pageObject.takeScreenshot("validation-invalid-input.png");
     }
 
@@ -33,7 +35,7 @@ public class ViewArticleTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         String longArticleName = "ThisIsAVeryLongArticleNameThatExceedsTheMaximumLengthAllowedForSearchQueries";
         pageObject.searchForArticle(longArticleName);
-        assertThat(pageObject.page.locator("#firstHeading")).not().containsText(longArticleName);
+        assertFalse(pageObject.getArticleTitle().contains(longArticleName));
         pageObject.takeScreenshot("boundary-edge-values.png");
     }
 }
