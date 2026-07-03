@@ -5,6 +5,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
+import java.nio.file.Paths;
+
 public class ViewArticlePage {
     private final Page page;
     private final Locator searchBox;
@@ -32,6 +34,6 @@ public class ViewArticlePage {
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
     }
 }
