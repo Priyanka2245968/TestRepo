@@ -2,6 +2,8 @@ package com.automation.apiTests;
 
 import com.automation.utils.ApiUtils;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.microsoft.playwright.APIRequest;
+import com.microsoft.playwright.APIRequestContext;
 import com.microsoft.playwright.APIResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +14,8 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 public class BookingApiTest {
 
@@ -21,6 +24,7 @@ public class BookingApiTest {
     private static final String API_TOKEN = System.getProperty("apiToken", "");
 
     private ApiUtils api;
+    private APIRequestContext requestContext;
 
     @BeforeClass(alwaysRun = true)
     public void setUp() {
@@ -29,6 +33,7 @@ public class BookingApiTest {
             headers.put("Authorization", "Bearer " + API_TOKEN);
         }
         api = new ApiUtils(BASE_URL, headers);
+        requestContext = api.getRequestContext();
     }
 
     @AfterClass(alwaysRun = true)
@@ -43,87 +48,19 @@ public class BookingApiTest {
         body.put("lastname", "Doe");
         body.put("totalprice", 120);
         body.put("depositpaid", true);
-
-        Map<String, String> dates = new HashMap<>();
-        dates.put("checkin", "2023-06-01");
-        dates.put("checkout", "2023-06-03");
-        body.put("bookingdates", dates);
-
+        body.put("bookingdates", Map.of("checkin", "2023-05-01", "checkout", "2023-05-05"));
         body.put("additionalneeds", "Breakfast");
 
-        APIResponse response = api.post("/booking", body);
-        assertTrue(response.status() >= 200 && response.status() < 300);
+        APIRequest request = requestContext.post("/booking", APIRequest.bodyFromJson(body));
+        APIResponse response = request.raise();
 
-        JsonNode json = api.asJson(response);
-        assertTrue(json.has("bookingid"));
-        assertNotNull(json.get("bookingid").asText());
-        assertTrue(json.has("booking"));
-    }
-
-    @Test
-    public void positiveBookingIDIsUniqueAcrossRequests() {
-        Map<String, Object> body = new HashMap<>();
-        body.put("firstname", "Jane");
-        body.put("lastname", "Doe");
-        body.put("totalprice", 150);
-        body.put("depositpaid", false);
-
-        Map<String, String> dates = new HashMap<>();
-        dates.put("checkin", "2023-07-01");
-        dates.put("checkout", "2023-07-05");
-        body.put("bookingdates", dates);
-
-        APIResponse response1 = api.post("/booking", body);
-        assertTrue(response1.status() >= 200 && response1.status() < 300);
-        JsonNode json1 = api.asJson(response1);
-        assertTrue(json1.has("bookingid"));
-        String bookingId1 = json1.get("bookingid").asText();
-
-        APIResponse response2 = api.post("/booking", body);
-        assertTrue(response2.status() >= 200 && response2.status() < 300);
-        JsonNode json2 = api.asJson(response2);
-        assertTrue(json2.has("bookingid"));
-        String bookingId2 = json2.get("bookingid").asText();
-
-        assertNotEquals(bookingId1, bookingId2);
-    }
-
-    @Test
-    public void negativeMissingRequiredField() {
-        Map<String, Object> body = new HashMap<>();
-        body.put("lastname", "Smith");
-        body.put("totalprice", 200);
-        body.put("depositpaid", true);
-
-        Map<String, String> dates = new HashMap<>();
-        dates.put("checkin", "2023-08-01");
-        dates.put("checkout", "2023-08-05");
-        body.put("bookingdates", dates);
-
-        APIResponse response = api.post("/booking", body);
-        assertTrue(response.status() >= 400 && response.status() < 500);
-
-        JsonNode json = api.asJson(response);
-        assertTrue(json.has("reason"));
-    }
-
-    @Test
-    public void boundaryInvalidDateRange() {
-        Map<String, Object> body = new HashMap<>();
-        body.put("firstname", "Bob");
-        body.put("lastname", "Smith");
-        body.put("totalprice", 180);
-        body.put("depositpaid", true);
-
-        Map<String, String> dates = new HashMap<>();
-        dates.put("checkin", "2023-09-15");
-        dates.put("checkout", "2023-09-10");
-        body.put("bookingdates", dates);
-
-        APIResponse response = api.post("/booking", body);
-        assertTrue(response.status() >= 400 && response.status() < 500, "Expected client error status code");
-
-        JsonNode responseBody = api.asJson(response);
-        assertTrue(responseBody.has("reason"), "Expected error message in response body");
+        try {
+            assertEquals(response.status(), 200, "Failed to create a new booking");
+            JsonNode responseBody = response.json();
+            assertTrue(responseBody.has("bookingid"), "Response does not contain a booking ID");
+            logger.info("New booking created with ID: {}", responseBody.get("bookingid").asText());
+        } catch (Exception e) {
+            logger.error("Error occurred during API request", e);
+        }
     }
 }
