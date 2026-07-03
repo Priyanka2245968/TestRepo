@@ -38,10 +38,6 @@ public class WikipediaArticleViewPage {
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
-    public Page getPage() {
-        return page;
-    }
-
     public Locator getBlankSearchErrorMessage() {
         return blankSearchErrorMessage;
     }
@@ -51,6 +47,6 @@ public class WikipediaArticleViewPage {
     }
 
     public void takeScreenshot(String fileName) {
-        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(Paths.get(fileName)));
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(fileName)));
     }
 }
