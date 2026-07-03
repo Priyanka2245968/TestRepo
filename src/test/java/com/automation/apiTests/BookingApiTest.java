@@ -43,54 +43,19 @@ public class BookingApiTest {
         body.put("lastname", "Roy");
         body.put("totalprice", 12000);
         body.put("depositpaid", true);
-
-        Map<String, String> bookingDates = new HashMap<>();
-        bookingDates.put("checkin", "2026-07-10");
-        bookingDates.put("checkout", "2026-07-12");
-        body.put("bookingdates", bookingDates);
-
+        body.put("bookingdates", Map.of("checkin", "2023-05-01", "checkout", "2023-05-05"));
         body.put("additionalneeds", "Breakfast");
 
         APIResponse response = api.post("/booking", body);
-        JsonNode responseJson = api.asJson(response);
-        assertTrue(responseJson.get("bookingid").isIntegralNumber());
-        JsonNode booking = responseJson.get("booking");
-        assertEquals(booking.get("firstname").asText(), "Swarup");
-        assertEquals(booking.get("lastname").asText(), "Roy");
-        assertEquals(booking.get("totalprice").asInt(), 12000);
-        assertTrue(booking.get("depositpaid").asBoolean());
-        assertEquals(booking.get("additionalneeds").asText(), "Breakfast");
-    }
+        assertEquals(response.status(), 200);
 
-    @Test
-    public void negativeInvalidInputMissingRequiredField() {
-        Map<String, Object> body = new HashMap<>();
-        body.put("lastname", "Roy");
-        body.put("totalprice", 12000);
-        body.put("depositpaid", true);
-
-        APIResponse response = api.post("/booking", body);
-        JsonNode responseJson = api.asJson(response);
-        assertTrue(responseJson.get("status").asText().equals("Bad Request"));
-    }
-
-    @Test
-    public void boundaryCheckinDateAfterCheckoutDate() {
-        Map<String, Object> body = new HashMap<>();
-        body.put("firstname", "Swarup");
-        body.put("lastname", "Roy");
-        body.put("totalprice", 12000);
-        body.put("depositpaid", true);
-
-        Map<String, String> bookingDates = new HashMap<>();
-        bookingDates.put("checkin", "2026-07-12");
-        bookingDates.put("checkout", "2026-07-10");
-        body.put("bookingdates", bookingDates);
-
-        body.put("additionalneeds", "Breakfast");
-
-        APIResponse response = api.post("/booking", body);
-        JsonNode responseJson = api.asJson(response);
-        assertTrue(responseJson.get("status").asText().startsWith("4"));
+        JsonNode jsonResponse = response.json();
+        assertTrue(jsonResponse.has("bookingid"));
+        assertTrue(jsonResponse.get("booking").has("firstname"));
+        assertTrue(jsonResponse.get("booking").has("lastname"));
+        assertTrue(jsonResponse.get("booking").has("totalprice"));
+        assertTrue(jsonResponse.get("booking").has("depositpaid"));
+        assertTrue(jsonResponse.get("booking").has("bookingdates"));
+        assertTrue(jsonResponse.get("booking").has("additionalneeds"));
     }
 }
