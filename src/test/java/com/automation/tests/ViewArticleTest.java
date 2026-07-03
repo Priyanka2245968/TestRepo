@@ -2,8 +2,10 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticlePage;
-import org.testng.Assert;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import org.testng.annotations.Test;
+
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class ViewArticleTest extends BaseTestManager {
 
@@ -12,8 +14,7 @@ public class ViewArticleTest extends BaseTestManager {
         ViewArticlePage pageObject = new ViewArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("Baby Doll");
-        String articleTitle = pageObject.getArticleTitle();
-        Assert.assertTrue(articleTitle.contains("Baby Doll"));
+        assertThat(pageObject.page.locator("#firstHeading")).containsText("Baby Doll");
         pageObject.takeScreenshot("happy-path-primary-flow.png");
     }
 
@@ -22,8 +23,7 @@ public class ViewArticleTest extends BaseTestManager {
         ViewArticlePage pageObject = new ViewArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("!@#$%^&*()");
-        String articleTitle = pageObject.getArticleTitle();
-        Assert.assertFalse(articleTitle.contains("!@#$%^&*()"));
+        assertThat(pageObject.page.locator("#firstHeading")).not().containsText("!@#$%^&*()");
         pageObject.takeScreenshot("validation-invalid-input.png");
     }
 
@@ -33,8 +33,7 @@ public class ViewArticleTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         String longArticleName = "ThisIsAVeryLongArticleNameThatExceedsTheMaximumLengthAllowedForSearchQueries";
         pageObject.searchForArticle(longArticleName);
-        String articleTitle = pageObject.getArticleTitle();
-        Assert.assertFalse(articleTitle.contains(longArticleName));
+        assertThat(pageObject.page.locator("#firstHeading")).not().containsText(longArticleName);
         pageObject.takeScreenshot("boundary-edge-values.png");
     }
 }

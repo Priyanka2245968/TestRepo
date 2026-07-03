@@ -8,7 +8,7 @@ import com.microsoft.playwright.options.LoadState;
 import java.nio.file.Paths;
 
 public class ViewArticlePage {
-    private final Page page;
+    public final Page page;
     private final Locator searchBox;
     private final Locator articleTitle;
 
