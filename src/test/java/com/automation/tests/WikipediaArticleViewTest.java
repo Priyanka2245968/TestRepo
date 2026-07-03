@@ -25,6 +25,7 @@ public class WikipediaArticleViewTest extends BaseTestManager {
         WikipediaArticleViewPage pageObject = new WikipediaArticleViewPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
+        pageObject.waitForBlankSearchErrorMessage();
         assertThat(pageObject.getBlankSearchErrorMessage()).isVisible();
         pageObject.takeScreenshot("wikipedia-blank-search-error.png");
     }
@@ -35,7 +36,7 @@ public class WikipediaArticleViewTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("This is a very long search query that should not return any results on Wikipedia");
         pageObject.clickSearchButton();
-        pageObject.waitForArticleLoad();
+        pageObject.waitForNoResultsMessage();
         assertThat(pageObject.getNoResultsMessage()).isVisible();
         pageObject.takeScreenshot("wikipedia-long-search-no-results.png");
     }

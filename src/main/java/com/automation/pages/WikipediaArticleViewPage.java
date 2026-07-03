@@ -38,6 +38,14 @@ public class WikipediaArticleViewPage {
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
+    public void waitForBlankSearchErrorMessage() {
+        blankSearchErrorMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+    }
+
+    public void waitForNoResultsMessage() {
+        noResultsMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+    }
+
     public Locator getBlankSearchErrorMessage() {
         return blankSearchErrorMessage;
     }

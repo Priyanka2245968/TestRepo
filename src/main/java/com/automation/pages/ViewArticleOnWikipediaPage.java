@@ -37,6 +37,14 @@ public class ViewArticleOnWikipediaPage {
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
+    public void waitForNoResultsMessage() {
+        noResultsMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+    }
+
+    public void waitForSearchErrorMessage() {
+        searchErrorMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+    }
+
     public Locator getSearchResultsContainer() {
         return searchResultsContainer;
     }

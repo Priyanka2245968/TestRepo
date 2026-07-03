@@ -24,7 +24,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipediaHomepage();
         pageObject.searchForTerm("");
-        pageObject.waitForSearchResults();
+        pageObject.waitForNoResultsMessage();
         assertThat(pageObject.getNoResultsMessage()).isVisible();
         pageObject.takeScreenshot("no_results.png");
     }
@@ -35,7 +35,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipediaHomepage();
         String longTerm = "A very long search term with more than 500 characters exceeding the maximum allowed length for search terms on Wikipedia";
         pageObject.searchForTerm(longTerm);
-        pageObject.waitForSearchResults();
+        pageObject.waitForSearchErrorMessage();
         assertThat(pageObject.getSearchErrorMessage()).isVisible();
         pageObject.takeScreenshot("search_error.png");
     }
