@@ -1,0 +1,56 @@
+package com.automation.pages;
+
+import com.automation.base.BaseTestManager;
+import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
+
+import java.nio.file.Paths;
+
+public class ViewArticleOnWikipediaPage {
+    private final Page page;
+    private final Locator searchInput;
+    private final Locator searchButton;
+    private final Locator searchResultsContainer;
+    private final Locator noResultsMessage;
+    private final Locator searchErrorMessage;
+
+    public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
+        this.page = testManager.getPage();
+        this.searchInput = page.locator("#searchInput");
+        this.searchButton = page.locator("button[type='submit']");
+        this.searchResultsContainer = page.locator(".mw-search-results");
+        this.noResultsMessage = page.locator("//div[contains(@class,'mw-search-nonefound')]");
+        this.searchErrorMessage = page.locator("//div[contains(@class,'mw-message-box')]");
+    }
+
+    public void navigateToWikipediaHomepage() {
+        page.navigate("https://www.wikipedia.org");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+    }
+
+    public void searchForTerm(String term) {
+        searchInput.fill(term);
+        searchButton.click();
+    }
+
+    public void waitForSearchResults() {
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+    }
+
+    public Locator getSearchResultsContainer() {
+        return searchResultsContainer;
+    }
+
+    public Locator getNoResultsMessage() {
+        return noResultsMessage;
+    }
+
+    public Locator getSearchErrorMessage() {
+        return searchErrorMessage;
+    }
+
+    public void takeScreenshot(String filename) {
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
+    }
+}
