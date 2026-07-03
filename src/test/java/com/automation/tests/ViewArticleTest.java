@@ -36,4 +36,12 @@ public class ViewArticleTest extends BaseTestManager {
     @Test
     public void testBoundary_MaximumSearchLength() {
         ViewArticlePage pageObject = new ViewArticlePage(this);
-        
+        pageObject.navigateToWikipedia();
+        String longSearchTerm = "This is a very long search term that exceeds the maximum length allowed by Wikipedia's search input field.";
+        pageObject.searchForArticle(longSearchTerm);
+        pageObject.clickSearchButton();
+        String errorMessage = pageObject.getErrorMessage();
+        assertTrue(errorMessage.contains("The search query must be between 1 and 500 characters long"));
+        pageObject.takeScreenshot("max-search-length.png");
+    }
+}

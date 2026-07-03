@@ -11,7 +11,7 @@ import static org.testng.Assert.assertTrue;
 
 public class ViewArticlePage {
     private final Page page;
-    private static final String SEARCH_INPUT_SELECTOR = "input[name='search']"; 
+    private static final String SEARCH_INPUT_SELECTOR = "#searchInput"; 
     private static final String SEARCH_BUTTON_SELECTOR = "button[type='submit']";  
     private static final String ARTICLE_LINK_SELECTOR = ".mw-search-results a";
     private static final String ERROR_MESSAGE_SELECTOR = ".mw-search-nonefound";
@@ -38,6 +38,7 @@ public class ViewArticlePage {
 
     public void clickSearchButton() {
         searchButton.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void clickArticleLink(String linkText) {
