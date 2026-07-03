@@ -3,6 +3,11 @@ package com.automation.pages;
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
+
+import java.nio.file.Paths;
+
+import static org.testng.Assert.assertTrue;
 
 public class ViewArticlePage {
     private final Page page;
@@ -38,6 +43,7 @@ public class ViewArticlePage {
     public void clickArticleLink(String linkText) {
         Locator articleLink = this.articleLink.filter(new Locator.FilterOptions().setHasText(linkText)).first();
         articleLink.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
         assertTrue(page.title().contains(linkText), "Article link did not open the expected article");
     }
 
@@ -46,6 +52,6 @@ public class ViewArticlePage {
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(filename));
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
     }
 }
