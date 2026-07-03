@@ -39,7 +39,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void verifySearchResultsHeading() {
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        page.locator("h1:has-text('Search results')").waitFor(new Locator.WaitForOptions().setTimeout(10000));
+        page.locator("h1:has-text('Search results')").waitFor(new Locator.WaitForOptions().setTimeout(10000).setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE));
     }
 
     public void clickPythonProgrammingLanguageLink() {
@@ -50,7 +50,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void verifyArticlePageLoaded() {
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        page.locator("h1:has-text('Python (programming language)')").waitFor(new Locator.WaitForOptions().setTimeout(10000));
+        page.locator("h1:has-text('Python (programming language)')").waitFor(new Locator.WaitForOptions().setTimeout(10000).setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE));
     }
 
     public void takeScreenshot(String fileName) {

@@ -24,6 +24,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
     public void testAnonymousAccessToWikipedia() {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
+        assertThat(page).hasURL("https://www.wikipedia.org/");
         assertThat(pageObject.getLoginLink()).isVisible();
         assertThat(pageObject.getCreateAccountLink()).isVisible();
         pageObject.clickCreateAccountLink();
@@ -36,6 +37,6 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        assertThat(pageObject.getNoSearchResultsContainer()).isHidden();
+        assertThat(pageObject.getNoSearchResultsContainer()).isVisible();
     }
 }
