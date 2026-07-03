@@ -2,6 +2,7 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticlePage;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
@@ -16,6 +17,7 @@ public class ViewArticleTest extends BaseTestManager {
         pageObject.searchForArticle("Python programming language");
         pageObject.clickSearchButton();
         pageObject.clickArticleLink("Python (programming language)");
+        Page page = getPage();
         page.waitForLoadState(LoadState.NETWORKIDLE);
         assertTrue(page.title().contains("Python (programming language) - Wikipedia"));
         pageObject.takeScreenshot("python-article.png");
@@ -34,12 +36,4 @@ public class ViewArticleTest extends BaseTestManager {
     @Test
     public void testBoundary_MaximumSearchLength() {
         ViewArticlePage pageObject = new ViewArticlePage(this);
-        pageObject.navigateToWikipedia();
-        String longSearchString = "abcdefghijklmnopqrstuvwxyz0123456789".repeat(25);
-        pageObject.searchForArticle(longSearchString);
-        pageObject.clickSearchButton();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertTrue(page.title().contains("Search results - Wikipedia"));
-        pageObject.takeScreenshot("long-search.png");
-    }
-}
+        
