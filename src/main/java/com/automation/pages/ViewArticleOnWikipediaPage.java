@@ -26,15 +26,17 @@ public class ViewArticleOnWikipediaPage {
 
     public void navigateToWikipediaHomepage() {
         page.navigate("https://www.wikipedia.org");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void searchForTerm(String term) {
         searchInput.fill(term);
         searchButton.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void waitForSearchResults() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
+        searchResultsContainer.waitFor(new Locator.WaitForOptions().setTimeout(5000));
     }
 
     public void waitForNoResultsMessage() {
