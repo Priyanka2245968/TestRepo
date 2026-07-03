@@ -5,7 +5,7 @@ import com.automation.pages.ViewArticleOnWikipediaPage;
 import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertTrue;
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
@@ -24,9 +24,10 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
     public void testAnonymousAccessToWikipedia() {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
-        assertTrue(pageObject.verifyLoginAndCreateAccountLinksVisible(), "Login and Create Account links are not visible");
+        assertThat(pageObject.getLoginLink()).isVisible();
+        assertThat(pageObject.getCreateAccountLink()).isVisible();
         pageObject.clickCreateAccountLink();
-        assertTrue(pageObject.verifyCreateAccountPageLoaded(), "Create Account page did not load successfully");
+        assertThat(pageObject.getCreateAccountPageHeading()).isVisible();
         pageObject.takeScreenshot("wikipedia-create-account.png");
     }
 
@@ -35,6 +36,6 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        assertTrue(pageObject.verifyNoSearchResultsDisplayed(), "Search results are displayed even without a search query");
+        assertThat(pageObject.getNoSearchResultsContainer()).isHidden();
     }
 }
