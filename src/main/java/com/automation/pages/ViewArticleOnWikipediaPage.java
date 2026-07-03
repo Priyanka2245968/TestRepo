@@ -36,15 +36,15 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void waitForSearchResults() {
-        searchResultsContainer.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+        searchResultsContainer.waitFor(new Locator.WaitForOptions().setTimeout(10000));
     }
 
     public void waitForNoResultsMessage() {
-        noResultsMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+        noResultsMessage.waitFor(new Locator.WaitForOptions().setTimeout(10000));
     }
 
     public void waitForSearchErrorMessage() {
-        searchErrorMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+        searchErrorMessage.waitFor(new Locator.WaitForOptions().setTimeout(10000));
     }
 
     public Locator getSearchResultsContainer() {

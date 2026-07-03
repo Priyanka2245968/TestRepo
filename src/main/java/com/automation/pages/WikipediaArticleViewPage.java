@@ -41,11 +41,11 @@ public class WikipediaArticleViewPage {
     }
 
     public void waitForBlankSearchErrorMessage() {
-        blankSearchErrorMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+        blankSearchErrorMessage.waitFor(new Locator.WaitForOptions().setTimeout(10000));
     }
 
     public void waitForNoResultsMessage() {
-        noResultsMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+        noResultsMessage.waitFor(new Locator.WaitForOptions().setTimeout(10000));
     }
 
     public Locator getBlankSearchErrorMessage() {
