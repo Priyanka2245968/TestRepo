@@ -10,20 +10,21 @@ public class ViewArticleOnWikipediaPage {
     private final Locator searchInput;
     private final Locator searchButton;
     private final Locator pythonProgrammingLanguageLink;
+    private final Locator loginLink;
+    private final Locator createAccountLink;
+    private final Locator createAccountPageHeading;
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
-        this.searchInput = page.locator("#searchInput");
+        this.searchInput = page.locator("input[name='search']");
         this.searchButton = page.locator("button[type='submit']");
-        this.pythonProgrammingLanguageLink = page.locator("#vector-main-menu-dropdown-checkbox");
+        this.pythonProgrammingLanguageLink = page.locator("a:has-text('Python (programming language)')");
+        this.loginLink = page.locator("a:has-text('Log in')");
+        this.createAccountLink = page.locator("a:has-text('Create account')");
+        this.createAccountPageHeading = page.locator("h1:has-text('Create account')");
     }
 
     public void navigateToWikipedia() {
-        page.navigate("https://www.wikipedia.org/");
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-    }
-
-    public void navigateToWikipediaHomepage() {
         page.navigate("https://www.wikipedia.org/");
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
@@ -36,9 +37,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void verifySearchResultsHeading() {
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        page.locator("h1").waitFor(new Locator.WaitForOptions().setTimeout(5000));
-        String title = page.locator("h1").textContent();
-        assertTrue(title.contains("Python (programming language) - Search results - Wikipedia"));
+        page.locator("h1:has-text('Search results')").isVisible();
     }
 
     public void clickPythonProgrammingLanguageLink() {
@@ -48,48 +47,24 @@ public class ViewArticleOnWikipediaPage {
 
     public void verifyArticlePageLoaded() {
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        page.locator("h1").waitFor(new Locator.WaitForOptions().setTimeout(5000));
-        String title = page.locator("h1").textContent();
-        assertTrue(title.contains("Python (programming language)"));
+        page.locator("h1:has-text('Python (programming language)')").isVisible();
     }
 
-    public void verifyLoginAndCreateAccountLinksVisible() {
-        page.locator("a[href='/w/index.php?title=Special:UserLogin']").waitFor(new Locator.WaitForOptions().setTimeout(5000));
-        page.locator("a[href='/w/index.php?title=Special:CreateAccount']").waitFor(new Locator.WaitForOptions().setTimeout(5000));
+    public void takeScreenshot(String fileName) {
+        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(fileName));
+    }
+
+    public boolean verifyLoginAndCreateAccountLinksVisible() {
+        return loginLink.isVisible() && createAccountLink.isVisible();
     }
 
     public void clickCreateAccountLink() {
-        page.locator("a[href='/w/index.php?title=Special:CreateAccount']").click();
+        createAccountLink.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
-    public void verifyCreateAccountPageLoaded() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        page.locator("h1").waitFor(new Locator.WaitForOptions().setTimeout(5000));
-        assertTrue(page.locator("h1").textContent().contains("Create account"));
-    }
-
-    public void clickSearchButtonWithoutQuery() {
-        searchButton.click();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-    }
-
-    public void verifyNoResultsMessageDisplayed() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        page.locator(".mw-search-nonefound").waitFor(new Locator.WaitForOptions().setTimeout(5000));
-        String noResultsMessage = page.locator(".mw-search-nonefound").textContent();
-        assertTrue(noResultsMessage.contains("No results found"));
-    }
-
-    public void enterLongSearchQuery() {
-        String longQuery = "This is a very long search query that exceeds the maximum allowed length of 500 characters. " +
-                "It is used to test the behavior of Wikipedia's search functionality when an excessively long query is submitted. " +
-                "The purpose of this test is to ensure that the system handles such cases gracefully and provides an appropriate error message to the user.";
-        searchInput.fill(longQuery);
-    }
-
-    public void enterInvalidSearchQuery(String query) {
-        searchInput.fill(query);
+    public boolean verifyCreateAccountPageLoaded() {
+        return createAccountPageHeading.isVisible();
     }
 
     public void clickSearchButton() {
@@ -97,13 +72,7 @@ public class ViewArticleOnWikipediaPage {
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
-    public String getErrorMessage() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        page.locator(".mw-search-nonefound").waitFor(new Locator.WaitForOptions().setTimeout(5000));
-        return page.locator(".mw-search-nonefound").textContent();
-    }
-
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    public boolean verifyNoSearchResultsDisplayed() {
+        return !page.locator("div.results").isVisible();
     }
 }

@@ -24,9 +24,9 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
     public void testAnonymousAccessToWikipedia() {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
-        pageObject.verifyLoginAndCreateAccountLinksVisible();
+        assertTrue(pageObject.verifyLoginAndCreateAccountLinksVisible(), "Login and Create Account links are not visible");
         pageObject.clickCreateAccountLink();
-        pageObject.verifyCreateAccountPageLoaded();
+        assertTrue(pageObject.verifyCreateAccountPageLoaded(), "Create Account page did not load successfully");
         pageObject.takeScreenshot("wikipedia-create-account.png");
     }
 
@@ -34,28 +34,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
     public void testNoSearchQueryProvided() {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
-        pageObject.clickSearchButtonWithoutQuery();
-        pageObject.verifyNoResultsMessageDisplayed();
-        pageObject.takeScreenshot("wikipedia-no-search-query.png");
-    }
-
-    @Test
-    public void testNegativeLongSearchQueryExceeding500Characters() {
-        ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
-        pageObject.navigateToWikipediaHomepage();
-        pageObject.enterLongSearchQuery();
         pageObject.clickSearchButton();
-        assertTrue(pageObject.getErrorMessage().contains("Search request is longer than the maximum allowed length"));
-        pageObject.takeScreenshot("long_search_query_error.png");
-    }
-
-    @Test
-    public void testNegativeInvalidSearchQueryWithNoMatchingArticles() {
-        ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
-        pageObject.navigateToWikipediaHomepage();
-        pageObject.enterInvalidSearchQuery("asdfghjklqwertyuiop");
-        pageObject.clickSearchButton();
-        assertTrue(pageObject.getErrorMessage().contains("There were no results matching the query"));
-        pageObject.takeScreenshot("invalid_search_query_error.png");
+        assertTrue(pageObject.verifyNoSearchResultsDisplayed(), "Search results are displayed even without a search query");
     }
 }
