@@ -21,7 +21,7 @@ public class ViewArticleOnWikipediaPage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.pythonProgrammingLanguageLink = page.locator("#vector-main-menu-dropdown-checkbox").first();
+        this.pythonProgrammingLanguageLink = page.locator("a[href*='/wiki/Python_(programming_language)']");
         this.noResultsMessage = page.locator(".no-results-info");
     }
 
