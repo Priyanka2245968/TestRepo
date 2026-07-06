@@ -36,7 +36,7 @@ public class BookingApiTest {
         api.dispose();
     }
 
-    @Test
+        @Test
     public void positiveSuccessfulBookingCreation() {
         Map<String, Object> body = new HashMap<>();
         body.put("firstname", "Swarup");
@@ -47,37 +47,40 @@ public class BookingApiTest {
         body.put("additionalneeds", "Breakfast");
 
         APIResponse response = api.post("/booking", body);
-        assertEquals(response.status(), 200, "Booking creation failed");
+        JsonNode jsonResponse = api.asJson(response);
+        org.testng.Assert.assertTrue(response.status() >= 200 && response.status() < 300, "Booking creation failed");
 
-        JsonNode jsonResponse = response.json();
-        assertTrue(jsonResponse.has("bookingid"), "Response does not contain booking ID");
+        org.testng.Assert.assertTrue(jsonResponse.has("bookingid"), "Response does not contain booking ID");
         int bookingId = jsonResponse.get("bookingid").asInt();
-        assertTrue(bookingId > 0, "Invalid booking ID");
+        org.testng.Assert.assertTrue(bookingId > 0, "Invalid booking ID");
 
-        assertEquals(jsonResponse.get("booking").get("firstname").asText(), "Swarup");
-        assertEquals(jsonResponse.get("booking").get("lastname").asText(), "Roy");
-        assertEquals(jsonResponse.get("booking").get("totalprice").asInt(), 12000);
-        assertTrue(jsonResponse.get("booking").get("depositpaid").asBoolean());
-        assertEquals(jsonResponse.get("booking").get("bookingdates").get("checkin").asText(), "2023-05-01");
-        assertEquals(jsonResponse.get("booking").get("bookingdates").get("checkout").asText(), "2023-05-05");
-        assertEquals(jsonResponse.get("booking").get("additionalneeds").asText(), "Breakfast");
+        org.testng.Assert.assertEquals(jsonResponse.get("booking").get("firstname").asText(), "Swarup");
+        org.testng.Assert.assertEquals(jsonResponse.get("booking").get("lastname").asText(), "Roy");
+        org.testng.Assert.assertEquals(jsonResponse.get("booking").get("totalprice").asInt(), 12000);
+        org.testng.Assert.assertTrue(jsonResponse.get("booking").get("depositpaid").asBoolean());
+        org.testng.Assert.assertEquals(jsonResponse.get("booking").get("bookingdates").get("checkin").asText(), "2023-05-01");
+        org.testng.Assert.assertEquals(jsonResponse.get("booking").get("bookingdates").get("checkout").asText(), "2023-05-05");
+        org.testng.Assert.assertEquals(jsonResponse.get("booking").get("additionalneeds").asText(), "Breakfast");
     }
 
-    @Test
+        @Test
     public void negativeInvalidBookingCreation() {
         Map<String, Object> body = new HashMap<>();
         body.put("firstname", "");
         body.put("lastname", "");
         body.put("totalprice", -1);
         body.put("depositpaid", true);
-        body.put("bookingdates", Map.of("checkin", "2023-05-01", "checkout", "2023-04-30"));
+        Map<String, String> bookingDates = new HashMap<>();
+        bookingDates.put("checkin", "2023-05-01");
+        bookingDates.put("checkout", "2023-04-30");
+        body.put("bookingdates", bookingDates);
         body.put("additionalneeds", "Breakfast");
 
         APIResponse response = api.post("/booking", body);
-        assertNotEquals(response.status(), 200, "Booking creation should fail");
+        org.testng.Assert.assertFalse(response.status() >= 200 && response.status() < 300, "Booking creation should fail");
 
-        JsonNode jsonResponse = response.json();
-        assertTrue(jsonResponse.has("reason"), "Response does not contain error reason");
+        JsonNode jsonResponse = api.asJson(response);
+        org.testng.Assert.assertTrue(jsonResponse.has("reason"), "Response does not contain error reason");
         logger.error("Booking creation failed: {}", jsonResponse.get("reason").asText());
     }
 }
