@@ -48,19 +48,19 @@ public class BookingApiTest {
 
         APIResponse response = api.post("/booking", body);
         JsonNode jsonResponse = api.asJson(response);
-        org.testng.Assert.assertTrue(response.status() >= 200 && response.status() < 300, "Booking creation failed");
+        assertTrue(response.status() >= 200 && response.status() < 300, "Booking creation failed");
 
-        org.testng.Assert.assertTrue(jsonResponse.has("bookingid"), "Response does not contain booking ID");
+        assertTrue(jsonResponse.has("bookingid"), "Response does not contain booking ID");
         int bookingId = jsonResponse.get("bookingid").asInt();
-        org.testng.Assert.assertTrue(bookingId > 0, "Invalid booking ID");
+        assertTrue(bookingId > 0, "Invalid booking ID");
 
-        org.testng.Assert.assertEquals(jsonResponse.get("booking").get("firstname").asText(), "Swarup");
-        org.testng.Assert.assertEquals(jsonResponse.get("booking").get("lastname").asText(), "Roy");
-        org.testng.Assert.assertEquals(jsonResponse.get("booking").get("totalprice").asInt(), 12000);
-        org.testng.Assert.assertTrue(jsonResponse.get("booking").get("depositpaid").asBoolean());
-        org.testng.Assert.assertEquals(jsonResponse.get("booking").get("bookingdates").get("checkin").asText(), "2023-05-01");
-        org.testng.Assert.assertEquals(jsonResponse.get("booking").get("bookingdates").get("checkout").asText(), "2023-05-05");
-        org.testng.Assert.assertEquals(jsonResponse.get("booking").get("additionalneeds").asText(), "Breakfast");
+        assertEquals(jsonResponse.get("booking").get("firstname").asText(), "Swarup");
+        assertEquals(jsonResponse.get("booking").get("lastname").asText(), "Roy");
+        assertEquals(jsonResponse.get("booking").get("totalprice").asInt(), 12000);
+        assertTrue(jsonResponse.get("booking").get("depositpaid").asBoolean());
+        assertEquals(jsonResponse.get("booking").get("bookingdates").get("checkin").asText(), "2023-05-01");
+        assertEquals(jsonResponse.get("booking").get("bookingdates").get("checkout").asText(), "2023-05-05");
+        assertEquals(jsonResponse.get("booking").get("additionalneeds").asText(), "Breakfast");
     }
 
         @Test
@@ -77,10 +77,10 @@ public class BookingApiTest {
         body.put("additionalneeds", "Breakfast");
 
         APIResponse response = api.post("/booking", body);
-        org.testng.Assert.assertFalse(response.status() >= 200 && response.status() < 300, "Booking creation should fail");
+        assertTrue(response.status() >= 400 && response.status() < 500, "Booking creation should fail");
 
         JsonNode jsonResponse = api.asJson(response);
-        org.testng.Assert.assertTrue(jsonResponse.has("reason"), "Response does not contain error reason");
+        assertTrue(jsonResponse.has("reason"), "Response does not contain error reason");
         logger.error("Booking creation failed: {}", jsonResponse.get("reason").asText());
     }
 }
