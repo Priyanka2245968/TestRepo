@@ -46,11 +46,37 @@ public class BookingApiTest {
 
         APIResponse response = api.post("/booking", body);
         assertEquals(response.statusCode(), 200, "Booking creation failed");
-        JsonNode responseBody = response.json();
+        JsonNode responseBody = api.asJson(response);
         assertTrue(responseBody.has("bookingid"), "Response does not contain booking ID");
         int bookingId = responseBody.get("bookingid").asInt();
 
         // Clean up the created booking
         api.delete("/booking/" + bookingId, headers);
+    }
+
+    @Test
+    public void negativeRequiredFieldsValidation() {
+        Map<String, Object> body = new HashMap<>();
+        body.put("firstname", "Swarup");
+        body.put("lastname", "Roy");
+
+        APIResponse response = api.post("/booking", body);
+        assertTrue(response.statusCode() >= 400 && response.statusCode() < 500, "Expected client error status code");
+    }
+
+    @Test
+    public void negativeDataValidation() {
+        Map<String, Object> body = new HashMap<>();
+        body.put("firstname", "Swarup");
+        body.put("lastname", "Roy");
+        body.put("totalprice", -12000);
+        body.put("depositpaid", true);
+        Map<String, String> bookingDates = new HashMap<>();
+        bookingDates.put("checkin", "2026-07-10");
+        bookingDates.put("checkout", "2026-07-05");
+        body.put("bookingdates", bookingDates);
+
+        APIResponse response = api.post("/booking", body);
+        assertTrue(response.statusCode() >= 400 && response.statusCode() < 500, "Expected client error status code");
     }
 }
