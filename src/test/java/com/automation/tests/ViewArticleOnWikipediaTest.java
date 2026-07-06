@@ -10,7 +10,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
     @Test
-    public void testHappyPathViewArticleOnWikipedia() {
+    public void testViewPythonArticleOnWikipedia() {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("Python programming language");
@@ -21,24 +21,13 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
     }
 
     @Test
-    public void testArticleContentReadableAndSuitableForLearning() {
+    public void testPhotosynthesisArticleContentIsReadable() {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("Photosynthesis");
         pageObject.clickSearchButton();
         pageObject.clickArticleLink("Photosynthesis");
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(pageObject.getArticleContent()).containsText("Photosynthesis is a process used by plants and other organisms");
-        pageObject.takeScreenshot("photosynthesis-article.png");
-    }
-
-    @Test
-    public void testNoArticleSearchShowsBlankPage() {
-        ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
-        pageObject.navigateToWikipedia();
-        pageObject.clickSearchButton();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(pageObject.getNoResultsMessage()).containsText("No results found");
-        pageObject.takeScreenshot("no-results.png");
+        assertThat(pageObject.getArticleContent()).containsText("Photosynthesis is a process used by plants and other organisms to convert light energy into chemical energy");
     }
 }

@@ -4,7 +4,6 @@ import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
-import org.testng.Assert;
 
 import java.nio.file.Paths;
 
@@ -41,13 +40,12 @@ public class BOK21Page {
         errorMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
     }
 
-    public void verifyErrorMessageForLongText() {
-        String expectedMessage = "An error has occurred while searching: Search request is longer than the maximum allowed length";
-        Assert.assertTrue(errorMessage.textContent().contains(expectedMessage));
+    public String getErrorMessage() {
+        return errorMessage.textContent();
     }
 
     public void enterInvalidTextInSearchField() {
-        searchInput.fill("asdfghjklzxcvbnm");
+        searchInput.fill("!@#$%^&*()_+");
     }
 
     public void waitForNoResultsMessage() {
@@ -55,12 +53,11 @@ public class BOK21Page {
         noResultsMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
     }
 
-    public void verifyNoResultsMessage() {
-        String expectedMessage = "There were no results matching the query";
-        Assert.assertTrue(noResultsMessage.textContent().contains(expectedMessage));
+    public String getNoResultsMessage() {
+        return noResultsMessage.textContent();
     }
 
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
+    public void takeScreenshot(String fileName) {
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(fileName)));
     }
 }
