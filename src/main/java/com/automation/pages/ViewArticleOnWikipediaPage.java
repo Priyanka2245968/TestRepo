@@ -2,10 +2,10 @@ package com.automation.pages;
 
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.testng.Assert.assertTrue;
 
 public class ViewArticleOnWikipediaPage {
 
@@ -17,10 +17,11 @@ public class ViewArticleOnWikipediaPage {
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.testManager = testManager;
-        this.searchInput = testManager.getPage().locator("input[name='search']");
-        this.searchButton = testManager.getPage().locator("button:has-text('Search')");
-        this.pythonProgrammingLanguageLink = testManager.getPage().locator("a:has-text('Python (programming language)')");
-        this.noResultsMessage = testManager.getPage().locator(".no-results-info");
+        Page page = testManager.getPage();
+        this.searchInput = page.locator("input[name='search']");
+        this.searchButton = page.locator("button:has-text('Search')");
+        this.pythonProgrammingLanguageLink = page.locator("a:has-text('Python (programming language)')");
+        this.noResultsMessage = page.locator(".no-results-info");
     }
 
     public void navigateToWikipediaHomepage() {
@@ -56,6 +57,6 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void takeScreenshot(String fileName) {
-        testManager.getPage().screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(com.microsoft.playwright.utils.Utils.map("path", fileName)));
+        testManager.getPage().screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(fileName)));
     }
 }
