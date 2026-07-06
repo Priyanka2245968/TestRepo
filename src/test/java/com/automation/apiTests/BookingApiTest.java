@@ -46,7 +46,7 @@ public class BookingApiTest {
 
         APIResponse response = api.post("/booking", body);
         assertTrue(response.statusText().contains("OK"), "Booking creation failed");
-        JsonNode responseBody = response.json();
+        JsonNode responseBody = api.asJson(response);
         assertTrue(responseBody.has("bookingid"), "Response does not contain booking ID");
         int bookingId = responseBody.get("bookingid").asInt();
 
@@ -61,7 +61,7 @@ public class BookingApiTest {
         body.put("lastname", "Roy");
 
         APIResponse response = api.post("/booking", body);
-        assertTrue(response.statusCode() >= 400 && response.statusCode() < 500, "Expected client error status code");
+        assertTrue(response.status() >= 400 && response.status() < 500, "Expected client error status code");
     }
 
     @Test
@@ -77,6 +77,6 @@ public class BookingApiTest {
         body.put("bookingdates", bookingDates);
 
         APIResponse response = api.post("/booking", body);
-        assertTrue(response.statusCode() >= 400 && response.statusCode() < 500, "Expected client error status code");
+        assertTrue(response.status() >= 400 && response.status() < 500, "Expected client error status code");
     }
 }
