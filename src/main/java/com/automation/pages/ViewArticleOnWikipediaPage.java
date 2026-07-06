@@ -10,6 +10,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 public class ViewArticleOnWikipediaPage {
 
     private final BaseTestManager testManager;
+    private final Page page;
     private final Locator searchInput;
     private final Locator searchButton;
     private final Locator pythonProgrammingLanguageLink;
@@ -17,15 +18,15 @@ public class ViewArticleOnWikipediaPage {
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.testManager = testManager;
-        Page page = testManager.getPage();
+        this.page = testManager.getPage();
         this.searchInput = page.locator("input[name='search']");
-        this.searchButton = page.locator("button:has-text('Search')");
-        this.pythonProgrammingLanguageLink = page.locator("a:has-text('Python (programming language)')");
+        this.searchButton = page.locator("button[type='submit']");
+        this.pythonProgrammingLanguageLink = page.locator("#vector-main-menu-dropdown-checkbox").first();
         this.noResultsMessage = page.locator(".no-results-info");
     }
 
     public void navigateToWikipediaHomepage() {
-        testManager.getPage().navigate("https://www.wikipedia.org/");
+        page.navigate("https://www.wikipedia.org/");
     }
 
     public void searchForTerm(String term) {
@@ -37,7 +38,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void waitForSearchResultsToLoad() {
-        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void clickPythonProgrammingLanguageLink() {
@@ -45,11 +46,11 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void waitForArticleToLoad() {
-        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void verifyArticleContentVisible() {
-        assertThat(testManager.getPage().locator(".mw-parser-output")).isVisible();
+        assertThat(page.locator(".mw-parser-output")).isVisible();
     }
 
     public void verifyNoResultsPageVisible() {
@@ -57,6 +58,6 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void takeScreenshot(String fileName) {
-        testManager.getPage().screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(fileName)));
+        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(fileName)));
     }
 }
