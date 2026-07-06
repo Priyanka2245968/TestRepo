@@ -61,7 +61,10 @@ public class BookingApiTest {
         body.put("lastname", "Roy");
 
         APIResponse response = api.post("/booking", body);
-        assertTrue(response.status() >= 400 && response.status() < 500, "Expected client error status code");
+        JsonNode responseBody = api.asJson(response);
+        assertTrue(responseBody.has("reason"), "Response does not contain error reason");
+        String errorReason = responseBody.get("reason").asText();
+        assertTrue(errorReason.contains("This field is required"), "Unexpected error reason");
     }
 
     @Test
@@ -77,6 +80,9 @@ public class BookingApiTest {
         body.put("bookingdates", bookingDates);
 
         APIResponse response = api.post("/booking", body);
-        assertTrue(response.status() >= 400 && response.status() < 500, "Expected client error status code");
+        JsonNode responseBody = api.asJson(response);
+        assertTrue(responseBody.has("reason"), "Response does not contain error reason");
+        String errorReason = responseBody.get("reason").asText();
+        assertTrue(errorReason.contains("Invalid date"), "Unexpected error reason");
     }
 }
