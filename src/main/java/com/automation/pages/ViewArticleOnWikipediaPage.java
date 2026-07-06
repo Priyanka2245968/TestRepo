@@ -3,6 +3,7 @@ package com.automation.pages;
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import java.nio.file.Paths;
 
 public class ViewArticleOnWikipediaPage {
     private final Page page;
