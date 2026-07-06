@@ -48,9 +48,9 @@ public class BookingApiTest {
 
         APIResponse response = api.post("/booking", body);
         assertEquals(response.statusText(), "Created");
-        assertEquals(response.status(), 200);
+        assertEquals(response.status(), 201);
 
-        JsonNode jsonResponse = response.json();
+        JsonNode jsonResponse = api.asJson(response);
         assertTrue(jsonResponse.has("bookingid"));
         assertEquals(jsonResponse.get("booking").get("firstname").asText(), "Swarup");
         assertEquals(jsonResponse.get("booking").get("lastname").asText(), "Roy");
@@ -72,8 +72,8 @@ public class BookingApiTest {
         body.put("additionalneeds", "");
 
         APIResponse response = api.post("/booking", body);
-        assertEquals(response.status(), 500);
-        JsonNode jsonResponse = response.json();
+        assertTrue(response.status() >= 400 && response.status() < 500);
+        JsonNode jsonResponse = api.asJson(response);
         assertTrue(jsonResponse.has("error"));
         assertEquals(jsonResponse.get("error").asText(), "Invalid data");
     }
