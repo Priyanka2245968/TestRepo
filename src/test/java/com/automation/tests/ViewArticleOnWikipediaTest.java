@@ -2,7 +2,6 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticleOnWikipediaPage;
-import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
@@ -29,7 +28,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.clickSearchButton();
         pageObject.clickArticleLink("Photosynthesis");
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        Locator articleContent = pageObject.getArticleContent();
-        assertThat(articleContent).containsText("Photosynthesis is a process used by plants and other organisms to convert light energy into chemical energy");
+        String articleContent = pageObject.getArticleContent();
+        org.testng.Assert.assertTrue(articleContent.contains("Photosynthesis is a process used by plants and other organisms to convert light energy into chemical energy"), "Article content does not contain expected text");
     }
 }
