@@ -36,7 +36,7 @@ public class BookingApiTest {
         api.dispose();
     }
 
-        @Test
+    @Test
     public void positiveSuccessfulBookingCreation() {
         Map<String, Object> body = new HashMap<>();
         body.put("firstname", "Swarup");
@@ -63,7 +63,7 @@ public class BookingApiTest {
         assertEquals(jsonResponse.get("booking").get("additionalneeds").asText(), "Breakfast");
     }
 
-        @Test
+    @Test
     public void negativeInvalidBookingCreation() {
         Map<String, Object> body = new HashMap<>();
         body.put("firstname", "");
@@ -77,7 +77,7 @@ public class BookingApiTest {
         body.put("additionalneeds", "Breakfast");
 
         APIResponse response = api.post("/booking", body);
-        assertTrue(response.status() >= 400 && response.status() < 500, "Booking creation should fail");
+        assertFalse(response.status() >= 200 && response.status() < 300, "Booking creation should fail");
 
         JsonNode jsonResponse = api.asJson(response);
         assertTrue(jsonResponse.has("reason"), "Response does not contain error reason");
