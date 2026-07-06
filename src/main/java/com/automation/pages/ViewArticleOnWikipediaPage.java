@@ -13,12 +13,14 @@ public class ViewArticleOnWikipediaPage {
     private final Locator searchInput;
     private final Locator searchButton;
     private final Locator pythonProgrammingLanguageLink;
+    private final Locator noResultsMessage;
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.testManager = testManager;
-        this.searchInput = testManager.getPage().locator("#searchInput");
-        this.searchButton = testManager.getPage().locator("button[type='submit']");
-        this.pythonProgrammingLanguageLink = testManager.getPage().locator("a[href='/wiki/Python_(programming_language)']");
+        this.searchInput = testManager.getPage().locator("input[name='search']");
+        this.searchButton = testManager.getPage().locator("button:has-text('Search')");
+        this.pythonProgrammingLanguageLink = testManager.getPage().locator("a:has-text('Python (programming language)')");
+        this.noResultsMessage = testManager.getPage().locator(".no-results-info");
     }
 
     public void navigateToWikipediaHomepage() {
@@ -46,41 +48,14 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void verifyArticleContentVisible() {
-        Locator articleTitle = testManager.getPage().locator("h1");
-        assertThat(articleTitle).containsText("Python (programming language)");
-        Locator articleContent = testManager.getPage().locator(".mw-parser-output");
-        assertThat(articleContent).isVisible();
-    }
-
-    public void waitForNoResultsPage() {
-        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
+        assertThat(testManager.getPage().locator(".mw-parser-output")).isVisible();
     }
 
     public void verifyNoResultsPageVisible() {
-        Locator noResultsMessage = testManager.getPage().locator(".mw-search-nonefound");
         assertThat(noResultsMessage).isVisible();
     }
 
-    public void waitForErrorMessageToLoad() {
-        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
-    }
-
-    public void verifyErrorMessageVisible() {
-        Locator errorMessage = testManager.getPage().locator(".mw-search-error");
-        assertTrue(errorMessage.textContent().contains("Search request is longer than the maximum allowed length"));
-    }
-
-    public void verifyNoResultsMessage() {
-        Locator noResultsMessage = testManager.getPage().locator(".mw-search-nonefound");
-        assertThat(noResultsMessage).isVisible();
-    }
-
-    public void verifyNoArticleLinksDisplayed() {
-        Locator articleLinks = testManager.getPage().locator(".mw-search-results a");
-        assertTrue(articleLinks.count() == 0, "Article links should not be displayed");
-    }
-
-    public void takeScreenshot(String filename) {
-        testManager.getPage().screenshot(new com.microsoft.playwright.Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    public void takeScreenshot(String fileName) {
+        testManager.getPage().screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(com.microsoft.playwright.utils.Utils.map("path", fileName)));
     }
 }

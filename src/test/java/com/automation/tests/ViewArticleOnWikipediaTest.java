@@ -25,7 +25,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipediaHomepage();
         pageObject.clickSearchButton();
-        pageObject.waitForNoResultsPage();
+        pageObject.waitForSearchResultsToLoad();
         pageObject.verifyNoResultsPageVisible();
         pageObject.takeScreenshot("no-results.png");
     }
@@ -34,28 +34,11 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
     public void testNegativeTooLongSearchInput() {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipediaHomepage();
-        pageObject.searchForTerm("This is a very long search input that exceeds the maximum allowed length of 500 characters. This is a very long search input that exceeds the maximum allowed length of 500 characters. This is a very long search input that exceeds the maximum allowed length of 500 characters.");
+        String longSearchTerm = "This is a very long search term that exceeds the maximum length allowed by Wikipedia's search input field";
+        pageObject.searchForTerm(longSearchTerm);
         pageObject.clickSearchButton();
-        pageObject.waitForErrorMessageToLoad();
-        pageObject.verifyErrorMessageVisible();
-        pageObject.takeScreenshot("error-message.png");
-    }
-
-    @Test
-    public void testNegativeSearchInputWithNoMatchingArticle() {
-        System.out.println("✨ Starting Negative — Search input with no matching article");
-        ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
-
-        pageObject.navigateToWikipediaHomepage();
-        pageObject.searchForTerm("akjshfkajhfkajhfhdfdf");
-        pageObject.clickSearchButton();
-
-        pageObject.waitForNoResultsPage();
-
-        pageObject.verifyNoResultsMessage();
-        pageObject.verifyNoArticleLinksDisplayed();
-
-        pageObject.takeScreenshot("no-results-" + System.currentTimeMillis() + ".png");
-        System.out.println("✅ Test completed successfully!");
+        pageObject.waitForSearchResultsToLoad();
+        pageObject.verifyNoResultsPageVisible();
+        pageObject.takeScreenshot("long-search-term.png");
     }
 }

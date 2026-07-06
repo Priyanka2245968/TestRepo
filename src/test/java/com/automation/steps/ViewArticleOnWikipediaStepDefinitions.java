@@ -8,6 +8,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.Map;
+
 public class ViewArticleOnWikipediaStepDefinitions {
 
     private BaseTestManager testManager;
@@ -27,21 +29,26 @@ public class ViewArticleOnWikipediaStepDefinitions {
 
     @When("I execute step {int}: {string}")
     public void executeStep(int stepNumber, String description) {
-        switch (stepNumber) {
-            case 1 -> pageObject.navigateToWikipediaHomepage();
-            case 2 -> pageObject.searchForTerm("Python programming language");
-            case 3 -> pageObject.clickSearchButton();
-            case 4 -> pageObject.waitForSearchResultsToLoad();
-            case 5 -> pageObject.clickPythonProgrammingLanguageLink();
-            case 6 -> pageObject.waitForArticleToLoad();
-            case 7 -> pageObject.verifyArticleContentVisible();
-            default -> throw new IllegalArgumentException("Invalid step number: " + stepNumber);
-        }
+        Map<Integer, Runnable> steps = Map.ofEntries(
+                Map.entry(1, () -> pageObject.navigateToWikipediaHomepage()),
+                Map.entry(2, () -> pageObject.searchForTerm("Python programming language")),
+                Map.entry(3, pageObject::clickSearchButton),
+                Map.entry(4, pageObject::waitForSearchResultsToLoad),
+                Map.entry(5, pageObject::clickPythonProgrammingLanguageLink),
+                Map.entry(6, pageObject::waitForArticleToLoad),
+                Map.entry(7, pageObject::verifyArticleContentVisible)
+        );
+
+        steps.getOrDefault(stepNumber, () -> { throw new IllegalArgumentException("Invalid step number"); }).run();
     }
 
-    @Then("the test should complete successfully")
-    public void theTestShouldCompleteSuccessfully() {
-        pageObject.takeScreenshot("final-screenshot.png");
+    @Then("I should see the {string} page")
+    public void iShouldSeeThePage(String pageName) {
+        switch (pageName) {
+            case "no results" -> pageObject.verifyNoResultsPageVisible();
+            case "article" -> pageObject.verifyArticleContentVisible();
+            default -> throw new IllegalArgumentException("Invalid page name");
+        }
     }
 
     @After
