@@ -45,13 +45,13 @@ public class BookingApiTest {
         body.put("bookingdates", bookingDates);
 
         APIResponse response = api.post("/booking", body);
-        assertEquals(response.statusCode(), 200, "Booking creation failed");
-        JsonNode responseBody = api.asJson(response);
+        assertTrue(response.statusText().contains("OK"), "Booking creation failed");
+        JsonNode responseBody = response.json();
         assertTrue(responseBody.has("bookingid"), "Response does not contain booking ID");
         int bookingId = responseBody.get("bookingid").asInt();
 
         // Clean up the created booking
-        api.delete("/booking/" + bookingId, headers);
+        api.delete("/booking/" + bookingId);
     }
 
     @Test
