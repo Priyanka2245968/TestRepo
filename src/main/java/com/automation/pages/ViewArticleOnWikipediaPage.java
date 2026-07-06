@@ -3,7 +3,7 @@ package com.automation.pages;
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 
 public class ViewArticleOnWikipediaPage {
     private final Page page;
@@ -45,6 +45,6 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void takeScreenshot(String fileName) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(fileName)));
+        page.screenshot(new Page.ScreenshotOptions().setPath(Path.of(fileName)));
     }
 }
