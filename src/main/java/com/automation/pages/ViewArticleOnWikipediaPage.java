@@ -19,7 +19,7 @@ public class ViewArticleOnWikipediaPage {
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.testManager = testManager;
         this.page = testManager.getPage();
-        this.searchInput = page.locator("input[name='search']");
+        this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
         this.pythonProgrammingLanguageLink = page.locator("#vector-main-menu-dropdown-checkbox").first();
         this.noResultsMessage = page.locator(".no-results-info");
@@ -43,6 +43,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void clickPythonProgrammingLanguageLink() {
         pythonProgrammingLanguageLink.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void waitForArticleToLoad() {
