@@ -50,7 +50,7 @@ public class BookingApiTest {
         assertEquals(response.statusText(), "Created");
         assertEquals(response.status(), 201);
 
-        JsonNode jsonResponse = api.asJson(response);
+        JsonNode jsonResponse = response.asJson();
         assertTrue(jsonResponse.has("bookingid"));
         assertEquals(jsonResponse.get("booking").get("firstname").asText(), "Swarup");
         assertEquals(jsonResponse.get("booking").get("lastname").asText(), "Roy");
@@ -73,7 +73,7 @@ public class BookingApiTest {
 
         APIResponse response = api.post("/booking", body);
         assertTrue(response.status() >= 400 && response.status() < 500);
-        JsonNode jsonResponse = api.asJson(response);
+        JsonNode jsonResponse = response.asJson();
         assertTrue(jsonResponse.has("error"));
         assertEquals(jsonResponse.get("error").asText(), "Invalid data");
     }
