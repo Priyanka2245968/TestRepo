@@ -3,9 +3,8 @@ package com.automation.tests;
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticlePage;
 import com.microsoft.playwright.options.LoadState;
+import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
@@ -17,7 +16,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.clickSearchButton();
         page.waitForLoadState(LoadState.NETWORKIDLE);
         String errorMessage = pageObject.verifyErrorMessageForLongSearch();
-        assertThat(errorMessage).contains("The search query is too long");
+        Assert.assertTrue(errorMessage.contains("The search query is too long"));
         pageObject.takeScreenshot("long_search_error.png");
     }
 
@@ -29,7 +28,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.clickSearchButton();
         page.waitForLoadState(LoadState.NETWORKIDLE);
         String errorMessage = pageObject.verifyErrorMessageForInvalidSearch();
-        assertThat(errorMessage).contains("The search query could not be understood");
+        Assert.assertTrue(errorMessage.contains("The search query could not be understood"));
         pageObject.takeScreenshot("invalid_search_error.png");
     }
 }

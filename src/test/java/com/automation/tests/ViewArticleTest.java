@@ -4,9 +4,8 @@ import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticlePage;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.LoadState;
+import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class ViewArticleTest extends BaseTestManager {
 
@@ -18,7 +17,7 @@ public class ViewArticleTest extends BaseTestManager {
         pageObject.clickSearchButton();
         pageObject.clickArticleLink("Python (programming language)");
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(page).hasURL("https://en.wikipedia.org/wiki/Python_(programming_language)");
+        Assert.assertEquals(page.url(), "https://en.wikipedia.org/wiki/Python_(programming_language)");
         pageObject.takeScreenshot("article-page.png");
     }
 
@@ -26,11 +25,11 @@ public class ViewArticleTest extends BaseTestManager {
     public void testAccessWithoutAuthentication() {
         ViewArticlePage pageObject = new ViewArticlePage(this);
         pageObject.navigateToWikipedia();
-        assertThat(page).hasTitle("Wikipedia");
+        Assert.assertEquals(page.title(), "Wikipedia");
         pageObject.searchForArticle("Java programming language");
         pageObject.clickSearchButton();
         pageObject.clickArticleLink("Java (programming language)");
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(page).hasURL("https://en.wikipedia.org/wiki/Java_(programming_language)");
+        Assert.assertEquals(page.url(), "https://en.wikipedia.org/wiki/Java_(programming_language)");
     }
 }
