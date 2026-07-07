@@ -21,14 +21,16 @@ public class WikipediaArticleViewTest extends BaseTestManager {
         pageObject.takeScreenshot("python-article.png");
     }
 
-    @Test
+                @Test
     public void testWebsiteAccessibleToAnonymousUsers() {
         WikipediaArticleViewPage pageObject = new WikipediaArticleViewPage(this);
         pageObject.navigateToWikipedia();
-        assertThat(page).hasTitle("Wikipedia, the free encyclopedia");
+        assertThat(getPage()).hasTitle("Wikipedia, the free encyclopedia");
         pageObject.clickRandomArticleLink();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(page).hasTitle(title -> !title.equals("Wikipedia, the free encyclopedia"));
+        getPage().waitForLoadState(LoadState.NETWORKIDLE);
+        String randomArticleTitle = getPage().title();
+        assertThat(getPage()).hasTitle(randomArticleTitle);
+        org.testng.Assert.assertFalse(randomArticleTitle.equals("Wikipedia, the free encyclopedia"));
         pageObject.takeScreenshot("random-article.png");
     }
 
