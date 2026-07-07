@@ -36,12 +36,12 @@ public class ViewArticleOnWikipediaPage {
 
     public void verifySearchResultsLoaded() {
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(page).hasURL(url -> url.contains("Special:Search"));
+        assertThat(page).hasURL(".*Special:Search.*");
     }
 
     public void verifyNoSearchResultsLoaded() {
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(page).hasURL(url -> !url.contains("Special:Search"));
+        assertThat(page).not().hasURL(".*Special:Search.*");
     }
 
     public void clickPythonArticleLink() {
@@ -51,7 +51,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void verifyPythonArticleLoaded() {
-        assertThat(page).hasURL(url -> url.contains("/wiki/Python_(programming_language)"));
+        assertThat(page).hasURL(".*Python_(programming_language).*");
     }
 
     public void verifyArticleStructureAndPresentation() {
