@@ -15,6 +15,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.enterVeryLongTextInSearchField();
         pageObject.clickSearchButton();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
         assertThat(page).hasURL(url -> url.contains("error"));
         String errorMessage = pageObject.getErrorMessage();
         org.testng.Assert.assertTrue(errorMessage.contains("Search request is longer than the maximum allowed length"));
