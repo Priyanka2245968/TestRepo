@@ -48,11 +48,13 @@ public class ViewArticleOnWikipediaPage {
 
     public void verifyArticleContentReadable() {
         Locator articleContent = testManager.getPage().locator(".mw-parser-output");
+        articleContent.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
         assertTrue(articleContent.isVisible());
     }
 
     public void verifyNoSearchResultsShown() {
         Locator noResultsMessage = testManager.getPage().locator(".mw-search-nonefound");
+        noResultsMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
         assertTrue(noResultsMessage.isVisible());
     }
 
