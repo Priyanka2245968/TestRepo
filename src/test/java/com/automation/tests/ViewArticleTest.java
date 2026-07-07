@@ -2,7 +2,6 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticlePage;
-import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
 public class ViewArticleTest extends BaseTestManager {

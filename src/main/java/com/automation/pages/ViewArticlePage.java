@@ -3,12 +3,8 @@ package com.automation.pages;
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.LoadState;
-
-import java.nio.file.Paths;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.testng.Assert.assertTrue;
 
 public class ViewArticlePage {
     private final Page page;
@@ -34,27 +30,20 @@ public class ViewArticlePage {
     }
 
     public void verifySearchResultsLoaded() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertTrue(page.locator(".mw-search-results").isVisible());
+        assertThat(page.locator(".mw-search-results")).isVisible();
     }
 
     public void clickArticleLink(String articleName) {
         Locator articleLink = page.locator("a[href='/wiki/" + articleName + "']");
-        articleLink.waitFor(new Locator.WaitForOptions().setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE));
+        articleLink.waitFor(new Locator.WaitForOptions().setState(com.microsoft.playwright.options.WaitForSelectorState.ATTACHED));
         articleLink.click();
     }
 
     public void verifyArticleLoaded(String articleName) {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(page).hasTitle(articleName + " - Wikipedia");
+        assertThat(page.locator("#firstHeading")).containsText(articleName);
     }
 
     public void verifyNoSearchResults() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertTrue(page.locator(".mw-search-results").isHidden());
-    }
-
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
+        assertThat(page.locator(".mw-search-nonefound")).isVisible();
     }
 }

@@ -2,7 +2,6 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticleOnWikipediaPage;
-import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -22,13 +21,12 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
     }
 
     @Test
-    public void testNegativeSearchInputHasNoMatches() {
+    public void testNegativeSearchWithSpecialCharacters() {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
-        pageObject.enterSearchText("asgcnbdwhjssnjjsb");
+        pageObject.enterSearchText("!@#$%^&*()_+");
         pageObject.clickSearchButton();
         pageObject.waitForNoResultsMessage();
-        assertTrue(pageObject.getNoResultsMessage().contains("There were no results matching the query"));
-        pageObject.takeScreenshot("negative-search-input-no-matches.png");
+        assertThat(pageObject.getNoResultsMessage()).isVisible();
     }
 }

@@ -3,7 +3,6 @@ package com.automation.pages;
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.LoadState;
-import com.microsoft.playwright.options.WaitForSelectorState;
 
 public class ViewArticleOnWikipediaPage {
     private final BaseTestManager testManager;
@@ -34,7 +33,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void waitForErrorMessage() {
-        errorMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        errorMessage.waitFor();
     }
 
     public String getErrorMessage() {
@@ -42,14 +41,14 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void waitForNoResultsMessage() {
-        noResultsMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+        noResultsMessage.waitFor();
     }
 
-    public String getNoResultsMessage() {
-        return noResultsMessage.textContent();
+    public Locator getNoResultsMessage() {
+        return noResultsMessage;
     }
 
-    public void takeScreenshot(String filename) {
-        testManager.getPage().screenshot(new com.microsoft.playwright.Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    public void takeScreenshot(String fileName) {
+        testManager.getPage().screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(Paths.get(fileName)));
     }
 }
