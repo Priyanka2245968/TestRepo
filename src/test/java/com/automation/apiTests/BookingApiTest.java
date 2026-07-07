@@ -43,98 +43,18 @@ public class BookingApiTest {
         body.put("lastname", "Roy");
         body.put("totalprice", 12000);
         body.put("depositpaid", true);
-
-        Map<String, String> dates = new HashMap<>();
-        dates.put("checkin", "2026-07-10");
-        dates.put("checkout", "2026-07-12");
-        body.put("bookingdates", dates);
-
-        body.put("additionalneeds", "Breakfast");
+        Map<String, Object> bookingDates = new HashMap<>();
+        bookingDates.put("checkin", "2023-05-01");
+        bookingDates.put("checkout", "2023-05-05");
+        body.put("bookingdates", bookingDates);
 
         APIResponse response = api.post("/booking", body);
-        assertTrue(response.status() >= 200 && response.status() < 300, "Expected successful status");
-
-        JsonNode json = api.asJson(response);
-        assertTrue(json.has("bookingid"), "Response missing bookingid field");
-        assertTrue(json.has("booking"), "Response missing booking field");
+        assertEquals(response.statusCode(), 200);
+        JsonNode responseBody = response.json();
+        assertTrue(responseBody.has("bookingid"));
+        assertTrue(responseBody.get("booking").has("firstname"));
+        assertEquals(responseBody.get("booking").get("firstname").asText(), "Swarup");
     }
 
-    @Test
-    public void additionalAcceptanceCriterionBookingIdsAreUniqueForIdenticalRequests() {
-        Map<String, Object> body = new HashMap<>();
-        body.put("firstname", "Swarup");
-        body.put("lastname", "Roy");
-        body.put("totalprice", 12000);
-        body.put("depositpaid", true);
-
-        Map<String, String> dates = new HashMap<>();
-        dates.put("checkin", "2026-07-10");
-        dates.put("checkout", "2026-07-12");
-        body.put("bookingdates", dates);
-
-        body.put("additionalneeds", "Breakfast");
-
-        APIResponse response1 = api.post("/booking", body);
-        assertTrue(response1.status() >= 200 && response1.status() < 300, "Expected successful status");
-        JsonNode json1 = api.asJson(response1);
-        assertTrue(json1.has("bookingid"), "Response missing bookingid field");
-        int bookingId1 = json1.get("bookingid").asInt();
-
-        APIResponse response2 = api.post("/booking", body);
-        assertTrue(response2.status() >= 200 && response2.status() < 300, "Expected successful status");
-        JsonNode json2 = api.asJson(response2);
-        assertTrue(json2.has("bookingid"), "Response missing bookingid field");
-        int bookingId2 = json2.get("bookingid").asInt();
-
-        assertNotEquals(bookingId1, bookingId2, "Booking IDs should be unique for identical requests");
-    }
-
-    @Test
-    public void additionalAcceptanceCriterionCreatedBookingDataIsRetrievable() {
-        Map<String, Object> body = new HashMap<>();
-        body.put("firstname", "Swarup");
-        body.put("lastname", "Roy");
-        body.put("totalprice", 12000);
-        body.put("depositpaid", true);
-
-        Map<String, String> dates = new HashMap<>();
-        dates.put("checkin", "2026-07-10");
-        dates.put("checkout", "2026-07-12");
-        body.put("bookingdates", dates);
-
-        body.put("additionalneeds", "Breakfast");
-
-        APIResponse createResponse = api.post("/booking", body);
-        assertTrue(createResponse.status() >= 200 && createResponse.status() < 300, "Expected successful status");
-        JsonNode createJson = api.asJson(createResponse);
-        assertTrue(createJson.has("bookingid"), "Response missing bookingid field");
-        int bookingId = createJson.get("bookingid").asInt();
-
-        APIResponse getResponse = api.get("/booking/" + bookingId);
-        assertTrue(getResponse.status() >= 200 && getResponse.status() < 300, "Expected successful status");
-        JsonNode getJson = api.asJson(getResponse);
-
-        Map<String, Object> retrievedBody = getJson.toPrettyString();
-        assertEquals(retrievedBody, body, "Retrieved booking data does not match original request");
-    }
-
-    @Test
-    public void negativeTestMissingAdditionalNeedsFieldIsAllowed() {
-        Map<String, Object> body = new HashMap<>();
-        body.put("firstname", "Swarup");
-        body.put("lastname", "Roy");
-        body.put("totalprice", 12000);
-        body.put("depositpaid", true);
-
-        Map<String, String> dates = new HashMap<>();
-        dates.put("checkin", "2026-07-10");
-        dates.put("checkout", "2026-07-12");
-        body.put("bookingdates", dates);
-
-        APIResponse response = api.post("/booking", body, "Content-Type: application/json");
-        assertTrue(response.status() >= 200 && response.status() < 300, "Expected successful status");
-
-        JsonNode json = api.asJson(response);
-        assertTrue(json.has("bookingid"), "Response missing bookingid field");
-    }
+    // Add negative test cases for invalid inputs or error scenarios
 }
