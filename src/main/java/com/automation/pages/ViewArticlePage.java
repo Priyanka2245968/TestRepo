@@ -15,7 +15,7 @@ public class ViewArticlePage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("input[name='search']");
         this.searchButton = page.locator("button[type='submit']");
-        this.articleLink = page.locator(".mw-search-result-heading a");
+        this.articleLink = page.locator("a.mw-search-results-object");
         this.searchResultsContainer = page.locator(".mw-search-results");
     }
 
@@ -40,6 +40,6 @@ public class ViewArticlePage {
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        page.screenshot(new Page.ScreenshotOptions().setPath(filename));
     }
 }

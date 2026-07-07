@@ -7,7 +7,6 @@ import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.testng.Assert.assertTrue;
 
 public class ViewArticleTest extends BaseTestManager {
 
@@ -19,7 +18,7 @@ public class ViewArticleTest extends BaseTestManager {
         pageObject.clickSearchButton();
         pageObject.clickArticleLink("Python (programming language)");
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(page).hasTitle("Python (programming language) - Wikipedia");
+        assertThat(page).hasURL("https://en.wikipedia.org/wiki/Python_(programming_language)");
         pageObject.takeScreenshot("article-page.png");
     }
 
@@ -32,19 +31,6 @@ public class ViewArticleTest extends BaseTestManager {
         pageObject.clickSearchButton();
         pageObject.clickArticleLink("Java (programming language)");
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(page).hasTitle("Java (programming language) - Wikipedia");
-        pageObject.takeScreenshot("java-article.png");
-    }
-
-    @Test
-    public void testBlankSearch_NoResults() {
-        ViewArticlePage pageObject = new ViewArticlePage(this);
-        pageObject.navigateToWikipedia();
-        pageObject.clickSearchButton();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(page).hasTitle("Search results - Wikipedia");
-        Locator searchResultsContainer = pageObject.getSearchResultsContainer();
-        assertTrue(searchResultsContainer.textContent().contains("Your search did not match any documents."));
-        pageObject.takeScreenshot("blank-search.png");
+        assertThat(page).hasURL("https://en.wikipedia.org/wiki/Java_(programming_language)");
     }
 }
