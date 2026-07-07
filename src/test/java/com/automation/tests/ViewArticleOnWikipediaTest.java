@@ -2,8 +2,6 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticleOnWikipediaPage;
-import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
@@ -36,7 +34,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
     public void testNegativeNoSearchTerm() {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
-        pageObject.searchForArticle("")
+        pageObject.searchForArticle("");
         pageObject.verifyNoSearchResultsLoaded();
     }
 }
