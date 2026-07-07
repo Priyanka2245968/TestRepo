@@ -3,6 +3,7 @@ package com.automation.pages;
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
@@ -19,31 +20,34 @@ public class ViewArticlePage {
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org/");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void searchForArticle(String searchTerm) {
         searchInput.fill(searchTerm);
+        searchButton.click();
     }
 
     public void clickSearchButton() {
         searchButton.click();
     }
 
-    public void verifySearchResultsLoaded() {
-        assertThat(page.locator(".mw-search-results")).isVisible();
+    public void waitForSearchResults() {
+        page.locator(".mw-search-results").waitFor(new Locator.WaitForOptions().setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE));
     }
 
     public void clickArticleLink(String articleName) {
         Locator articleLink = page.locator("a[href='/wiki/" + articleName + "']");
-        articleLink.waitFor(new Locator.WaitForOptions().setState(com.microsoft.playwright.options.WaitForSelectorState.ATTACHED));
+        articleLink.waitFor(new Locator.WaitForOptions().setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE));
         articleLink.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void verifyArticleLoaded(String articleName) {
         assertThat(page.locator("#firstHeading")).containsText(articleName);
     }
 
-    public void verifyNoSearchResults() {
-        assertThat(page.locator(".mw-search-nonefound")).isVisible();
+    public void waitForNoSearchResults() {
+        page.locator(".mw-search-nonefound").waitFor(new Locator.WaitForOptions().setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE));
     }
 }

@@ -11,9 +11,9 @@ public class ViewArticleTest extends BaseTestManager {
         ViewArticlePage pageObject = new ViewArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("Python programming language");
-        pageObject.verifySearchResultsLoaded();
-        pageObject.clickArticleLink("Python");
-        pageObject.verifyArticleLoaded("Python");
+        pageObject.waitForSearchResults();
+        pageObject.clickArticleLink("Python (programming language)");
+        pageObject.verifyArticleLoaded("Python (programming language)");
     }
 
     @Test
@@ -21,6 +21,7 @@ public class ViewArticleTest extends BaseTestManager {
         ViewArticlePage pageObject = new ViewArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("HTML");
+        pageObject.waitForSearchResults();
         pageObject.clickArticleLink("HTML");
         pageObject.verifyArticleLoaded("HTML");
     }
@@ -30,6 +31,6 @@ public class ViewArticleTest extends BaseTestManager {
         ViewArticlePage pageObject = new ViewArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        pageObject.verifyNoSearchResults();
+        pageObject.waitForNoSearchResults();
     }
 }

@@ -33,10 +33,11 @@ public class ViewArticleOnWikipediaPage {
 
     public void clickSearchButton() {
         searchButton.click();
+        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void waitForErrorMessage() {
-        errorMessage.waitFor();
+        errorMessage.waitFor(new Locator.WaitForOptions().setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE));
     }
 
     public String getErrorMessage() {
@@ -44,7 +45,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void waitForNoResultsMessage() {
-        noResultsMessage.waitFor();
+        noResultsMessage.waitFor(new Locator.WaitForOptions().setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE));
     }
 
     public Locator getNoResultsMessage() {
