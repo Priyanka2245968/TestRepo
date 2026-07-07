@@ -14,7 +14,7 @@ public class ViewArticleOnWikipediaPage {
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
-        this.searchIcon = page.locator("//button[contains(@class,'search')]");
+        this.searchIcon = page.locator("//button[contains(normalize-space(.),\"search")]");
         this.searchResultsContainer = page.locator(".mw-search-results");
     }
 
@@ -35,7 +35,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void clickArticleLink(String articleTitle) {
-        Locator articleLink = searchResultsContainer.locator("a", new Page.GetLocatorOptions().setHasText(articleTitle));
+        Locator articleLink = searchResultsContainer.locator("a", new Locator.LocatorOptions().setHasText(articleTitle));
         articleLink.click();
     }
 
