@@ -9,7 +9,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
-        @Test
+    @Test
     public void testNegativeWhenVeryLongTextIsProvided() {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
