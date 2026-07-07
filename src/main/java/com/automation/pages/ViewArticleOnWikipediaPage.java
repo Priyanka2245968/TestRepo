@@ -8,6 +8,8 @@ import org.testng.Assert;
 
 import java.nio.file.Paths;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class ViewArticleOnWikipediaPage {
     private final Page page;
     private final Locator searchInput;
@@ -17,8 +19,8 @@ public class ViewArticleOnWikipediaPage {
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
-        this.searchButton = page.locator("//button[contains(normalize-space(.),'Search')]");
-        this.pythonArticleLink = page.locator("//a[contains(@href, '/wiki/Python_(programming_language)')]/h3");
+        this.searchButton = page.locator("button[type='submit']");
+        this.pythonArticleLink = page.locator("#vector-main-menu-dropdown-checkbox").first();
     }
 
     public void navigateToWikipedia() {
@@ -34,22 +36,22 @@ public class ViewArticleOnWikipediaPage {
 
     public void verifySearchResultsLoaded() {
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        Assert.assertTrue(page.url().contains("Special:Search"));
+        assertThat(page).hasURL(url -> url.contains("Special:Search"));
     }
 
     public void verifyNoSearchResultsLoaded() {
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        Assert.assertFalse(page.url().contains("Special:Search"));
+        assertThat(page).hasURL(url -> !url.contains("Special:Search"));
     }
 
     public void clickPythonArticleLink() {
         System.out.println("\ud83d\udccd Clicking on the 'Python (programming language)' link");
         pythonArticleLink.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void verifyPythonArticleLoaded() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        Assert.assertTrue(page.url().contains("/wiki/Python_(programming_language)"));
+        assertThat(page).hasURL(url -> url.contains("/wiki/Python_(programming_language)"));
     }
 
     public void verifyArticleStructureAndPresentation() {
