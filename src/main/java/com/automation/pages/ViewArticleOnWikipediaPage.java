@@ -6,6 +6,8 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 import org.testng.Assert;
 
+import java.nio.file.Paths;
+
 public class ViewArticleOnWikipediaPage {
     private final Page page;
     private final Locator searchInput;
@@ -25,7 +27,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void searchForArticle(String term) {
-        System.out.println("📍 In the 'Search Wikipedia' field, enter '" + term + "'");
+        System.out.println("\ud83d\udccd In the 'Search Wikipedia' field, enter '" + term + "'");
         searchInput.fill(term);
         searchButton.click();
     }
@@ -41,7 +43,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void clickPythonArticleLink() {
-        System.out.println("📍 Clicking on the 'Python (programming language)' link");
+        System.out.println("\ud83d\udccd Clicking on the 'Python (programming language)' link");
         pythonArticleLink.click();
     }
 
@@ -65,6 +67,6 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void takeScreenshot(String fileName) {
-        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(fileName));
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(fileName)));
     }
 }
