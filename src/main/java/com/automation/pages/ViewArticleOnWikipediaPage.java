@@ -7,7 +7,7 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 import java.nio.file.Paths;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 public class ViewArticleOnWikipediaPage {
     private final BaseTestManager testManager;
@@ -55,7 +55,7 @@ public class ViewArticleOnWikipediaPage {
     public void verifyNoSearchResultsShown() {
         Locator noResultsMessage = testManager.getPage().locator(".mw-search-nonefound");
         noResultsMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        assertThat(noResultsMessage).not().isVisible();
+        assertTrue(noResultsMessage.isVisible(), "No search results message is not visible");
     }
 
     public void takeScreenshot(String fileName) {
