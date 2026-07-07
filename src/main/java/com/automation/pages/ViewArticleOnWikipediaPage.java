@@ -4,6 +4,7 @@ import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
+import java.nio.file.Paths;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static org.testng.Assert.assertTrue;
@@ -18,7 +19,7 @@ public class ViewArticleOnWikipediaPage {
         this.testManager = testManager;
         this.searchInput = testManager.getPage().locator("#searchInput");
         this.searchButton = testManager.getPage().locator("button[type='submit']");
-        this.pythonArticleLink = testManager.getPage().locator("//a[contains(text(), 'Python (programming language)')]")
+        this.pythonArticleLink = testManager.getPage().locator("#vector-main-menu-dropdown-checkbox").first();
     }
 
     public void navigateToWikipedia() {
@@ -56,6 +57,6 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void takeScreenshot(String fileName) {
-        testManager.getPage().screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(fileName));
+        testManager.getPage().screenshot(new com.microsoft.playwright.Page.ScreenshotOptions().setPath(Paths.get(fileName)));
     }
 }
