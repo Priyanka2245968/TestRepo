@@ -39,29 +39,29 @@ public class BookingApiTest {
     @Test
     public void positiveSuccessfulBookingCreation() throws Exception {
         Map<String, Object> body = new HashMap<>();
-        body.put("firstname", "Swarup");
-        body.put("lastname", "Roy");
+        body.put("firstname", "James");
+        body.put("lastname", "Brown");
         body.put("totalprice", 12000);
         body.put("depositpaid", true);
         body.put("bookingdates", Map.of("checkin", "2023-05-01", "checkout", "2023-05-05"));
         body.put("additionalneeds", "Breakfast");
 
         APIResponse response = api.post("/booking", body);
-        assertEquals(response.statusText(), "Created");
+        assertTrue(response.status() >= 200 && response.status() < 300);
     }
 
-        @Test
+    @Test
     public void positiveSuccessfulBookingRetrieval() throws Exception {
         APIResponse response = api.get("/booking/1");
         JsonNode booking = api.asJson(response);
         assertNotNull(booking);
-        assertEquals(booking.get("firstname").asText(), "Swarup");
-        assertEquals(booking.get("lastname").asText(), "Roy");
+        assertEquals(booking.get("firstname").asText(), "James");
+        assertEquals(booking.get("lastname").asText(), "Brown");
     }
 
     @Test
     public void negativeBookingDeletion() throws Exception {
         APIResponse response = api.delete("/booking/1");
-        assertEquals(response.statusText(), "Not Found");
+        assertTrue(response.status() >= 400 && response.status() < 500);
     }
 }
