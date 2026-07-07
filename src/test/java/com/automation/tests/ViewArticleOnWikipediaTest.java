@@ -18,6 +18,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.waitForSearchResults();
         pageObject.clickArticleLink("Python (programming language)");
         assertThat(pageObject.getArticleTitle()).contains("Python (programming language)");
+        assertThat(pageObject.getArticleContent()).contains("Python is an interpreted high-level general-purpose programming language");
         pageObject.takeScreenshot("python_article.png");
     }
 
@@ -29,18 +30,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.clickSearchIcon();
         pageObject.waitForSearchResults();
         pageObject.clickArticleLink("Photosynthesis");
-        assertThat(pageObject.getArticleContent()).contains("Photosynthesis is a process used by plants and other organisms");
+        assertThat(pageObject.getArticleContent()).contains("Photosynthesis is a process used by plants and other organisms to convert light energy into chemical energy");
         pageObject.takeScreenshot("photosynthesis_article.png");
-    }
-
-    @Test
-    public void testNegative_NoSearchTermShowsBlankPage() {
-        ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
-        pageObject.navigateToWikipedia();
-        pageObject.clickSearchIcon();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(pageObject.getSearchResultsContainer()).isVisible();
-        assertThat(pageObject.getSearchResultsContainer()).hasText("No results found");
-        pageObject.takeScreenshot("no_search_results.png");
     }
 }

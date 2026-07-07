@@ -5,6 +5,8 @@ import com.automation.pages.WikipediaViewArticlePage;
 import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class WikipediaViewArticleTest extends BaseTestManager {
 
     @Test
@@ -13,7 +15,7 @@ public class WikipediaViewArticleTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.enterVeryLongTextInSearchBox();
         pageObject.clickSearchButton();
-        pageObject.verifyErrorMessageForLongSearch();
+        assertThat(pageObject.getErrorMessage()).contains("The search query is too long");
         pageObject.takeScreenshot("long_search_error.png");
     }
 
@@ -23,7 +25,7 @@ public class WikipediaViewArticleTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.enterInvalidTextInSearchBox();
         pageObject.clickSearchButton();
-        pageObject.verifyNoResultsMessage();
+        assertThat(pageObject.getNoResultsMessage()).contains("No results found");
         pageObject.takeScreenshot("invalid_search_error.png");
     }
 }

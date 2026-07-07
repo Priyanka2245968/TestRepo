@@ -4,19 +4,20 @@ import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
-import org.testng.Assert;
 
 public class WikipediaViewArticlePage {
     private final Page page;
     private final Locator searchInput;
     private final Locator searchButton;
-    private final Locator submitButton;
+    private final Locator errorMessage;
+    private final Locator noResultsMessage;
 
     public WikipediaViewArticlePage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
-        this.searchButton = page.locator("//button[contains(normalize-space(.),'search')]");
-        this.submitButton = page.locator("button[type='submit']");
+        this.searchButton = page.locator("//button[contains(@class,'search')]");
+        this.errorMessage = page.locator("//div[@class='mw-message-box']");
+        this.noResultsMessage = page.locator(".mw-search-nonefound");
     }
 
     public void navigateToWikipedia() {
@@ -37,19 +38,15 @@ public class WikipediaViewArticlePage {
         searchButton.click();
     }
 
-    public void verifyErrorMessageForLongSearch() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        String errorMessage = page.locator("//div[@class='mw-message-box']").textContent();
-        Assert.assertTrue(errorMessage.contains("Search request is longer than the maximum allowed length"));
+    public String getErrorMessage() {
+        return errorMessage.textContent();
     }
 
-    public void verifyNoResultsMessage() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        String noResultsMessage = page.locator("//p[@class='mw-search-nonefound']").textContent();
-        Assert.assertTrue(noResultsMessage.contains("There were no results matching the query"));
+    public String getNoResultsMessage() {
+        return noResultsMessage.textContent();
     }
 
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    public void takeScreenshot(String fileName) {
+        page.screenshot(new Page.ScreenshotOptions().setPath(fileName));
     }
 }

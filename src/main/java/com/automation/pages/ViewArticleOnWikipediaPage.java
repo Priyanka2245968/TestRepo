@@ -14,7 +14,7 @@ public class ViewArticleOnWikipediaPage {
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
-        this.searchIcon = page.locator("//button[contains(normalize-space(.),'search')]");
+        this.searchIcon = page.locator("//button[contains(@class,'search')]");
         this.searchResultsContainer = page.locator(".mw-search-results");
     }
 
@@ -35,23 +35,19 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void clickArticleLink(String articleTitle) {
-        Locator articleLink = page.locator("button[type='submit']", new Page.GetLocatorOptions().setHasText(articleTitle));
+        Locator articleLink = searchResultsContainer.locator("a", new Page.GetLocatorOptions().setHasText(articleTitle));
         articleLink.click();
     }
 
     public String getArticleTitle() {
-        return page.locator("h1").textContent();
+        return page.locator("#firstHeading").textContent();
     }
 
     public String getArticleContent() {
         return page.locator(".mw-parser-output").textContent();
     }
 
-    public Locator getSearchResultsContainer() {
-        return searchResultsContainer;
-    }
-
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    public void takeScreenshot(String fileName) {
+        page.screenshot(new Page.ScreenshotOptions().setPath(fileName));
     }
 }
