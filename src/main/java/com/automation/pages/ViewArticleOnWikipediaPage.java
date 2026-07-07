@@ -19,8 +19,8 @@ public class ViewArticleOnWikipediaPage {
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
-        this.searchButton = page.locator("button[type='submit']");
-        this.pythonArticleLink = page.locator("#vector-main-menu-dropdown-checkbox").first();
+        this.searchButton = page.locator("//button[contains(normalize-space(.),'Search')]").first();
+        this.pythonArticleLink = page.locator("text='Python (programming language)'").first();
     }
 
     public void navigateToWikipedia() {
@@ -32,15 +32,14 @@ public class ViewArticleOnWikipediaPage {
         System.out.println("\ud83d\udccd In the 'Search Wikipedia' field, enter '" + term + "'");
         searchInput.fill(term);
         searchButton.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void verifySearchResultsLoaded() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
         assertThat(page).hasURL(".*Special:Search.*");
     }
 
     public void verifyNoSearchResultsLoaded() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
         assertThat(page).not().hasURL(".*Special:Search.*");
     }
 
@@ -51,7 +50,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void verifyPythonArticleLoaded() {
-        assertThat(page).hasURL(".*Python_(programming_language).*");
+        assertThat(page).hasURL("https://en.wikipedia.org/wiki/Python_(programming_language)");
     }
 
     public void verifyArticleStructureAndPresentation() {
