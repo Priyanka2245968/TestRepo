@@ -18,6 +18,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org/");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void enterVeryLongTextInSearchField() {
@@ -33,15 +34,14 @@ public class ViewArticleOnWikipediaPage {
 
     public void clickSearchButton() {
         searchButton.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public String getErrorMessage() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
         return page.locator("text=Search request is longer than the maximum allowed length").textContent();
     }
 
     public String getNoResultsMessage() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
         return page.locator("text=There were no results matching the query").textContent();
     }
 

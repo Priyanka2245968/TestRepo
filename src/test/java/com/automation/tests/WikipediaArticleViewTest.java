@@ -16,8 +16,7 @@ public class WikipediaArticleViewTest extends BaseTestManager {
         pageObject.searchForArticle("Python programming language");
         pageObject.clickSearchButton();
         pageObject.clickPythonProgrammingLanguageLink();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(page).hasTitle("Category:Python (programming language) - Wikipedia");
+        assertThat(page).hasTitle("Python (programming language) - Wikipedia");
         pageObject.takeScreenshot("python-article.png");
     }
 
@@ -25,11 +24,10 @@ public class WikipediaArticleViewTest extends BaseTestManager {
     public void testWebsiteAccessibleToAnonymousUsers() {
         WikipediaArticleViewPage pageObject = new WikipediaArticleViewPage(this);
         pageObject.navigateToWikipedia();
-        assertThat(getPage()).hasTitle("Wikipedia");
+        assertThat(page).hasTitle("Wikipedia");
         pageObject.clickRandomArticleLink();
-        getPage().waitForLoadState(LoadState.NETWORKIDLE);
-        String randomArticleTitle = getPage().title();
-        assertThat(getPage()).hasTitle(randomArticleTitle);
+        String randomArticleTitle = page.title();
+        assertThat(page).hasTitle(randomArticleTitle);
         org.testng.Assert.assertFalse(randomArticleTitle.equals("Wikipedia"));
         pageObject.takeScreenshot("random-article.png");
     }
@@ -39,7 +37,6 @@ public class WikipediaArticleViewTest extends BaseTestManager {
         WikipediaArticleViewPage pageObject = new WikipediaArticleViewPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
         assertThat(page).hasTitle("Search - Wikipedia");
         String noResultsMessage = pageObject.getNoResultsMessage();
         org.testng.Assert.assertTrue(noResultsMessage.contains("There were no results matching the query"));
