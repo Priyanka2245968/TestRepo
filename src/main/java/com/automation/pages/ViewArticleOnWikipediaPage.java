@@ -2,7 +2,10 @@ package com.automation.pages;
 
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
+
+import java.nio.file.Paths;
 
 public class ViewArticleOnWikipediaPage {
     private final BaseTestManager testManager;
@@ -49,6 +52,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void takeScreenshot(String fileName) {
-        testManager.getPage().screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(Paths.get(fileName)));
+        Page page = testManager.getPage();
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(fileName)));
     }
 }
