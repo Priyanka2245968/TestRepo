@@ -36,7 +36,7 @@ public class BookingApiTest {
         api.dispose();
     }
 
-        @Test
+                @Test
     public void positiveCreateSuccessfulBookingWithAllFields() {
         Map<String, Object> body = new HashMap<>();
         body.put("firstname", "Swarup");
@@ -50,7 +50,7 @@ public class BookingApiTest {
 
         APIResponse response = api.post("/booking", body);
         JsonNode responseBody = api.asJson(response);
-        org.testng.Assert.assertTrue(response.status() >= 200 && response.status() < 300);
+        org.testng.Assert.assertTrue(response.statusText().contains("OK"));
         org.testng.Assert.assertTrue(responseBody.has("bookingid"));
         org.testng.Assert.assertTrue(responseBody.get("booking").has("firstname"));
         org.testng.Assert.assertEquals(responseBody.get("booking").get("firstname").asText(), "Swarup");
