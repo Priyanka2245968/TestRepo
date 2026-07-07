@@ -26,10 +26,12 @@ public class ViewArticlePage {
     public void searchForArticle(String searchTerm) {
         searchInput.fill(searchTerm);
         searchButton.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void clickSearchButton() {
         searchButton.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void waitForSearchResults() {

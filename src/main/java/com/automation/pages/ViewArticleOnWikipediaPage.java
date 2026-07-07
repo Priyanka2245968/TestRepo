@@ -8,23 +8,23 @@ import com.microsoft.playwright.options.LoadState;
 import java.nio.file.Paths;
 
 public class ViewArticleOnWikipediaPage {
-    private final BaseTestManager testManager;
+    private final Page page;
     private final Locator searchInput;
     private final Locator searchButton;
     private final Locator errorMessage;
     private final Locator noResultsMessage;
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
-        this.testManager = testManager;
-        this.searchInput = testManager.getPage().locator("#searchInput");
-        this.searchButton = testManager.getPage().locator("button[type='submit']");
-        this.errorMessage = testManager.getPage().locator(".mw-message-box");
-        this.noResultsMessage = testManager.getPage().locator(".mw-search-nonefound");
+        this.page = testManager.getPage();
+        this.searchInput = page.locator("#searchInput");
+        this.searchButton = page.locator("button[type='submit']");
+        this.errorMessage = page.locator(".mw-message-box");
+        this.noResultsMessage = page.locator(".mw-search-nonefound");
     }
 
     public void navigateToWikipedia() {
-        testManager.getPage().navigate("https://www.wikipedia.org/");
-        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
+        page.navigate("https://www.wikipedia.org/");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void enterSearchText(String text) {
@@ -33,7 +33,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void clickSearchButton() {
         searchButton.click();
-        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void waitForErrorMessage() {
@@ -53,7 +53,6 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void takeScreenshot(String fileName) {
-        Page page = testManager.getPage();
         page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(fileName)));
     }
 }

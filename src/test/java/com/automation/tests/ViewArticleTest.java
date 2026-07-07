@@ -12,7 +12,7 @@ public class ViewArticleTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("Python programming language");
         pageObject.waitForSearchResults();
-        pageObject.clickArticleLink("Python (programming language)");
+        pageObject.clickArticleLink("Python_(programming_language)");
         pageObject.verifyArticleLoaded("Python (programming language)");
     }
 
