@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
-    @Test
+        @Test
     public void testNegativeWhenVeryLongTextIsProvided() {
         ViewArticlePage pageObject = new ViewArticlePage(this);
         pageObject.navigateToWikipedia();
@@ -20,7 +20,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.takeScreenshot("long_search_error.png");
     }
 
-    @Test
+        @Test
     public void testNegativeWhenInvalidTextIsProvided() {
         ViewArticlePage pageObject = new ViewArticlePage(this);
         pageObject.navigateToWikipedia();
