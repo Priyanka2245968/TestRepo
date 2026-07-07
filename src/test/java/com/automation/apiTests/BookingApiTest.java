@@ -50,9 +50,10 @@ public class BookingApiTest {
         assertEquals(response.statusText(), "Created");
     }
 
-    @Test
+        @Test
     public void positiveSuccessfulBookingRetrieval() throws Exception {
-        JsonNode booking = api.get("/booking/1").bodyAsJson();
+        APIResponse response = api.get("/booking/1");
+        JsonNode booking = api.asJson(response);
         assertNotNull(booking);
         assertEquals(booking.get("firstname").asText(), "Swarup");
         assertEquals(booking.get("lastname").asText(), "Roy");
