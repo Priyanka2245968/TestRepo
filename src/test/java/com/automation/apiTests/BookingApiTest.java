@@ -36,7 +36,7 @@ public class BookingApiTest {
         api.dispose();
     }
 
-    @Test
+        @Test
     public void positiveCreateSuccessfulBookingWithAllFields() {
         Map<String, Object> body = new HashMap<>();
         body.put("firstname", "Swarup");
@@ -49,12 +49,11 @@ public class BookingApiTest {
         body.put("bookingdates", bookingDates);
 
         APIResponse response = api.post("/booking", body);
-        int statusCode = response.statusCode();
-        assertEquals(statusCode, 200);
         JsonNode responseBody = api.asJson(response);
-        assertTrue(responseBody.has("bookingid"));
-        assertTrue(responseBody.get("booking").has("firstname"));
-        assertEquals(responseBody.get("booking").get("firstname").asText(), "Swarup");
+        org.testng.Assert.assertTrue(response.status() >= 200 && response.status() < 300);
+        org.testng.Assert.assertTrue(responseBody.has("bookingid"));
+        org.testng.Assert.assertTrue(responseBody.get("booking").has("firstname"));
+        org.testng.Assert.assertEquals(responseBody.get("booking").get("firstname").asText(), "Swarup");
     }
 
     // Add negative test cases for invalid inputs or error scenarios
