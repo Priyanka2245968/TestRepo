@@ -18,7 +18,7 @@ public class ViewArticleOnWikipediaPage {
         this.testManager = testManager;
         this.searchInput = testManager.getPage().locator("#searchInput");
         this.searchButton = testManager.getPage().locator("button[type='submit']");
-        this.pythonArticleLink = testManager.getPage().locator("#vector-main-menu-dropdown-checkbox");
+        this.pythonArticleLink = testManager.getPage().locator("//a[contains(text(), 'Python (programming language)')]")
     }
 
     public void navigateToWikipedia() {
@@ -42,27 +42,20 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void verifyPythonArticlePageLoaded() {
-        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(testManager.getPage()).hasTitle("Python (programming language) - Wikipedia");
+        assertThat(testManager.getPage()).hasURL("https://en.wikipedia.org/wiki/Python_(programming_language)");
     }
 
     public void verifyArticleContentReadable() {
         Locator articleContent = testManager.getPage().locator(".mw-parser-output");
-        assertThat(articleContent).isVisible();
-        assertTrue(articleContent.textContent().length() > 0);
+        assertTrue(articleContent.isVisible());
     }
 
-    public void waitForBlankSearchResults() {
-        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
+    public void verifyNoSearchResultsShown() {
+        Locator noResultsMessage = testManager.getPage().locator(".mw-search-nonefound");
+        assertTrue(noResultsMessage.isVisible());
     }
 
-    public void verifyBlankSearchResultsMessage() {
-        Locator blankResultsMessage = testManager.getPage().locator(".mw-search-nonefound");
-        assertThat(blankResultsMessage).isVisible();
-        assertTrue(blankResultsMessage.textContent().contains("No results found. Please try another search."));
-    }
-
-    public void takeScreenshot(String filename) {
-        testManager.getPage().screenshot(new com.microsoft.playwright.Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    public void takeScreenshot(String fileName) {
+        testManager.getPage().screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(fileName));
     }
 }

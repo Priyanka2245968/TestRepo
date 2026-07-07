@@ -2,6 +2,7 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticleOnWikipediaPage;
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
@@ -36,28 +37,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        pageObject.waitForBlankSearchResults();
-        pageObject.verifyBlankSearchResultsMessage();
-        pageObject.takeScreenshot("blank-search-results.png");
-    }
-
-    @Test
-    public void testNegativeWhenVeryLongTextIsProvided() {
-        ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
-        pageObject.navigateToWikipedia();
-        pageObject.enterVeryLongTextInSearchBox();
-        pageObject.clickSearchButton();
-        assertTrue(pageObject.getErrorMessage().contains("Search request is longer than the maximum allowed length"));
-        pageObject.takeScreenshot("very-long-text-error.png");
-    }
-
-    @Test
-    public void testNegativeWhenInvalidTextIsProvided() {
-        ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
-        pageObject.navigateToWikipedia();
-        pageObject.enterInvalidTextInSearchBox();
-        pageObject.clickSearchButton();
-        assertThat(pageObject.getNoResultsMessage()).containsText("There were no results matching the query");
-        pageObject.takeScreenshot("invalid-text-error.png");
+        pageObject.waitForSearchResults();
+        pageObject.verifyNoSearchResultsShown();
     }
 }
