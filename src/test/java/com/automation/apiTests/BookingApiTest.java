@@ -49,8 +49,9 @@ public class BookingApiTest {
         body.put("bookingdates", bookingDates);
 
         APIResponse response = api.post("/booking", body);
-        assertEquals(response.statusCode(), 200);
-        JsonNode responseBody = response.json();
+        int statusCode = response.statusCode();
+        assertEquals(statusCode, 200);
+        JsonNode responseBody = api.asJson(response);
         assertTrue(responseBody.has("bookingid"));
         assertTrue(responseBody.get("booking").has("firstname"));
         assertEquals(responseBody.get("booking").get("firstname").asText(), "Swarup");
