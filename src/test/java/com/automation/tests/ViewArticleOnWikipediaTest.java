@@ -37,5 +37,6 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.clickSearchButton();
         pageObject.waitForSearchResults();
         pageObject.verifyNoSearchResultsShown();
+        pageObject.takeScreenshot("no-search-results.png");
     }
 }
