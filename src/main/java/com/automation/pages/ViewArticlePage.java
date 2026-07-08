@@ -45,12 +45,16 @@ public class ViewArticlePage {
         return errorMessage.textContent();
     }
 
-    public String getSearchResultsMessage() {
+    public String getNoResultsMessage() {
         return noResultsMessage.textContent();
     }
 
     public void waitForSearchResults() {
         searchResultsContainer.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+    }
+
+    public void waitForErrorMessage() {
+        errorMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void takeScreenshot(String filename) {

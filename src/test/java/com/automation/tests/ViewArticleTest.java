@@ -15,6 +15,7 @@ public class ViewArticleTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.enterLongSearchText();
         pageObject.clickSearchButton();
+        pageObject.waitForErrorMessage();
         assertTrue(pageObject.getErrorMessage().contains("Search request is longer than the maximum allowed length"));
         pageObject.takeScreenshot("long_search_error.png");
     }
@@ -26,7 +27,7 @@ public class ViewArticleTest extends BaseTestManager {
         pageObject.enterInvalidSearchText("asdfghjklzxcvbnm");
         pageObject.clickSearchButton();
         pageObject.waitForSearchResults();
-        assertTrue(pageObject.getSearchResultsMessage().contains("There were no results matching the query"));
+        assertTrue(pageObject.getNoResultsMessage().contains("There were no results matching the query"));
         pageObject.takeScreenshot("invalid_search_error.png");
     }
 }

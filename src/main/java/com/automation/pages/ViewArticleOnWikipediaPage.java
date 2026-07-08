@@ -11,7 +11,6 @@ public class ViewArticleOnWikipediaPage {
     private final BaseTestManager testManager;
     private final Locator searchInput;
     private final Locator searchButton;
-    private final Locator articleLink;
     private final Locator searchResultsContainer;
     private final Locator articleContent;
     private final Locator noResultsMessage;
@@ -20,7 +19,6 @@ public class ViewArticleOnWikipediaPage {
         this.testManager = testManager;
         this.searchInput = testManager.getPage().locator("#searchInput");
         this.searchButton = testManager.getPage().locator("button[type='submit']");
-        this.articleLink = testManager.getPage().locator(".mw-search-results a");
         this.searchResultsContainer = testManager.getPage().locator(".mw-search-results");
         this.articleContent = testManager.getPage().locator(".mw-parser-output");
         this.noResultsMessage = testManager.getPage().locator(".mw-search-nonefound");
@@ -49,7 +47,8 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void clickArticleLink(String articleTitle) {
-        articleLink.filter(new Locator.FilterOptions().setHasText(articleTitle)).first().click();
+        Locator articleLink = searchResultsContainer.locator("a").filter(new Locator.FilterOptions().setHasText(articleTitle)).first();
+        articleLink.click();
         testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
     }
 
