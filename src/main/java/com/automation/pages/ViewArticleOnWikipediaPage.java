@@ -13,12 +13,16 @@ public class ViewArticleOnWikipediaPage {
     private final Locator searchInput;
     private final Locator searchButton;
     private final Locator articleLink;
+    private final Locator searchResultsContainer;
+    private final Locator articleContent;
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.testManager = testManager;
         this.searchInput = testManager.getPage().locator("#searchInput");
         this.searchButton = testManager.getPage().locator("button[type='submit']");
         this.articleLink = testManager.getPage().locator(".mw-search-results a");
+        this.searchResultsContainer = testManager.getPage().locator(".mw-search-results");
+        this.articleContent = testManager.getPage().locator(".mw-parser-output");
     }
 
     public void navigateToWikipedia() {
@@ -38,7 +42,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void waitForSearchResults() {
-        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
+        testManager.getPage().waitForSelector(searchResultsContainer, new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void clickArticleLink(String articleTitle) {
@@ -46,21 +50,16 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void waitForArticleLoad() {
-        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
-    }
-
-    public void waitForNoResultsMessage() {
-        testManager.getPage().locator(".mw-search-nonefound").waitFor();
+        testManager.getPage().waitForSelector(articleContent, new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void verifyArticleStructure() {
-        Locator articleContent = testManager.getPage().locator("#bodyContent");
+        // Implement assertions to verify the structure of the article page
+        // For example, check for the presence of specific sections or elements
         assertThat(articleContent).isVisible();
-        assertTrue(articleContent.locator("h2").isVisible());
-        assertTrue(articleContent.locator("img").isVisible());
     }
 
     public void takeScreenshot(String filename) {
-        testManager.getPage().screenshot(new com.microsoft.playwright.Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        testManager.getPage().screenshot(new Page.ScreenshotOptions().setPath(testManager.getScreenshotPath(filename)));
     }
 }

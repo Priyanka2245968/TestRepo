@@ -26,7 +26,7 @@ public class ViewArticleTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.enterInvalidSearchText("asdfghjklzxcvbnm");
         pageObject.clickSearchButton();
-        assertThat(getPage()).hasTitle("Search results - Wikipedia");
+        assertThat(getPage().locator(".mw-search-results")).isVisible();
         assertTrue(pageObject.getSearchResultsMessage().contains("There were no results matching the query"));
         pageObject.takeScreenshot("invalid_search_error.png");
     }
