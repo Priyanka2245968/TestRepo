@@ -2,7 +2,6 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticleOnWikipediaPage;
-import com.microsoft.playwright.Locator;
 import org.testng.annotations.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
