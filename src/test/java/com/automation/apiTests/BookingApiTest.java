@@ -102,12 +102,12 @@ public class BookingApiTest {
         assertTrue(response.status() >= 200 && response.status() < 300);
 
         JsonNode json = api.asJson(response);
-        assertEquals(json.get("firstname").asText(), "Swarup");
-        assertEquals(json.get("lastname").asText(), "Roy");
-        assertEquals(json.get("totalprice").asInt(), 12000);
-        assertTrue(json.get("depositpaid").asBoolean());
-        assertEquals(json.get("bookingdates").get("checkin").asText(), "2026-07-10");
-        assertEquals(json.get("bookingdates").get("checkout").asText(), "2026-07-12");
+        assertEquals(json.get("firstname").asText(), "Sally");
+        assertEquals(json.get("lastname").asText(), "Brown");
+        assertEquals(json.get("totalprice").asInt(), 111);
+        assertFalse(json.get("depositpaid").asBoolean());
+        assertEquals(json.get("bookingdates").get("checkin").asText(), "2023-02-01");
+        assertEquals(json.get("bookingdates").get("checkout").asText(), "2023-02-05");
         assertEquals(json.get("additionalneeds").asText(), "Breakfast");
     }
 
