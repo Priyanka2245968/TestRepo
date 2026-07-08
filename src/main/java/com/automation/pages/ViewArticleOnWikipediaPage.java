@@ -40,6 +40,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void clickSearchButton() {
         searchButton.click();
+        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void waitForSearchResults() {

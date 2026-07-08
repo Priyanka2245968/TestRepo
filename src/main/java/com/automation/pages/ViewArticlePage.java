@@ -39,6 +39,7 @@ public class ViewArticlePage {
 
     public void clickSearchButton() {
         searchButton.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public String getErrorMessage() {
