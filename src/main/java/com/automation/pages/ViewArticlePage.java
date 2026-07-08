@@ -11,12 +11,16 @@ public class ViewArticlePage {
     private final Locator searchInput;
     private final Locator searchButton;
     private final Locator searchResultsContainer;
+    private final Locator errorMessage;
+    private final Locator noResultsMessage;
 
     public ViewArticlePage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
         this.searchResultsContainer = page.locator(".mw-search-results");
+        this.errorMessage = page.locator(".mw-search-errorbox");
+        this.noResultsMessage = page.locator(".mw-search-nonefound");
     }
 
     public void navigateToWikipedia() {
@@ -38,11 +42,11 @@ public class ViewArticlePage {
     }
 
     public String getErrorMessage() {
-        return page.locator(".mw-search-errorbox").textContent();
+        return errorMessage.textContent();
     }
 
     public String getSearchResultsMessage() {
-        return page.locator(".mw-search-nonefound").textContent();
+        return noResultsMessage.textContent();
     }
 
     public void waitForSearchResults() {

@@ -6,7 +6,6 @@ import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.testng.Assert.assertTrue;
 
 public class ViewArticleOnWikipediaPage {
     private final BaseTestManager testManager;
@@ -29,10 +28,12 @@ public class ViewArticleOnWikipediaPage {
 
     public void navigateToWikipedia() {
         testManager.getPage().navigate("https://www.wikipedia.org/");
+        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void navigateToArticle(String url) {
         testManager.getPage().navigate(url);
+        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void searchForArticle(String searchTerm) {
@@ -49,6 +50,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void clickArticleLink(String articleTitle) {
         articleLink.filter(new Locator.FilterOptions().setHasText(articleTitle)).first().click();
+        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void waitForArticleLoad() {
