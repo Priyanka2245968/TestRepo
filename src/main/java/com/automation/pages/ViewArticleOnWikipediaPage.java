@@ -16,7 +16,7 @@ public class ViewArticleOnWikipediaPage {
         this.page = testManager.getPage();
         this.searchField = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.htmlLinkInSearchResults = page.locator("a[href='/wiki/Main_Page']").first();
+        this.htmlLinkInSearchResults = page.locator("a[href='/wiki/HTML']").first();
         this.noResultsMessage = page.locator(".mw-search-nonefound");
     }
 

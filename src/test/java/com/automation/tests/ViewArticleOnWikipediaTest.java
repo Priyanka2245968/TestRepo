@@ -3,12 +3,9 @@ package com.automation.tests;
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticleOnWikipediaPage;
 import com.microsoft.playwright.Locator;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.testng.Assert.assertFalse;
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
@@ -38,8 +35,6 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForTerm(" ");
         pageObject.waitForSearchResults();
-        Locator noResultsMessage = pageObject.getNoResultsMessage();
-        noResultsMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
-        assertThat(noResultsMessage).isVisible();
+        assertThat(pageObject.getNoResultsMessage()).isVisible();
     }
 }
