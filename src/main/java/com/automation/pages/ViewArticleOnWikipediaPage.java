@@ -42,7 +42,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void waitForSearchResults() {
-        testManager.getPage().waitForSelector(searchResultsContainer, new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE));
+        searchResultsContainer.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void clickArticleLink(String articleTitle) {
@@ -50,7 +50,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void waitForArticleLoad() {
-        testManager.getPage().waitForSelector(articleContent, new Page.WaitForSelectorOptions().setState(WaitForSelectorState.VISIBLE));
+        articleContent.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void verifyArticleStructure() {
@@ -60,6 +60,6 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void takeScreenshot(String filename) {
-        testManager.getPage().screenshot(new Page.ScreenshotOptions().setPath(testManager.getScreenshotPath(filename)));
+        testManager.getPage().screenshot(new com.microsoft.playwright.Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
     }
 }
