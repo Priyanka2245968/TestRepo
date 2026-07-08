@@ -16,7 +16,7 @@ public class ViewArticleOnWikipediaPage {
         this.page = testManager.getPage();
         this.searchField = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.htmlLinkInSearchResults = page.locator("//a[contains(@href, '/wiki/HTML')]");
+        this.htmlLinkInSearchResults = page.locator("a[href='/wiki/Main_Page']").first();
         this.noResultsMessage = page.locator(".mw-search-nonefound");
     }
 
@@ -49,7 +49,7 @@ public class ViewArticleOnWikipediaPage {
         return noResultsMessage;
     }
 
-    public void takeScreenshot(String fileName) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(fileName));
+    public void takeScreenshot(String filename) {
+        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
     }
 }

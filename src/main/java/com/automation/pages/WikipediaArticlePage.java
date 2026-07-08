@@ -28,9 +28,6 @@ public class WikipediaArticlePage {
 
     public void searchForTerm(String term) {
         searchField.fill(term);
-    }
-
-    public void clickSearchButton() {
         searchButton.click();
     }
 
