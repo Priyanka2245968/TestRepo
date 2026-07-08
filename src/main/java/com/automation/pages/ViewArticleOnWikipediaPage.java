@@ -3,21 +3,20 @@ package com.automation.pages;
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 
 public class ViewArticleOnWikipediaPage {
     private final Page page;
     private final Locator searchField;
     private final Locator searchButton;
-    private final Locator htmlLink;
-    private final Locator errorMessage;
+    private final Locator htmlLinkInSearchResults;
     private final Locator noResultsMessage;
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
-        this.searchField = page.locator("#searchInput, #ooui-php-1");
+        this.searchField = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.htmlLink = page.locator("a[href='/wiki/Main_Page']");
-        this.errorMessage = page.locator(".mw-message-box");
+        this.htmlLinkInSearchResults = page.locator("//a[contains(@href, '/wiki/HTML')]");
         this.noResultsMessage = page.locator(".mw-search-nonefound");
     }
 
@@ -25,27 +24,32 @@ public class ViewArticleOnWikipediaPage {
         page.navigate("https://www.wikipedia.org/");
     }
 
-    public void enterSearchQuery(String query) {
-        searchField.fill(query);
+    public void searchForTerm(String term) {
+        searchField.fill(term);
+        searchButton.click();
     }
 
-    public void clickSearchButton() {
-        searchButton.click();
+    public void waitForSearchResults() {
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+    }
+
+    public void clickHtmlLinkInSearchResults() {
+        htmlLinkInSearchResults.click();
+    }
+
+    public void waitForArticlePageLoad() {
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public Locator getSearchField() {
         return searchField;
     }
 
-    public Locator getErrorMessage() {
-        return errorMessage;
-    }
-
     public Locator getNoResultsMessage() {
         return noResultsMessage;
     }
 
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    public void takeScreenshot(String fileName) {
+        page.screenshot(new Page.ScreenshotOptions().setPath(fileName));
     }
 }
