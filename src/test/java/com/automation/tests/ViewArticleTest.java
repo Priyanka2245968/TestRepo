@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticlePage;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static org.testng.Assert.assertTrue;
 
 public class ViewArticleTest extends BaseTestManager {
@@ -16,7 +15,7 @@ public class ViewArticleTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.enterLongSearchText();
         pageObject.clickSearchButton();
-        assertThat(pageObject.getErrorMessage()).containsText("Search request is longer than the maximum allowed length");
+        assertTrue(pageObject.getErrorMessage().contains("Search request is longer than the maximum allowed length"));
         pageObject.takeScreenshot("long_search_error.png");
     }
 
