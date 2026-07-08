@@ -22,6 +22,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org/");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void searchForTerm(String term) {
@@ -34,6 +35,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void clickHtmlLinkInSearchResults() {
+        htmlLinkInSearchResults.waitFor(new Locator.WaitForOptions().setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE));
         htmlLinkInSearchResults.click();
     }
 

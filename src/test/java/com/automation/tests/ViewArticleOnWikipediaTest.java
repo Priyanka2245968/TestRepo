@@ -38,6 +38,8 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForTerm(" ");
         pageObject.waitForSearchResults();
-        assertThat(pageObject.getNoResultsMessage()).isVisible();
+        Locator noResultsMessage = pageObject.getNoResultsMessage();
+        noResultsMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
+        assertThat(noResultsMessage).isVisible();
     }
 }
