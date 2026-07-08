@@ -15,6 +15,7 @@ public class ViewArticleOnWikipediaPage {
     private final Locator articleLink;
     private final Locator searchResultsContainer;
     private final Locator articleContent;
+    private final Locator noResultsMessage;
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.testManager = testManager;
@@ -23,6 +24,7 @@ public class ViewArticleOnWikipediaPage {
         this.articleLink = testManager.getPage().locator(".mw-search-results a");
         this.searchResultsContainer = testManager.getPage().locator(".mw-search-results");
         this.articleContent = testManager.getPage().locator(".mw-parser-output");
+        this.noResultsMessage = testManager.getPage().locator(".mw-search-nonefound");
     }
 
     public void navigateToWikipedia() {
@@ -54,9 +56,11 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void verifyArticleStructure() {
-        // Implement assertions to verify the structure of the article page
-        // For example, check for the presence of specific sections or elements
         assertThat(articleContent).isVisible();
+    }
+
+    public void waitForNoResultsMessage() {
+        noResultsMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
     }
 
     public void takeScreenshot(String filename) {

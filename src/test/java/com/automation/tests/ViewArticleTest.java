@@ -1,12 +1,12 @@
 package com.automation.tests;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.testng.Assert.assertTrue;
-
 import org.testng.annotations.Test;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticlePage;
+
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.testng.Assert.assertTrue;
 
 public class ViewArticleTest extends BaseTestManager {
 
@@ -26,7 +26,7 @@ public class ViewArticleTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.enterInvalidSearchText("asdfghjklzxcvbnm");
         pageObject.clickSearchButton();
-        assertThat(getPage().locator(".mw-search-results")).isVisible();
+        pageObject.waitForSearchResults();
         assertTrue(pageObject.getSearchResultsMessage().contains("There were no results matching the query"));
         pageObject.takeScreenshot("invalid_search_error.png");
     }
