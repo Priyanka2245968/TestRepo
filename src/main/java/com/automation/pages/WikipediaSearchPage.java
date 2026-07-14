@@ -21,7 +21,7 @@ public class WikipediaSearchPage {
 
     public void navigateToWikipedia() {
         page.navigate(WIKIPEDIA_URL);
-        page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void searchForTopic(String topic) {
@@ -30,15 +30,15 @@ public class WikipediaSearchPage {
     }
 
     public void waitForSearchResults() {
-        page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void clickSearchResult(String resultLink) {
-        page.locator("a:has-text(\\"" + resultLink + "\\")").first().click();
+        page.locator("a:has-text(\"" + resultLink + "\")").first().click();
     }
 
     public void waitForArticleLoad() {
-        page.waitForLoadState(LoadState.DOMCONTENTLOADED);
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public Locator getArticleTitleLocator() {
@@ -47,5 +47,9 @@ public class WikipediaSearchPage {
 
     public String getNoResultsMessage() {
         return page.locator(".mw-search-results .mw-message-box").textContent();
+    }
+
+    public void takeScreenshot(String filename) {
+        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
     }
 }
