@@ -6,6 +6,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
 public class WikipediaSearchPage {
+    private static final String WIKIPEDIA_URL = "https://www.wikipedia.org/";
     private final Page page;
     private final Locator searchInput;
     private final Locator searchButton;
@@ -19,8 +20,8 @@ public class WikipediaSearchPage {
     }
 
     public void navigateToWikipedia() {
-        page.navigate("https://www.wikipedia.org/");
-        page.waitForLoadState(LoadState.NETWORKIDLE);
+        page.navigate(WIKIPEDIA_URL);
+        page.waitForLoadState(LoadState.DOMCONTENTLOADED);
     }
 
     public void searchForTopic(String topic) {
@@ -29,7 +30,7 @@ public class WikipediaSearchPage {
     }
 
     public void waitForSearchResults() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
+        page.waitForLoadState(LoadState.DOMCONTENTLOADED);
     }
 
     public void clickSearchResult(String resultLink) {
@@ -37,7 +38,7 @@ public class WikipediaSearchPage {
     }
 
     public void waitForArticleLoad() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
+        page.waitForLoadState(LoadState.DOMCONTENTLOADED);
     }
 
     public Locator getArticleTitleLocator() {
@@ -45,18 +46,6 @@ public class WikipediaSearchPage {
     }
 
     public String getNoResultsMessage() {
-        return page.locator(".mw-search-nonefound").first().textContent();
-    }
-
-    public String getErrorMessage() {
-        return page.locator(".mw-search-error").first().textContent();
-    }
-
-    public String getSearchInputValue() {
-        return searchInput.inputValue();
-    }
-
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        return page.locator(".mw-search-results .mw-message-box").textContent();
     }
 }

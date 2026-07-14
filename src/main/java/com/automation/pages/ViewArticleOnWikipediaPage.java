@@ -3,6 +3,7 @@ package com.automation.pages;
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.LoadState;
 
 public class ViewArticleOnWikipediaPage {
     private final Page page;
@@ -15,10 +16,6 @@ public class ViewArticleOnWikipediaPage {
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
         this.errorMessage = page.locator(".mw-search-results .mw-message-box");
-    }
-
-    public void navigateToWikipedia() {
-        page.navigate("https://www.wikipedia.org/");
     }
 
     public void enterSearchText(String text) {
