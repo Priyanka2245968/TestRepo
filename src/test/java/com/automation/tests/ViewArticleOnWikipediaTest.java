@@ -9,7 +9,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
-                            @Test(description = "BOK-21-TC-01: Happy Path - View Wikipedia article for a valid search term")
+                                @Test(description = "BOK-21-TC-01: Happy Path - View Wikipedia article for a valid search term")
     public void testViewWikipediaArticleForValidSearchTerm() {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
@@ -19,7 +19,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.clickFirstSearchResult();
         pageObject.waitForLoadState(LoadState.NETWORKIDLE);
         assertThat(getPage()).hasTitle("HTML - Wikipedia");
-        String articleContent = pageObject.getArticleText();
+        String articleContent = pageObject.getArticleContent();
         org.testng.Assert.assertTrue(articleContent.contains("HTML"));
         pageObject.takeScreenshot("wikipedia-article.png");
     }
