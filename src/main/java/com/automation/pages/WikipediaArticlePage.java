@@ -43,6 +43,10 @@ public class WikipediaArticlePage {
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(filename));
+        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    }
+
+    public String getArticleTitle() {
+        return page.locator("#firstHeading").textContent();
     }
 }
