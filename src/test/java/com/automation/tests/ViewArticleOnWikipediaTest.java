@@ -9,17 +9,16 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
-    @Test(description = "BOK-21-TC-01: Happy Path - View Wikipedia article for a valid search term")
+        @Test(description = "BOK-21-TC-01: Happy Path - View Wikipedia article for a valid search term")
     public void testViewWikipediaArticleForValidSearchTerm() {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForTerm("HTML");
         pageObject.clickSearchButton();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        pageObject.firstSearchResult.waitFor(new Locator.WaitForOptions().setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE));
+        pageObject.waitForSearchResultsToLoad();
         pageObject.clickFirstSearchResult();
-        assertThat(page).hasTitle("HTML - Wikipedia");
-        assertThat(page.locator("#mw-content-text")).containsText("HTML");
+        assertThat(pageObject).hasTitle("HTML - Wikipedia");
+        assertThat(pageObject.getArticleContent()).containsText("HTML");
         pageObject.takeScreenshot("wikipedia-article.png");
     }
 }
