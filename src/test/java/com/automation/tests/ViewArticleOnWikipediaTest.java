@@ -1,12 +1,13 @@
-@Test
-public void viewArticleOnWikipedia() {
-    page.navigate("https://en.wikipedia.org/wiki/Main_Page");
-    page.waitForLoadState(LoadState.NETWORKIDLE);
-    WikipediaArticlePage articlePage = new WikipediaArticlePage(this);
-    articlePage.searchForArticle("Automation");
-    String articleText = articlePage.getArticleText();
-    assertTrue(articleText.contains("Automation"));
-}    @Test
+    @Test
+    public void viewArticleOnWikipedia() {
+        page.navigate("https://en.wikipedia.org/wiki/Main_Page");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+        WikipediaArticlePage articlePage = new WikipediaArticlePage(this);
+        articlePage.searchForArticle("Automation");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+        String articleText = articlePage.getArticleText();
+        assertThat(articlePage.getArticleTextLocator()).containsText("Automation");
+    }    @Test
     public void testViewArticle() {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         page.navigate("https://en.wikipedia.org/wiki/Main_Page");
@@ -29,13 +30,13 @@ public void viewArticleOnWikipedia() {
         pageObject.clickArticleLink("HTML");
         assertThat(page).hasTitle("HTML - Wikipedia");
         pageObject.takeScreenshot("html-article.png");
-@Test
+    @Test
     public void testViewArticleOnWikipedia() {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToArticle("Java_(programming_language)");
         page.waitForLoadState(LoadState.NETWORKIDLE);
         String articleTitle = pageObject.getArticleTitle();
-        assertThat(pageObject.getArticleTitleLocator()).containsText("Java (programming language)");
+        assertThat(page).hasTitle("Java (programming language) - Wikipedia");
     }    WikipediaArticlePage articlePage = new WikipediaArticlePage(testManager);
     articlePage.searchForArticle("Automation");
     articlePage.verifyArticleTitle("Automation");
