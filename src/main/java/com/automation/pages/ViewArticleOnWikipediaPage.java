@@ -36,10 +36,6 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public String getNoResultsMessage() {
-        return page.locator("text=There were no results matching the query").textContent();
-    }
-
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        return page.locator(".mw-search-nonefound").textContent();
     }
 }
