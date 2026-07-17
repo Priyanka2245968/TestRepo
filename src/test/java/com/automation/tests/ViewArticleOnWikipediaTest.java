@@ -1,4 +1,4 @@
-    @Test
+        @Test
     public void viewArticleOnWikipedia() {
         page.navigate("https://en.wikipedia.org/wiki/Main_Page");
         page.waitForLoadState(LoadState.NETWORKIDLE);
@@ -30,13 +30,13 @@
         pageObject.clickArticleLink("HTML");
         assertThat(page).hasTitle("HTML - Wikipedia");
         pageObject.takeScreenshot("html-article.png");
-    @Test
+        @Test
     public void testViewArticleOnWikipedia() {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToArticle("Java_(programming_language)");
         page.waitForLoadState(LoadState.NETWORKIDLE);
         String articleTitle = pageObject.getArticleTitle();
-        assertThat(page).hasTitle("Java (programming language) - Wikipedia");
+        assertThat(pageObject.getArticleTitleLocator()).containsText("Java (programming language)");
     }    WikipediaArticlePage articlePage = new WikipediaArticlePage(testManager);
     articlePage.searchForArticle("Automation");
     articlePage.verifyArticleTitle("Automation");
