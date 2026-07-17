@@ -10,13 +10,13 @@ public class WikipediaArticlePage {
     private final Page page;
     private final Locator searchInput;
     private final Locator searchButton;
-    private final Locator firstSearchResult;
+    public final Locator firstSearchResult;
 
     public WikipediaArticlePage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.firstSearchResult = page.locator(".mw-search-results a").first();
+        this.firstSearchResult = page.locator("a[href='/wiki/Main_Page']");
     }
 
     public void navigateToWikipedia() {

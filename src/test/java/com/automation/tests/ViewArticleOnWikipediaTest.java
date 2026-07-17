@@ -16,6 +16,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.searchForTerm("HTML");
         pageObject.clickSearchButton();
         page.waitForLoadState(LoadState.NETWORKIDLE);
+        pageObject.firstSearchResult.waitFor(new Locator.WaitForOptions().setState(com.microsoft.playwright.options.WaitForSelectorState.VISIBLE));
         pageObject.clickFirstSearchResult();
         assertThat(page).hasTitle("HTML - Wikipedia");
         assertThat(page.locator("#mw-content-text")).containsText("HTML");
