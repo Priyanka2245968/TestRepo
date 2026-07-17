@@ -4,6 +4,8 @@ import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 
+import java.nio.file.Paths;
+
 public class WikipediaArticlePage {
     private final Page page;
     private final Locator searchInput;
@@ -34,6 +36,6 @@ public class WikipediaArticlePage {
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
     }
 }
