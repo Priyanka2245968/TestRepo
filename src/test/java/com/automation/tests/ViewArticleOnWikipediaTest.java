@@ -32,4 +32,18 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.clickArticleLink("Python (programming language)");
         assertThat(page).hasTitle("Python (programming language) - Wikipedia");
     }
+}@Test
+public void testViewArticleOnWikipedia() {
+    WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
+    pageObject.navigateToArticle("Java_(programming_language)");
+    page.waitForLoadState(LoadState.NETWORKIDLE);
+    assertThat(pageObject.getArticleTitle()).contains("Java (programming language)");
+}Test
+public void testViewArticleOnWikipedia() {
+    BaseTestManager testManager = new BaseTestManager();
+    testManager.getPage().navigate("https://en.wikipedia.org/wiki/Main_Page");
+    testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
+    WikipediaArticlePage articlePage = new WikipediaArticlePage(testManager);
+    articlePage.searchForArticle("Automation");
+    articlePage.verifyArticleTitle("Automation");
 }
