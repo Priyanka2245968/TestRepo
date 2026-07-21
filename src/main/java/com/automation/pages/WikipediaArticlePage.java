@@ -15,7 +15,7 @@ public class WikipediaArticlePage {
 
     public WikipediaArticlePage(BaseTestManager testManager) {
         this.page = testManager.getPage();
-        this.searchInput = page.locator("#searchInput");
+        this.searchInput = page.locator("input[name='search']");
         this.searchButton = page.locator("button[type='submit']");
         this.searchResultsContainer = page.locator(".mw-search-results");
         this.articleContent = page.locator("#bodyContent");
@@ -29,10 +29,7 @@ public class WikipediaArticlePage {
 
     public void searchForTerm(String term) {
         searchInput.fill(term);
-    }
-
-    public void enterSearchText(String text) {
-        searchInput.fill(text);
+        searchButton.click();
     }
 
     public void clickSearchButton() {
@@ -44,8 +41,7 @@ public class WikipediaArticlePage {
     }
 
     public void clickSearchResult(String resultText) {
-        Locator resultLink = searchResultsContainer.locator("a", new Locator.LocatorOptions().setHasText(resultText));
-        resultLink.click();
+        searchResultsContainer.locator("xpath=//*[contains(text(), '" + resultText + "')]").first().click();
     }
 
     public void waitForArticleLoad() {
@@ -56,15 +52,11 @@ public class WikipediaArticlePage {
         return articleContent;
     }
 
-    public Locator getSearchResultsContainer() {
-        return searchResultsContainer;
+    public Page getPage() {
+        return page;
     }
 
-    public String getErrorMessage() {
-        return errorMessage.textContent();
-    }
-
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    public void takeScreenshot(String fileName) {
+        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(com.microsoft.playwright.impl.Playwright.getBrowserType().defaultBrowserContext().tracing().startChunk().path(fileName)));
     }
 }
