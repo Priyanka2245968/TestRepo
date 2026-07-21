@@ -5,6 +5,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
+import java.nio.file.Paths;
+
 public class WikipediaArticlePage {
     private final Page page;
     private final Locator searchInput;
@@ -52,11 +54,7 @@ public class WikipediaArticlePage {
         return articleContent;
     }
 
-    public Page getPage() {
-        return page;
-    }
-
     public void takeScreenshot(String fileName) {
-        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(com.microsoft.playwright.impl.Playwright.getBrowserType().defaultBrowserContext().tracing().startChunk().path(fileName)));
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(fileName)));
     }
 }
