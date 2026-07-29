@@ -11,7 +11,7 @@ public class WikipediaArticlePage {
 
     public WikipediaArticlePage(BaseTestManager testManager) {
         this.page = testManager.getPage();
-        this.articleTitle = page.locator("#firstHeading");
+        this.articleTitle = page.locator("//h1[@id='firstHeading' or @class='firstHeading']");
     }
 
     public void navigateToArticle(String articleName) {

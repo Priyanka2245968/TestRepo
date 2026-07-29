@@ -22,7 +22,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToArticle("!@#$%^&*()");
         String actualTitle = pageObject.getArticleTitle();
-        Assert.assertFalse(actualTitle.contains("!@#$%^&*()"));
+        Assert.assertFalse(actualTitle.contains("!@#$%^&*()") || actualTitle.contains("!@#$%^&*()" ));
         pageObject.takeScreenshot("invalid-input-" + System.currentTimeMillis() + ".png");
     }
 
