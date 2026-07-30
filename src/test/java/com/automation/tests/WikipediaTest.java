@@ -15,7 +15,7 @@ public class WikipediaTest extends BaseTestManager {
         pageObject.searchForTopic("HTML");
         pageObject.clickSearchButton();
         pageObject.clickSearchResult();
-        assertThat(page.locator("h1")).containsText("HTML");
+        assertThat(page).hasTitle("HTML - Wikipedia");
         pageObject.takeScreenshot("wikipedia-html-article.png");
     }
 
