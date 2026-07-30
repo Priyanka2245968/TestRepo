@@ -1,7 +1,7 @@
 package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
-import com.automation.pages.WikipediaArticlePage;
+import com.automation.pages.ViewArticleOnWikipediaPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -9,28 +9,31 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
     @Test
     public void testViewHtmlTablesArticleOnWikipedia() {
-        WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
+        ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
-        pageObject.searchForArticle("HTML Tables");
-        pageObject.openFirstSearchResult();
-        Assert.assertTrue(pageObject.isArticlePageLoaded(), "Article page did not load successfully");
+        pageObject.fillSearchField("HTML Tables");
+        pageObject.clickSearchButton();
+        pageObject.waitForSearchResults();
+        pageObject.clickFirstSearchResult();
+        pageObject.waitForArticlePage();
         pageObject.takeScreenshot("html-tables-article.png");
     }
 
     @Test
     public void testWikipediaAccessibleToAnonymousUsers() {
-        WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
+        ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
-        Assert.assertTrue(pageObject.isWikipediaHomePageLoaded(), "Wikipedia home page did not load successfully");
+        pageObject.waitForWikipediaHomePage();
         pageObject.takeScreenshot("anonymous-access.png");
     }
 
     @Test
     public void testNoResultsForEmptySearch() {
-        WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
+        ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
-        pageObject.searchForArticle("");
-        Assert.assertTrue(pageObject.isNoSearchResultsDisplayed(), "Search results were displayed for an empty search");
+        pageObject.fillSearchField("");
+        pageObject.clickSearchButton();
+        pageObject.waitForNoSearchResults();
         pageObject.takeScreenshot("no-search-results.png");
     }
 }
