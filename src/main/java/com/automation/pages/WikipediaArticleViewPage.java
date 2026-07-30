@@ -2,12 +2,13 @@ package com.automation.pages;
 
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
 import java.nio.file.Paths;
 
 public class WikipediaArticleViewPage {
-    private final com.microsoft.playwright.Page page;
+    private final Page page;
     private final Locator searchInput;
     private final Locator searchButton;
     private final Locator articleTitle;
@@ -66,6 +67,6 @@ public class WikipediaArticleViewPage {
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(Paths.get(filename)));
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
     }
 }

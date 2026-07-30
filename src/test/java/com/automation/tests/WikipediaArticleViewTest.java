@@ -2,10 +2,11 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.WikipediaArticleViewPage;
+import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.testng.Assert.assertTrue;
 
 public class WikipediaArticleViewTest extends BaseTestManager {
 
@@ -16,7 +17,8 @@ public class WikipediaArticleViewTest extends BaseTestManager {
         pageObject.searchForTerm("HTML Tutorial");
         pageObject.waitForSearchResults();
         pageObject.clickTopSearchResult();
-        assertThat(pageObject.getArticleTitle()).contains("HTML Tutorial");
+        String articleTitle = pageObject.getArticleTitle();
+        assertTrue(articleTitle.contains("HTML Tutorial"));
         pageObject.takeScreenshot("wikipedia-article-view.png");
     }
 
@@ -26,7 +28,8 @@ public class WikipediaArticleViewTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.clickOnThisDayLink();
         pageObject.waitForOnThisDayPage();
-        assertThat(pageObject.getPageTitle()).contains("On this day");
+        String pageTitle = pageObject.getPageTitle();
+        assertTrue(pageTitle.contains("On this day"));
         pageObject.takeScreenshot("wikipedia-on-this-day.png");
     }
 
@@ -35,6 +38,7 @@ public class WikipediaArticleViewTest extends BaseTestManager {
         WikipediaArticleViewPage pageObject = new WikipediaArticleViewPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        assertThat(pageObject.getErrorMessage()).contains("Please enter a search term");
+        String errorMessage = pageObject.getErrorMessage();
+        assertTrue(errorMessage.contains("Please enter a search term"));
     }
 }

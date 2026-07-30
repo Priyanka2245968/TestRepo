@@ -5,7 +5,7 @@ import com.automation.pages.ViewArticleOnWikipediaPage;
 import com.microsoft.playwright.options.LoadState;
 import org.testng.annotations.Test;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.testng.Assert.assertTrue;
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
@@ -17,6 +17,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.searchInput.fill(longText);
         pageObject.searchButton.click();
         pageObject.waitForSearchResults();
-        assertThat(pageObject.getErrorMessage()).contains("The search query is too long");
+        String errorMessage = pageObject.getErrorMessage();
+        assertTrue(errorMessage.contains("The search query is too long"));
     }
 }
