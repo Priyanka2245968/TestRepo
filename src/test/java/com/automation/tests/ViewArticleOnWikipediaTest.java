@@ -26,7 +26,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
         pageObject.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(testManager.getPage()).hasTitle("Wikipedia");
+        assertThat(getPage()).hasTitle("Wikipedia");
         pageObject.takeScreenshot("wikipedia-homepage.png");
     }
 
@@ -35,7 +35,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        assertThat(testManager.getPage()).hasTitle("Wikipedia");
+        assertThat(getPage()).hasTitle("Wikipedia");
         pageObject.takeScreenshot("wikipedia-no-search-term.png");
     }
 

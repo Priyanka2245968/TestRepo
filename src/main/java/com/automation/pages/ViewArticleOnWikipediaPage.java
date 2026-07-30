@@ -3,6 +3,7 @@ package com.automation.pages;
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.LoadState;
+import com.microsoft.playwright.Page;
 
 public class ViewArticleOnWikipediaPage {
 
@@ -13,9 +14,10 @@ public class ViewArticleOnWikipediaPage {
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.testManager = testManager;
-        this.searchInput = testManager.getPage().locator("#searchInput");
-        this.searchButton = testManager.getPage().locator("button[type='submit']");
-        this.htmlLink = testManager.getPage().locator("a[href='/wiki/HTML']").first();
+        Page page = testManager.getPage();
+        this.searchInput = page.locator("#searchInput");
+        this.searchButton = page.locator("button[type='submit']");
+        this.htmlLink = page.locator("a[href='/wiki/HTML']").first();
     }
 
     public void navigateToWikipedia() {
@@ -42,6 +44,6 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void takeScreenshot(String filename) {
-        testManager.getPage().screenshot(new com.microsoft.playwright.options.Path("./screenshots/" + filename));
+        testManager.getPage().screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get("./screenshots/" + filename)));
     }
 }
