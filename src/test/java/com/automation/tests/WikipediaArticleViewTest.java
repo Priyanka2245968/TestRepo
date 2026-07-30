@@ -35,8 +35,6 @@ public class WikipediaArticleViewTest extends BaseTestManager {
         WikipediaArticleViewPage pageObject = new WikipediaArticleViewPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        pageObject.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(pageObject.getSearchResultsContainer()).isHidden();
-        pageObject.takeScreenshot("wikipedia-no-search-text.png");
+        assertThat(pageObject.getErrorMessage()).contains("Please enter a search term");
     }
 }

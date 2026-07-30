@@ -5,6 +5,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
+import java.nio.file.Paths;
+
 public class ViewArticleOnWikipediaPage {
     private final Page page;
     public final Locator searchInput;
@@ -18,7 +20,19 @@ public class ViewArticleOnWikipediaPage {
         this.errorMessage = page.locator(".mw-search-nonefound");
     }
 
+    public void navigateToWikipedia() {
+        page.navigate("https://www.wikipedia.org/");
+    }
+
+    public void waitForSearchResults() {
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+    }
+
+    public String getErrorMessage() {
+        return errorMessage.textContent();
+    }
+
     public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
     }
 }
