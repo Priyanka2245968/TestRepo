@@ -44,6 +44,7 @@ public class WikipediaArticleViewPage {
 
     public void clickTopSearchResult() {
         searchResultsContainer.locator("a").first().click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public String getArticleTitle() {
@@ -52,14 +53,11 @@ public class WikipediaArticleViewPage {
 
     public void clickOnThisDayLink() {
         onThisDayLink.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void waitForOnThisDayPage() {
         page.waitForLoadState(LoadState.NETWORKIDLE);
-    }
-
-    public String getPageTitle() {
-        return page.title();
     }
 
     public String getErrorMessage() {
