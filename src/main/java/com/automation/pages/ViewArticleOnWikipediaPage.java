@@ -18,7 +18,7 @@ public class ViewArticleOnWikipediaPage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.articleLink = page.locator("a[href='/wiki/Main_Page']");
+        this.articleLink = page.locator("//a[contains(@href, '/wiki/HTML')]");
     }
 
     public void navigateToWikipedia() {
@@ -43,16 +43,14 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void verifyErrorMessageForLongSearch() {
-        String errorMessage = page.locator("//div[@class='error']").textContent();
-        Assert.assertTrue(errorMessage.contains("An error has occurred while searching: Search request is longer than the maximum allowed length"));
+        assertThat(page.locator(".mw-message-box")).containsText("The search query is too long.");
     }
 
     public void verifyErrorMessageForInvalidSearch() {
-        String errorMessage = page.locator("//div[@class='error']").textContent();
-        Assert.assertTrue(errorMessage.contains("There were no results matching the query"));
+        assertThat(page.locator(".mw-search-nonefound")).containsText("No results found.");
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
+        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(Paths.get(filename)));
     }
 }

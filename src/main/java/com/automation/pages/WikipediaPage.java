@@ -39,6 +39,6 @@ public class WikipediaPage {
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
+        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(Paths.get(filename)));
     }
 }
