@@ -2,7 +2,6 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticleOnWikipediaPage;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {

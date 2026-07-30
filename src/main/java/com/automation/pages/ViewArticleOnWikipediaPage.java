@@ -15,11 +15,12 @@ public class ViewArticleOnWikipediaPage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.firstSearchResult = page.locator("a[href='/wiki/Main_Page']").first();
+        this.firstSearchResult = page.locator("a[href='/wiki/HTML_element#Tables']").first();
     }
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org/");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void fillSearchField(String text) {
@@ -28,6 +29,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void clickSearchButton() {
         searchButton.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void waitForSearchResults() {
@@ -36,6 +38,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void clickFirstSearchResult() {
         firstSearchResult.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void waitForArticlePage() {
