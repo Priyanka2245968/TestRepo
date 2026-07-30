@@ -32,8 +32,8 @@ public class WikipediaTest extends BaseTestManager {
         WikipediaPage pageObject = new WikipediaPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        assertThat(page).hasTitle("Special:Search - Wikipedia");
-        assertThat(page.locator("p.mw-search-nonefound")).containsText("No results found.");
+        assertThat(page).hasTitle("Search - Wikipedia");
+        assertThat(page.locator("p.mw-search-nonefound")).containsText("There were no results matching the query.");
         pageObject.takeScreenshot("wikipedia-no-search-results.png");
     }
 }

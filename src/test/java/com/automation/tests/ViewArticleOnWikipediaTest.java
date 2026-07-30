@@ -15,7 +15,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.fillSearchField("A string longer than 500 characters");
         pageObject.clickSearchButton();
-        pageObject.verifyErrorMessageForLongSearch();
+        assertThat(page.locator(".mw-message-box")).containsText("The search query is too long.");
         pageObject.takeScreenshot("long-search-error.png");
     }
 
@@ -26,7 +26,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.fillSearchField("jkhfgdsjkfhgkjdshfgkjdshfgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsgkjhdfsg");
         pageObject.clickSearchButton();
-        pageObject.verifyErrorMessageForInvalidSearch();
+        assertThat(page.locator(".mw-search-nonefound")).containsText("There were no results matching the query.");
         pageObject.takeScreenshot("invalid-search-error.png");
     }
 }

@@ -7,8 +7,8 @@ import com.microsoft.playwright.options.LoadState;
 import java.nio.file.Paths;
 
 public class WikipediaPage {
-    private Page page;
-    public Locator searchInput, searchButton, searchResult;
+    private final Page page;
+    private final Locator searchInput, searchButton, searchResult;
 
     public WikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
