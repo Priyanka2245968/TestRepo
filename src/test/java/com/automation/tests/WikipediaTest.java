@@ -19,11 +19,11 @@ public class WikipediaTest extends BaseTestManager {
         pageObject.takeScreenshot("wikipedia-html-article.png");
     }
 
-    @Test
+                    @Test
     public void testWikipediaAccessibleToAnonymousUsers() {
         WikipediaPage pageObject = new WikipediaPage(this);
         pageObject.navigateToWikipedia();
-        assertThat(pageObject.searchInput).isVisible();
+        assertThat(getPage().locator("input[name='search']")).isVisible();
         pageObject.takeScreenshot("wikipedia-homepage.png");
     }
 
