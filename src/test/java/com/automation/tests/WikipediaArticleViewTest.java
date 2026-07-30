@@ -9,32 +9,34 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class WikipediaArticleViewTest extends BaseTestManager {
 
-    @Test
+                @Test
     public void testHappyPathSearchAndViewArticle() {
         WikipediaArticleViewPage pageObject = new WikipediaArticleViewPage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForTerm("HTML Tutorial");
         pageObject.waitForSearchResults();
         pageObject.clickTopSearchResult();
-        assertThat(pageObject.getArticleTitle()).containsText("HTML Tutorial");
+        getPage().waitForLoadState(LoadState.NETWORKIDLE);
+        assertThat(getPage()).hasTitle("HTML Tutorial");
         pageObject.takeScreenshot("wikipedia-article-view.png");
     }
 
-    @Test
+            @Test
     public void testViewWikipediaWithoutSearch() {
         WikipediaArticleViewPage pageObject = new WikipediaArticleViewPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickOnThisDayLink();
         pageObject.waitForOnThisDayPage();
-        assertThat(page).hasTitle(text -> text.contains("On this day"));
+        assertThat(getPage()).hasTitle("On this day");
         pageObject.takeScreenshot("wikipedia-on-this-day.png");
     }
 
-    @Test
+        @Test
     public void testNegativeNoSearchTextProvided() {
         WikipediaArticleViewPage pageObject = new WikipediaArticleViewPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        assertThat(pageObject.getErrorMessage()).containsText("Please enter a search term");
+        String errorMessage = pageObject.getErrorMessage();
+        org.testng.Assert.assertTrue(errorMessage.contains("Please enter a search term"));
     }
 }
