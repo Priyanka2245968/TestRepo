@@ -42,6 +42,6 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void takeScreenshot(String filename) {
-        testManager.getPage().screenshot(new com.microsoft.playwright.Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        testManager.getPage().screenshot(new com.microsoft.playwright.options.Path("./screenshots/" + filename));
     }
 }

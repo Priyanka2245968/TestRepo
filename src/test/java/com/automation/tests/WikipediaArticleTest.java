@@ -34,7 +34,7 @@ public class WikipediaArticleTest extends BaseTestManager {
     public void testNegativeInvalidSearchTerm() {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
-        pageObject.searchForTerm("asdf!@#$%^&*");
+        pageObject.searchForTerm("!@#$%^&*()");
         pageObject.clickSearchButton();
         assertThat(testManager.getPage()).hasTitle("Wikipedia");
         pageObject.takeScreenshot("wikipedia-invalid-search-term.png");
