@@ -4,6 +4,8 @@ import com.automation.base.BaseTestManager;
 import com.automation.pages.WikipediaArticlePage;
 import org.testng.annotations.Test;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class WikipediaArticleTest extends BaseTestManager {
 
     @Test
@@ -33,6 +35,7 @@ public class WikipediaArticleTest extends BaseTestManager {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("asdfghjklqwertyuiop");
+        assertThat(getPage().locator(".no-results")).isVisible();
         pageObject.takeScreenshot("search-no-results.png");
     }
 }

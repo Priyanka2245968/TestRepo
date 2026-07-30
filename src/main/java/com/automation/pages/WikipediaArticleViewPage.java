@@ -5,6 +5,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class WikipediaArticleViewPage {
     private final Page page;
     private final Locator searchInput;
@@ -35,7 +37,7 @@ public class WikipediaArticleViewPage {
     }
 
     public void clickArticleLink(String articleTitle) {
-        articleLink.click();
+        page.locator(String.format("a:has-text('%s')", articleTitle)).click();
     }
 
     public void waitForArticleLoad() {
@@ -47,10 +49,10 @@ public class WikipediaArticleViewPage {
     }
 
     public void waitForNoSearchResults() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
+        assertThat(page.locator(".no-results")).isVisible();
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        page.screenshot(new Page.ScreenshotOptions().setPath(filename));
     }
 }
