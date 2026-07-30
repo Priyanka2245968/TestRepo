@@ -53,11 +53,6 @@ public class WikipediaArticleViewPage {
 
     public void clickOnThisDayLink() {
         onThisDayLink.click();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-    }
-
-    public void waitForOnThisDayPage() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public String getErrorMessage() {

@@ -9,7 +9,7 @@ import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertTha
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
-        @Test
+    @Test
     public void testNegativeSearchTextExceedsMaximumLength() {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
@@ -19,5 +19,6 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.waitForSearchResults();
         String errorMessage = pageObject.getErrorMessage();
         org.testng.Assert.assertTrue(errorMessage.contains("The search query is too long"));
+        pageObject.takeScreenshot("search-error.png");
     }
 }
