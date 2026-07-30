@@ -26,7 +26,7 @@ public class WikipediaArticleTest extends BaseTestManager {
         String longTerm = "A text string longer than 500 characters";
         pageObject.searchForTerm(longTerm);
         pageObject.clickSearchButton();
-        assertThat(getPage()).hasTitle("Wikipedia");
+        assertThat(getPage()).hasTitle("A text string longer than 500 characters - Search results - Wikipedia");
         pageObject.takeScreenshot("wikipedia-long-search-term.png");
     }
 
@@ -36,7 +36,7 @@ public class WikipediaArticleTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForTerm("!@#$%^&*()");
         pageObject.clickSearchButton();
-        assertThat(getPage()).hasTitle("Wikipedia");
+        assertThat(getPage()).hasTitle("!@#$%^&*() - Search results - Wikipedia");
         pageObject.takeScreenshot("wikipedia-invalid-search-term.png");
     }
 }
