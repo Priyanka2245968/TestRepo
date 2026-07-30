@@ -36,7 +36,7 @@ public class WikipediaArticleViewTest extends BaseTestManager {
         WikipediaArticleViewPage pageObject = new WikipediaArticleViewPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        getPage().waitForLoadState(LoadState.NETWORKIDLE);
+        pageObject.waitForSearchResults();
         String errorMessage = pageObject.getErrorMessage();
         org.testng.Assert.assertTrue(errorMessage.contains("Please enter a search term"));
     }

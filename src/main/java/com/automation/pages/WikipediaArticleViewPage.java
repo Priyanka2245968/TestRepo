@@ -28,6 +28,7 @@ public class WikipediaArticleViewPage {
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org/");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void searchForTerm(String term) {
@@ -39,7 +40,7 @@ public class WikipediaArticleViewPage {
     }
 
     public void waitForSearchResults() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
+        searchResultsContainer.waitFor(new Locator.WaitForOptions().setTimeout(10000));
     }
 
     public void clickTopSearchResult() {
@@ -53,6 +54,7 @@ public class WikipediaArticleViewPage {
 
     public void clickOnThisDayLink() {
         onThisDayLink.click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public String getErrorMessage() {

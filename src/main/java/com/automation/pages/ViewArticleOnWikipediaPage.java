@@ -22,10 +22,11 @@ public class ViewArticleOnWikipediaPage {
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org/");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void waitForSearchResults() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
+        errorMessage.waitFor(new Locator.WaitForOptions().setTimeout(10000));
     }
 
     public String getErrorMessage() {
