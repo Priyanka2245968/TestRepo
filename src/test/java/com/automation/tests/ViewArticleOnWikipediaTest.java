@@ -23,7 +23,6 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
     public void testNegativeNoSearchTerm() {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
-        pageObject.searchForArticle("");
         pageObject.clickSearchButton();
         String currentUrl = getPage().url();
         assertTrue(currentUrl.equals("https://www.wikipedia.org/"));
