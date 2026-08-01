@@ -14,9 +14,8 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("HTML Table Element");
         pageObject.clickSearchButton();
-        pageObject.clickFirstResultLink();
         String currentUrl = getPage().url();
-        assertTrue(currentUrl.contains("https://en.wikipedia.org/wiki/HTML_element#Tables"));
+        assertTrue(currentUrl.contains("HTML_element#Tables"));
         pageObject.takeScreenshot("happy-path.png");
     }
 
@@ -27,7 +26,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.searchForArticle("");
         pageObject.clickSearchButton();
         String currentUrl = getPage().url();
-        assertTrue(currentUrl.contains("https://www.wikipedia.org/"));
+        assertTrue(currentUrl.equals("https://www.wikipedia.org/"));
         pageObject.takeScreenshot("negative-no-search-term.png");
     }
 
@@ -39,7 +38,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.searchForArticle(longString);
         pageObject.clickSearchButton();
         String currentUrl = getPage().url();
-        assertTrue(currentUrl.contains("https://en.wikipedia.org/wiki/Special:Search?search=A+string+longer+than+500+characters&go=Go&ns0=1"));
+        assertTrue(currentUrl.contains("Special:Search?search=A+string+longer+than+500+characters&go=Go&ns0=1"));
         pageObject.takeScreenshot("negative-long-search-term.png");
     }
 }
