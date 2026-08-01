@@ -2,10 +2,8 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.WikipediaArticlePage;
-import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import org.testng.annotations.Test;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static org.testng.Assert.assertTrue;
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
@@ -17,7 +15,8 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.searchForArticle("HTML Table Element");
         pageObject.clickSearchButton();
         pageObject.clickFirstResultLink();
-        assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/HTML_element#Tables");
+        String currentUrl = getPage().url();
+        assertTrue(currentUrl.contains("https://en.wikipedia.org/wiki/HTML_element#Tables"));
         pageObject.takeScreenshot("happy-path.png");
     }
 

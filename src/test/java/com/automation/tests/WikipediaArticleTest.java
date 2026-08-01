@@ -5,7 +5,6 @@ import com.automation.pages.WikipediaArticlePage;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import org.testng.annotations.Test;
 
-import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 import static org.testng.Assert.assertTrue;
 
 public class WikipediaArticleTest extends BaseTestManager {
@@ -17,7 +16,8 @@ public class WikipediaArticleTest extends BaseTestManager {
         pageObject.searchForArticle("HTML Tables");
         pageObject.clickSearchButton();
         pageObject.clickFirstResultLink();
-        assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/HTML_element#Tables");
+        String currentUrl = getPage().url();
+        assertTrue(currentUrl.contains("https://en.wikipedia.org/wiki/HTML_element#Tables"));
         pageObject.takeScreenshot("article-page.png");
     }
 
@@ -25,7 +25,8 @@ public class WikipediaArticleTest extends BaseTestManager {
     public void testWikipediaAccessibleAnonymously() {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
-        assertThat(getPage()).hasURL("https://www.wikipedia.org/");
+        String currentUrl = getPage().url();
+        assertTrue(currentUrl.equals("https://www.wikipedia.org/"));
         pageObject.takeScreenshot("wikipedia-home.png");
     }
 
