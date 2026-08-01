@@ -21,6 +21,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void navigateToWikipedia() {
         testManager.getPage().navigate("https://www.wikipedia.org/");
+        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void searchForArticle(String articleName) {

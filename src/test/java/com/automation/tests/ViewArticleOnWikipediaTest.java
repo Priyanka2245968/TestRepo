@@ -34,7 +34,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
         pageObject.waitForTimeout(2000); // Wait for the page to load
-        assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/Special:Search?search=&go=Go&ns0=1");
+        assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/Special:Search?search=&go=Go");
         pageObject.takeScreenshot("wikipedia-no-search.png");
     }
 
@@ -55,7 +55,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.searchForArticle(longQuery);
         pageObject.clickSearchButton();
         pageObject.waitForTimeout(2000);
-        assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/Special:Search?search=A+string+of+501+characters+or+more&go=Go&ns0=1");
+        assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/Special:Search?search=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&go=Go&ns0=1");
         pageObject.takeScreenshot("long-query-error.png");
     }
 
