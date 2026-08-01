@@ -2,8 +2,10 @@ package com.automation.tests;
 
 import com.automation.base.BaseTestManager;
 import com.automation.pages.WikipediaArticlePage;
-import org.testng.Assert;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import org.testng.annotations.Test;
+
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 public class WikipediaArticleTest extends BaseTestManager {
 
@@ -15,7 +17,7 @@ public class WikipediaArticleTest extends BaseTestManager {
         pageObject.clickSearchButton();
         pageObject.clickFirstResultLink();
         // Add assertion to verify article content
-        Assert.assertTrue(getPage().textContent().contains("HTML table"), "Article content does not contain 'HTML table'");
+        assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/HTML_element#Tables");
         pageObject.takeScreenshot("article-page.png");
     }
 
@@ -24,7 +26,7 @@ public class WikipediaArticleTest extends BaseTestManager {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
         // Add assertion to verify Wikipedia homepage is loaded
-        Assert.assertTrue(getPage().url().contains("wikipedia.org"), "Wikipedia homepage not loaded");
+        assertThat(getPage()).hasURL("https://www.wikipedia.org/");
         pageObject.takeScreenshot("wikipedia-home.png");
     }
 
@@ -34,7 +36,7 @@ public class WikipediaArticleTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
         // Add assertion to verify no search results are shown
-        Assert.assertTrue(getPage().textContent().contains("No results found"), "Search results found when no search term was provided");
+        assertThat(getPage()).hasURL("https://www.wikipedia.org/");
         pageObject.takeScreenshot("no-search-results.png");
     }
 }

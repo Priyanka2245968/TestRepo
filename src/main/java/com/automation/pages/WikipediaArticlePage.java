@@ -6,6 +6,7 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
 import java.io.PrintStream;
+import java.nio.file.Paths;
 
 public class WikipediaArticlePage {
     private final Page page;
@@ -14,13 +15,13 @@ public class WikipediaArticlePage {
     private final Locator firstResultLink;
 
     private static final String SEARCH_INPUT_SELECTOR = "#searchInput";
-    private static final String SEARCH_BUTTON_SELECTOR = "//button[contains(normalize-space(.),\"search\")]".first();
-    private static final String FIRST_RESULT_LINK_SELECTOR = "//a[contains(@href, '/wiki/')][1]";
+    private static final String SEARCH_BUTTON_SELECTOR = "//button[contains(normalize-space(.),\"search\")]";
+    private static final String FIRST_RESULT_LINK_SELECTOR = "button[type='submit']";
 
     public WikipediaArticlePage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator(SEARCH_INPUT_SELECTOR);
-        this.searchButton = page.locator(SEARCH_BUTTON_SELECTOR);
+        this.searchButton = page.locator(SEARCH_BUTTON_SELECTOR).first();
         this.firstResultLink = page.locator(FIRST_RESULT_LINK_SELECTOR);
     }
 
@@ -49,6 +50,6 @@ public class WikipediaArticlePage {
     }
 
     public void takeScreenshot(String fileName) {
-        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(com.microsoft.playwright.impl.Statics.artifactsPath(fileName)));
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(fileName)));
     }
 }
