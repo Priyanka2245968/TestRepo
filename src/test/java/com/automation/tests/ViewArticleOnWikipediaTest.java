@@ -16,7 +16,6 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.searchForArticle("HTML Table Element");
         pageObject.clickSearchButton();
         pageObject.clickFirstResultLink();
-        // Add assertion to verify article content
         assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/HTML_element#Tables");
         pageObject.takeScreenshot("happy-path.png");
     }
@@ -27,7 +26,6 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("");
         pageObject.clickSearchButton();
-        // Add assertion to verify no search results are shown
         assertThat(getPage()).hasURL("https://www.wikipedia.org/");
         pageObject.takeScreenshot("negative-no-search-term.png");
     }
@@ -39,18 +37,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle(longString);
         pageObject.clickSearchButton();
-        // Add assertion to verify no search results are shown
         assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/Special:Search?search=A+string+longer+than+500+characters&go=Go&ns0=1");
         pageObject.takeScreenshot("negative-long-search-term.png");
     }
-
-    // Remove this test case as it is a duplicate of testNegativeNoSearchTerm
-    // @Test
-    // public void testNegativeInvalidSearchTerm() {
-    //     WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
-    //     pageObject.navigateToWikipedia();
-    //     pageObject.searchForArticle("!@#$%^&*()");
-    //     pageObject.clickSearchButton();
-    //     pageObject.takeScreenshot("negative-invalid-search-term.png");
-    // }
 }

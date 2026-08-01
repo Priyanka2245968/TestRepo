@@ -15,7 +15,7 @@ public class WikipediaArticlePage {
     private final Locator firstResultLink;
 
     private static final String SEARCH_INPUT_SELECTOR = "#searchInput";
-    private static final String SEARCH_BUTTON_SELECTOR = "//button[contains(normalize-space(.),\"search\")]";
+    private static final String SEARCH_BUTTON_SELECTOR = "//button[contains(normalize-space(.),\"Search\")]";
     private static final String FIRST_RESULT_LINK_SELECTOR = "button[type='submit']";
 
     public WikipediaArticlePage(BaseTestManager testManager) {
@@ -27,6 +27,7 @@ public class WikipediaArticlePage {
 
     public void navigateToWikipedia() {
         page.navigate("https://www.wikipedia.org/");
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void searchForArticle(String query) {

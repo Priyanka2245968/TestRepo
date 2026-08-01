@@ -16,7 +16,6 @@ public class WikipediaArticleTest extends BaseTestManager {
         pageObject.searchForArticle("HTML Tables");
         pageObject.clickSearchButton();
         pageObject.clickFirstResultLink();
-        // Add assertion to verify article content
         assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/HTML_element#Tables");
         pageObject.takeScreenshot("article-page.png");
     }
@@ -25,7 +24,6 @@ public class WikipediaArticleTest extends BaseTestManager {
     public void testWikipediaAccessibleAnonymously() {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
-        // Add assertion to verify Wikipedia homepage is loaded
         assertThat(getPage()).hasURL("https://www.wikipedia.org/");
         pageObject.takeScreenshot("wikipedia-home.png");
     }
@@ -35,7 +33,6 @@ public class WikipediaArticleTest extends BaseTestManager {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        // Add assertion to verify no search results are shown
         assertThat(getPage()).hasURL("https://www.wikipedia.org/");
         pageObject.takeScreenshot("no-search-results.png");
     }
