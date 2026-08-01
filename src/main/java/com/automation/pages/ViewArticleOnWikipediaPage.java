@@ -5,9 +5,10 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 import com.microsoft.playwright.options.WaitForSelectorState;
+import com.microsoft.playwright.PlaywrightException;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.testng.Assert.assertTrue;
+import static org.hamcrest.Matchers.containsString;
 
 public class ViewArticleOnWikipediaPage {
     private final Page page;
@@ -17,9 +18,9 @@ public class ViewArticleOnWikipediaPage {
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
-        this.searchInput = page.locator("#searchInput");
+        this.searchInput = page.locator("input[name='search']");
         this.searchButton = page.locator("button[type='submit']");
-        this.searchBar = page.locator("#ooui-php-1");
+        this.searchBar = page.locator(".search-box");
     }
 
     public void navigateToWikipedia() {
@@ -38,51 +39,29 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void clickTopSearchResult() {
-        page.locator("a.mw-search-results-object-uri").first().click();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
+        page.locator(".mw-search-results li:first-child a").click();
+        assertThat(page).hasURL(containsString("/wiki/"));
     }
 
     public void verifyArticlePageLoaded() {
-        Locator articleTitle = page.locator("#firstHeading");
-        articleTitle.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        assertTrue(articleTitle.isVisible());
+        page.waitForLoadState(LoadState.NETWORKIDLE);
+        assertThat(page).hasTitle(not(containsString("Search")));
     }
 
     public void verifyHomePageLoadedWithoutLogin() {
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(searchBar).isVisible();
+        assertThat(page).hasURL("https://www.wikipedia.org/");
+    }
+
+    public void verifyNoResultsMessage() {
+        assertThat(page.locator(".mw-search-nonefound")).isVisible();
     }
 
     public void clickSearchWithoutText() {
         searchButton.click();
     }
 
-    public void verifyNoResultsMessage() {
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        Locator noResultsMessage = page.locator("p.mw-search-nonefound");
-        noResultsMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        assertTrue(noResultsMessage.isVisible());
-    }
-
-    public void fillSearchField(String text) {
-        searchInput.fill(text);
-    }
-
-    public void clickSearchButton() {
-        searchButton.click();
-    }
-
-    public void verifyErrorMessageDisplayed() {
-        Locator errorMessage = page.locator(".mw-searchErrorBox");
-        errorMessage.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        assertTrue(errorMessage.isVisible());
-    }
-
-    public void verifyNoResultsMessageDisplayed() {
-        verifyNoResultsMessage();
-    }
-
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    public void takeScreenshot(String fileName) {
+        page.screenshot(new Page.ScreenshotOptions().setPath(fileName));
     }
 }
