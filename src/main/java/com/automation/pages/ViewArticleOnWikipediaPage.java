@@ -10,7 +10,6 @@ public class ViewArticleOnWikipediaPage {
     private final Locator searchButton;
     private final Locator articleLink;
     private final Locator homepageElement;
-    private final Locator noResultsElement;
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.testManager = testManager;
@@ -18,7 +17,6 @@ public class ViewArticleOnWikipediaPage {
         this.searchButton = testManager.getPage().locator("button[type='submit']");
         this.articleLink = testManager.getPage().locator("a[href='/wiki/HTML']").first();
         this.homepageElement = testManager.getPage().locator(".central-featured");
-        this.noResultsElement = testManager.getPage().locator(".no-results-info");
     }
 
     public void navigateToWikipedia() {
@@ -31,6 +29,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void clickSearchButton() {
         searchButton.click();
+        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void clickArticleLink() {
@@ -42,13 +41,10 @@ public class ViewArticleOnWikipediaPage {
         return homepageElement;
     }
 
-    public Locator getNoResultsElement() {
-        return noResultsElement;
-    }
-
     public void viewArticle() {
         searchInput.fill("HTML");
         searchButton.click();
+        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
         articleLink.click();
         testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
     }

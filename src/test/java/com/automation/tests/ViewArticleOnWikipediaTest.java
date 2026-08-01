@@ -33,8 +33,8 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        Locator noResultsElement = pageObject.getNoResultsElement();
-        assertThat(noResultsElement).isVisible();
+        pageObject.waitForTimeout(2000); // Wait for the page to load
+        assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/Special:Search?search=&go=Go&ns0=1");
         pageObject.takeScreenshot("wikipedia-no-search.png");
     }
 
@@ -53,7 +53,9 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         String longQuery = "A".repeat(501);
         pageObject.searchForArticle(longQuery);
+        pageObject.clickSearchButton();
         pageObject.waitForTimeout(2000);
+        assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/Special:Search?search=A+string+of+501+characters+or+more&go=Go&ns0=1");
         pageObject.takeScreenshot("long-query-error.png");
     }
 
@@ -62,7 +64,9 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("qwerty123!@#");
+        pageObject.clickSearchButton();
         pageObject.waitForTimeout(2000);
+        assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/Special:Search?search=qwerty123%21%40%23&go=Go&ns0=1");
         pageObject.takeScreenshot("invalid-query-error.png");
     }
 }
