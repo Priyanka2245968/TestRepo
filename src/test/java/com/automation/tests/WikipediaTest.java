@@ -3,6 +3,7 @@ package com.automation.tests;
 import com.automation.base.BaseTestManager;
 import com.automation.pages.WikipediaPage;
 import org.testng.annotations.Test;
+import org.testng.Assert;
 
 public class WikipediaTest extends BaseTestManager {
 
@@ -13,6 +14,7 @@ public class WikipediaTest extends BaseTestManager {
         pageObject.searchForTerm("HTML Tables");
         pageObject.clickSearchButton();
         pageObject.clickFirstSearchResult();
+        pageObject.assertArticleTitle("HTML element - Wikipedia");
         pageObject.takeScreenshot("wikipedia-article.png");
     }
 
@@ -24,6 +26,7 @@ public class WikipediaTest extends BaseTestManager {
         pageObject.clickSearchButton();
         pageObject.clickFirstSearchResult();
         // Scroll through the article content
+        pageObject.assertArticleTitle("HTML element - Wikipedia");
         pageObject.takeScreenshot("wikipedia-article-readability.png");
     }
 
@@ -32,6 +35,9 @@ public class WikipediaTest extends BaseTestManager {
         WikipediaPage pageObject = new WikipediaPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
+        String expectedTitle = "Wikipedia";
+        String actualTitle = getPage().title();
+        Assert.assertEquals(actualTitle, expectedTitle, "Page title does not match for blank search");
         pageObject.takeScreenshot("wikipedia-blank-search.png");
     }
 }

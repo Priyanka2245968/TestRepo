@@ -4,6 +4,7 @@ import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
+import org.testng.Assert;
 
 public class WikipediaPage {
     private final Page page;
@@ -15,7 +16,7 @@ public class WikipediaPage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.firstSearchResult = page.locator("a[href='/wiki/Main_Page']").first();
+        this.firstSearchResult = page.locator("a[href='/wiki/HTML_element']").first();
     }
 
     public void navigateToWikipedia() {
@@ -33,6 +34,11 @@ public class WikipediaPage {
     public void clickFirstSearchResult() {
         firstSearchResult.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
+    }
+
+    public void assertArticleTitle(String expectedTitle) {
+        String actualTitle = page.title();
+        Assert.assertEquals(actualTitle, expectedTitle, "Article title does not match");
     }
 
     public void takeScreenshot(String filename) {
