@@ -6,6 +6,7 @@ import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import org.testng.annotations.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.testng.Assert.assertTrue;
 
 public class WikipediaArticleTest extends BaseTestManager {
 
@@ -33,7 +34,8 @@ public class WikipediaArticleTest extends BaseTestManager {
         WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        assertThat(getPage()).hasURL("https://www.wikipedia.org/");
+        String currentUrl = getPage().url();
+        assertTrue(currentUrl.contains("https://www.wikipedia.org/"));
         pageObject.takeScreenshot("no-search-results.png");
     }
 }

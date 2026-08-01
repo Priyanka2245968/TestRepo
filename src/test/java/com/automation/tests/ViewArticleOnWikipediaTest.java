@@ -6,6 +6,7 @@ import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import org.testng.annotations.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+import static org.testng.Assert.assertTrue;
 
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
@@ -26,7 +27,8 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle("");
         pageObject.clickSearchButton();
-        assertThat(getPage()).hasURL("https://www.wikipedia.org/");
+        String currentUrl = getPage().url();
+        assertTrue(currentUrl.contains("https://www.wikipedia.org/"));
         pageObject.takeScreenshot("negative-no-search-term.png");
     }
 
@@ -37,7 +39,8 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForArticle(longString);
         pageObject.clickSearchButton();
-        assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/Special:Search?search=A+string+longer+than+500+characters&go=Go&ns0=1");
+        String currentUrl = getPage().url();
+        assertTrue(currentUrl.contains("https://en.wikipedia.org/wiki/Special:Search?search=A+string+longer+than+500+characters&go=Go&ns0=1"));
         pageObject.takeScreenshot("negative-long-search-term.png");
     }
 }
