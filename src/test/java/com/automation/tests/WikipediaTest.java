@@ -3,7 +3,6 @@ package com.automation.tests;
 import com.automation.base.BaseTestManager;
 import com.automation.pages.WikipediaPage;
 import org.testng.annotations.Test;
-import org.testng.Assert;
 
 public class WikipediaTest extends BaseTestManager {
 
@@ -35,9 +34,9 @@ public class WikipediaTest extends BaseTestManager {
         WikipediaPage pageObject = new WikipediaPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        String expectedTitle = "Wikipedia";
+        String expectedTitle = "Search - Wikipedia";
         String actualTitle = getPage().title();
-        Assert.assertEquals(actualTitle, expectedTitle, "Page title does not match for blank search");
+        org.testng.Assert.assertEquals(actualTitle, expectedTitle, "Page title does not match for blank search");
         pageObject.takeScreenshot("wikipedia-blank-search.png");
     }
 }
