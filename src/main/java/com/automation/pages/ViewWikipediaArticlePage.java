@@ -2,6 +2,7 @@ package com.automation.pages;
 
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
+import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
 public class ViewWikipediaArticlePage {
@@ -18,8 +19,8 @@ public class ViewWikipediaArticlePage {
         this.topSearchResult = testManager.getPage().locator("a.mw-searchSuggest-link").first();
     }
 
-    public void navigateToWikipediaHomePage() {
-        testManager.getPage().navigate("https://www.wikipedia.org/");
+    public void navigateToUrl(String url) {
+        testManager.getPage().navigate(url);
     }
 
     public void fillSearchField(String query) {
@@ -31,7 +32,8 @@ public class ViewWikipediaArticlePage {
     }
 
     public void waitForSearchResults() {
-        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
+        Page page = testManager.getPage();
+        page.waitForSelector("a.mw-searchSuggest-link");
     }
 
     public void clickTopSearchResult() {
@@ -39,14 +41,16 @@ public class ViewWikipediaArticlePage {
     }
 
     public void waitForArticleLoad() {
-        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
+        Page page = testManager.getPage();
+        page.waitForLoadState(LoadState.DOMCONTENTLOADED);
     }
 
     public void waitForNoResults() {
-        testManager.getPage().waitForLoadState(LoadState.NETWORKIDLE);
+        Page page = testManager.getPage();
+        page.waitForSelector(".searchmenu-header");
     }
 
-    public void takeScreenshot(String filename) {
-        testManager.getPage().screenshot(new com.microsoft.playwright.Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    public void takeScreenshot(String fileName) {
+        testManager.getPage().screenshot(new Page.ScreenshotOptions().setPath(fileName));
     }
 }
