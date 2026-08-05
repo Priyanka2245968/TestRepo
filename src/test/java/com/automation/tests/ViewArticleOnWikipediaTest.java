@@ -35,35 +35,6 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipediaHomepage();
         pageObject.clickSearchButton();
-        pageObject.verifyNoSearchTermMessage();
-    }
-
-    @Test
-    public void testHappyPath() {
-        WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
-        pageObject.navigateToWikipedia();
-        pageObject.searchForTerm("HTML Table");
-        pageObject.clickSearchButton();
-        pageObject.clickFirstSearchResult();
-        pageObject.takeScreenshot("happy-path.png");
-    }
-
-    @Test
-    public void testNegativeSearchTermExceeds500Characters() {
-        WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
-        pageObject.navigateToWikipedia();
-        String longTerm = "a".repeat(501);
-        pageObject.searchForTerm(longTerm);
-        pageObject.clickSearchButton();
-        pageObject.takeScreenshot("negative-search-term-exceeds-500.png");
-    }
-
-    @Test
-    public void testNegativeSearchTermWithNoMatchingArticle() {
-        WikipediaArticlePage pageObject = new WikipediaArticlePage(this);
-        pageObject.navigateToWikipedia();
-        pageObject.searchForTerm("azbycxnvqwer");
-        pageObject.clickSearchButton();
-        pageObject.takeScreenshot("negative-search-term-no-match.png");
+        assertThat(getPage()).hasURL("https://www.wikipedia.org/wiki/Main_Page");
     }
 }

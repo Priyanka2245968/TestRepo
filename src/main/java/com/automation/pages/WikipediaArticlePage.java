@@ -15,7 +15,7 @@ public class WikipediaArticlePage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.firstSearchResult = page.locator("a[href='/wiki/Main_Page']").first();
+        this.firstSearchResult = page.locator("//a[contains(@href, '/wiki/')][1]");
     }
 
     public void navigateToWikipedia() {
@@ -23,23 +23,23 @@ public class WikipediaArticlePage {
     }
 
     public void searchForTerm(String term) {
-        System.out.println("📍 Entering search term: " + term);
+        System.out.println("\ud83d\udccd Entering search term: " + term);
         searchInput.fill(term);
     }
 
     public void clickSearchButton() {
-        System.out.println("📍 Clicking search button");
+        System.out.println("\ud83d\udccd Clicking search button");
         searchButton.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void clickFirstSearchResult() {
-        System.out.println("📍 Clicking first search result");
+        System.out.println("\ud83d\udccd Clicking first search result");
         firstSearchResult.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(filename));
     }
 }
