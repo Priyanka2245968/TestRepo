@@ -47,7 +47,7 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(filename));
+        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
     }
 
     public void verifyHomepageContentAccessible() {
