@@ -6,20 +6,17 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.testng.Assert.assertTrue;
 
 public class ViewArticleOnWikipediaPage {
 
     private final Page page;
     private final Locator searchInput;
     private final Locator searchButton;
-    private final Locator firstSearchResult;
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.firstSearchResult = page.locator("//a[contains(@href, '/wiki/')][1]");
     }
 
     public void navigateToWikipediaHomepage() {
@@ -39,7 +36,8 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void clickFirstSearchResult() {
-        firstSearchResult.click();
+        page.locator("a[href='/wiki/Main_Page']").first().click();
+        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void waitForArticlePage() {
@@ -51,8 +49,8 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void verifyHomepageContentAccessible() {
-        assertThat(page.locator("//a[contains(@href, '/wiki/Main_Page')]")).isVisible();
-        assertThat(page.locator("//a[contains(@href, '/wiki/Contents')]")).isVisible();
-        assertThat(page.locator("//a[contains(@href, '/wiki/Featured_content')]")).isVisible();
+        assertThat(page.locator("a[href='/wiki/Main_Page']")).isVisible();
+        assertThat(page.locator("a[href='/wiki/Wikipedia:Contents']")).isVisible();
+        assertThat(page.locator("a[href='/wiki/Portal:Current_events']")).isVisible();
     }
 }

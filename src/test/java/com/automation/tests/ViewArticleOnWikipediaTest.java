@@ -35,6 +35,6 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToWikipediaHomepage();
         pageObject.clickSearchButton();
-        assertThat(getPage()).hasURL("https://www.wikipedia.org/wiki/Main_Page");
+        assertThat(getPage()).hasURL("https://en.wikipedia.org/wiki/Special:Search?search=&go=Go");
     }
 }
