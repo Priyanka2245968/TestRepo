@@ -4,43 +4,55 @@ import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
-import org.testng.Assert;
 
 public class ViewArticleOnWikipediaPage {
     private final Page page;
+    private final Locator searchField;
+    private final Locator searchButton;
+    private final Locator errorMessage;
+    private final Locator noResultsMessage;
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
+        this.searchField = page.locator("#searchInput");
+        this.searchButton = page.locator("button[type='submit']");
+        this.errorMessage = page.locator(".mw-search-errorbox-caption");
+        this.noResultsMessage = page.locator(".mw-search-nonefound");
     }
 
-    public void navigateToWikipediaHomepage() {
-        page.navigate("https://www.wikipedia.org/");
+    public void navigateToWikipediaHomepage(String url) {
+        page.navigate(url);
     }
 
     public void searchForTerm(String term) {
-        System.out.println("📍 Entering search term: " + term);
-        page.locator("#searchInput").fill(term);
+        System.out.println("\ud83d\udccd Entering search term: " + term);
+        searchField.fill(term);
     }
 
     public void clickSearchButton() {
-        System.out.println("📍 Clicking 'Search' button");
-        page.locator("button[type='submit']").click();
+        System.out.println("\ud83d\udccd Clicking 'Search' button");
+        searchButton.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void clickSearchResultLink(String selector) {
-        System.out.println("📍 Clicking search result link: " + selector);
+        System.out.println("\ud83d\udccd Clicking search result link: " + selector);
         page.locator(selector).first().click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
-    public void verifyErrorMessageDisplayed(String expectedMessage) {
-        String actualMessage = page.locator(".mw-search-errorbox-caption").textContent();
-        System.out.println("📍 Verifying error message: " + expectedMessage);
-        Assert.assertTrue(actualMessage.contains(expectedMessage), "Error message does not match expected: " + expectedMessage);
+    public boolean verifyErrorMessageDisplayed(String expectedMessage) {
+        String actualMessage = errorMessage.textContent();
+        System.out.println("\ud83d\udccd Verifying error message: " + expectedMessage);
+        return actualMessage.contains(expectedMessage);
     }
 
-    public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    public boolean verifyNoResultsDisplayed() {
+        System.out.println("\ud83d\udccd Verifying no results message is displayed");
+        return noResultsMessage.isVisible();
+    }
+
+    public void takeScreenshot(String fileName) {
+        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(fileName));
     }
 }
