@@ -44,7 +44,7 @@ public class WikipediaArticleStepDefinitions {
 
     @Then("the test should complete successfully")
     public void theTestShouldCompleteSuccessfully() {
-        pageObject.takeScreenshot("wikipedia-test-result.png");
+        System.out.println("✅ BDD Test completed successfully!");
     }
 
     @After
