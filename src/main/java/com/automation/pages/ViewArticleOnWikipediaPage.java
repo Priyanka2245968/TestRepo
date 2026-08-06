@@ -25,24 +25,22 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void fillSearchField(String text) {
-        System.out.println("📍 Fill 'Search Wikipedia' field with: " + text);
+        System.out.println("\ud83d\udccd Fill 'Search Wikipedia' field with: " + text);
         searchInput.fill(text);
     }
 
     public void clickSearchButton() {
-        System.out.println("📍 Click 'Search' button");
+        System.out.println("\ud83d\udccd Click 'Search' button");
         searchButton.click();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
-    public void clickTopSearchResult() {
-        System.out.println("📍 Click top search result");
-        page.locator("a.mw-search-results-object").first().click();
+    public void waitForErrorMessage() {
         page.waitForLoadState(LoadState.NETWORKIDLE);
+        page.locator(".mw-search-errorbox-caption").waitFor(new Locator.WaitForOptions().setTimeout(10000));
     }
 
     public void verifyErrorMessageDisplayed(String expectedMessage) {
-        System.out.println("📍 Verify error message is displayed");
+        System.out.println("\ud83d\udccd Verify error message is displayed");
         String actualMessage = page.locator(".mw-search-errorbox-caption").textContent();
         Assert.assertTrue(actualMessage.contains(expectedMessage), "Expected error message not found");
     }

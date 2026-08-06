@@ -13,7 +13,8 @@ public class WikipediaArticleTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForTerm("HTML Tutorial");
         pageObject.clickSearchButton();
-        Assert.assertTrue(getPage().url().contains("HTML_Tutorial"), "Expected URL to contain 'HTML_Tutorial'");
+        String actualUrl = getPage().url();
+        Assert.assertTrue(actualUrl.contains("HTML_Tutorial"), "Expected URL to contain 'HTML_Tutorial', but got: " + actualUrl);
         pageObject.takeScreenshot("wikipedia-search-result.png");
     }
 
