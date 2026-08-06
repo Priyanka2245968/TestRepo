@@ -6,16 +6,16 @@ import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.LoadState;
 
 public class WikipediaSearchPage {
-    private final Page page;
-    private final Locator searchInput;
-    private final Locator searchButton;
-    private final Locator htmlLink;
+    private Page page;
+    private Locator searchInput;
+    private Locator searchButton;
+    private Locator htmlLink;
 
     public WikipediaSearchPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.htmlLink = page.locator("//a[contains(@href, '/wiki/HTML')]");
+        this.htmlLink = page.locator("a[href='/wiki/HTML']");
     }
 
     public void navigateToWikipedia() {
@@ -23,21 +23,23 @@ public class WikipediaSearchPage {
     }
 
     public void searchForTerm(String term) {
-        System.out.println("📍 Entering search term: " + term);
+        System.out.println("\ud83d\udccd Entering search term: " + term);
         searchInput.fill(term);
     }
 
     public void clickSearchButton() {
-        System.out.println("📍 Clicking search button");
+        System.out.println("\ud83d\udccd Clicking search button");
         searchButton.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void clickHtmlLink() {
-        System.out.println("📍 Clicking HTML link");
+        System.out.println("\ud83d\udccd Clicking HTML link");
         htmlLink.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().
+        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+    }
+}

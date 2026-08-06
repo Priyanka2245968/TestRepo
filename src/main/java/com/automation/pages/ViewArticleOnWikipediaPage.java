@@ -8,11 +8,10 @@ import com.microsoft.playwright.options.LoadState;
 import java.nio.file.Paths;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
-import static org.testng.Assert.assertTrue;
 
 public class ViewArticleOnWikipediaPage {
 
-    public final Page page;
+    private final Page page;
     private final Locator searchInput;
     private final Locator searchButton;
     private final Locator htmlLink;
@@ -23,7 +22,7 @@ public class ViewArticleOnWikipediaPage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.htmlLink = page.locator("//a[contains(@href, '/wiki/HTML')]");
+        this.htmlLink = page.locator("a[href='/wiki/HTML']");
         this.overlengthSearchError = page.locator("text=The search query is too long");
         this.noResultsFoundMessage = page.locator("text=There were no results matching the query");
     }
@@ -33,18 +32,18 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void fillSearchField(String text) {
-        System.out.println("📍 Fill 'Search Wikipedia' field with: " + text);
+        System.out.println("\ud83d\udccd Fill 'Search Wikipedia' field with: " + text);
         searchInput.fill(text);
     }
 
     public void clickSearchButton() {
-        System.out.println("📍 Click 'Search' icon button");
+        System.out.println("\ud83d\udccd Click 'Search' icon button");
         searchButton.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
     public void clickHtmlLinkInSearchResults() {
-        System.out.println("📍 Click 'HTML' link in search results");
+        System.out.println("\ud83d\udccd Click 'HTML' link in search results");
         htmlLink.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
@@ -57,13 +56,7 @@ public class ViewArticleOnWikipediaPage {
         return noResultsFoundMessage;
     }
 
-    public void verifyOverlengthSearchError() {
-        assertThat(getOverlengthSearchError()).isVisible();
-    }
-
-    public void verifyNoResultsFound() {
-        assertThat(getNoResultsFoundMessage()).isVisible();
-    }
-
     public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().
+        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
+    }
+}

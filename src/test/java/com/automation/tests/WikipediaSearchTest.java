@@ -15,6 +15,7 @@ public class WikipediaSearchTest extends BaseTestManager {
         pageObject.searchForTerm("HTML");
         pageObject.clickSearchButton();
         pageObject.clickHtmlLink();
+        assertThat(getPage()).hasTitle("HTML - Wikipedia");
         pageObject.takeScreenshot("wikipedia-search-result.png");
     }
 
@@ -31,7 +32,7 @@ public class WikipediaSearchTest extends BaseTestManager {
         WikipediaSearchPage pageObject = new WikipediaSearchPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
-        assertThat(pageObject.page.locator("text=There were no results matching the query")).isVisible();
+        assertThat(getPage().locator("text=There were no results matching the query")).isVisible();
         pageObject.takeScreenshot("wikipedia-blank-search.png");
     }
 }
