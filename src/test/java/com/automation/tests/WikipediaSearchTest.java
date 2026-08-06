@@ -14,7 +14,10 @@ public class WikipediaSearchTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.searchForTerm("HTML");
         pageObject.clickSearchButton();
-        pageObject.clickHtmlLink();
+        getPage().waitForLoadState(com.microsoft.playwright.options.LoadState.NETWORKIDLE);
+        assertThat(getPage().locator("a[href='/wiki/HTML']").first()).isVisible();
+        getPage().locator("a[href='/wiki/HTML']").first().click();
+        getPage().waitForLoadState(com.microsoft.playwright.options.LoadState.NETWORKIDLE);
         assertThat(getPage()).hasTitle("HTML - Wikipedia");
         pageObject.takeScreenshot("wikipedia-search-result.png");
     }
@@ -32,6 +35,7 @@ public class WikipediaSearchTest extends BaseTestManager {
         WikipediaSearchPage pageObject = new WikipediaSearchPage(this);
         pageObject.navigateToWikipedia();
         pageObject.clickSearchButton();
+        getPage().waitForLoadState(com.microsoft.playwright.options.LoadState.NETWORKIDLE);
         assertThat(getPage().locator("text=There were no results matching the query")).isVisible();
         pageObject.takeScreenshot("wikipedia-blank-search.png");
     }

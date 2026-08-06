@@ -15,6 +15,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.fillSearchField("A text longer than 500 characters");
         pageObject.clickSearchButton();
+        getPage().waitForLoadState(com.microsoft.playwright.options.LoadState.NETWORKIDLE);
         assertThat(pageObject.getOverlengthSearchError()).isVisible();
         pageObject.takeScreenshot("overlength-search-error.png");
     }
@@ -26,6 +27,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.fillSearchField("invalid text string");
         pageObject.clickSearchButton();
+        getPage().waitForLoadState(com.microsoft.playwright.options.LoadState.NETWORKIDLE);
         assertThat(pageObject.getNoResultsFoundMessage()).isVisible();
         pageObject.takeScreenshot("no-results-found.png");
     }

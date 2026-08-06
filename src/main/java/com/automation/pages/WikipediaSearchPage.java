@@ -9,13 +9,11 @@ public class WikipediaSearchPage {
     private Page page;
     private Locator searchInput;
     private Locator searchButton;
-    private Locator htmlLink;
 
     public WikipediaSearchPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.htmlLink = page.locator("a[href='/wiki/HTML']");
     }
 
     public void navigateToWikipedia() {
@@ -30,12 +28,6 @@ public class WikipediaSearchPage {
     public void clickSearchButton() {
         System.out.println("\ud83d\udccd Clicking search button");
         searchButton.click();
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-    }
-
-    public void clickHtmlLink() {
-        System.out.println("\ud83d\udccd Clicking HTML link");
-        htmlLink.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
     }
 
