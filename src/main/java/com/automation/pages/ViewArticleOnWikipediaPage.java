@@ -16,12 +16,16 @@ public class ViewArticleOnWikipediaPage {
     private final Locator searchInput;
     private final Locator searchButton;
     private final Locator htmlLink;
+    private final Locator overlengthSearchError;
+    private final Locator noResultsFoundMessage;
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.htmlLink = page.locator("a[href='/wiki/HTML']");
+        this.htmlLink = page.locator("//a[contains(@href, '/wiki/HTML')]");
+        this.overlengthSearchError = page.locator("text=The search query is too long");
+        this.noResultsFoundMessage = page.locator("text=There were no results matching the query");
     }
 
     public void navigateToWikipedia() {
@@ -40,25 +44,26 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void clickHtmlLinkInSearchResults() {
-        System.out.println("📍 Click 'HTML' link in the search results");
-        htmlLink.first().click();
+        System.out.println("📍 Click 'HTML' link in search results");
+        htmlLink.click();
         page.waitForLoadState(LoadState.NETWORKIDLE);
+    }
+
+    public Locator getOverlengthSearchError() {
+        return overlengthSearchError;
+    }
+
+    public Locator getNoResultsFoundMessage() {
+        return noResultsFoundMessage;
     }
 
     public void verifyOverlengthSearchError() {
-        System.out.println("📍 Verify over-length search error message");
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(page.locator("text=An error has occurred while searching: Search request is longer than the maximum allowed length")).isVisible();
+        assertThat(getOverlengthSearchError()).isVisible();
     }
 
     public void verifyNoResultsFound() {
-        System.out.println("📍 Verify no results found message");
-        page.waitForLoadState(LoadState.NETWORKIDLE);
-        assertThat(page.locator("text=There were no results matching the query")).isVisible();
+        assertThat(getNoResultsFoundMessage()).isVisible();
     }
 
     public void takeScreenshot(String filename) {
-        System.out.println("📸 Taking screenshot: " + filename);
-        page.screenshot(new Page.ScreenshotOptions().setPath(Paths.get(filename)));
-    }
-}
+        page.screenshot(new Page.ScreenshotOptions().

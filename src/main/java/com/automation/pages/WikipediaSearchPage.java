@@ -15,7 +15,7 @@ public class WikipediaSearchPage {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
-        this.htmlLink = page.locator("a[href='/wiki/HTML']").first();
+        this.htmlLink = page.locator("//a[contains(@href, '/wiki/HTML')]");
     }
 
     public void navigateToWikipedia() {
@@ -40,6 +40,4 @@ public class WikipediaSearchPage {
     }
 
     public void takeScreenshot(String filename) {
-        page.screenshot(new Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
-    }
-}
+        page.screenshot(new Page.ScreenshotOptions().

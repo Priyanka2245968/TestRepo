@@ -4,6 +4,8 @@ import com.automation.base.BaseTestManager;
 import com.automation.pages.ViewArticleOnWikipediaPage;
 import org.testng.annotations.Test;
 
+import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
+
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
     @Test
@@ -13,7 +15,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.fillSearchField("A text longer than 500 characters");
         pageObject.clickSearchButton();
-        pageObject.verifyOverlengthSearchError();
+        assertThat(pageObject.getOverlengthSearchError()).isVisible();
         pageObject.takeScreenshot("overlength-search-error.png");
     }
 
@@ -24,7 +26,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.navigateToWikipedia();
         pageObject.fillSearchField("invalid text string");
         pageObject.clickSearchButton();
-        pageObject.verifyNoResultsFound();
+        assertThat(pageObject.getNoResultsFoundMessage()).isVisible();
         pageObject.takeScreenshot("no-results-found.png");
     }
 }
