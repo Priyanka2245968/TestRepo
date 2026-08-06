@@ -25,6 +25,6 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.fillSearchField("zxcvbnmasdfghjklqwertyuiop");
         pageObject.clickSearchButton();
         pageObject.verifyErrorMessageDisplayed("There were no results matching the query");
-        pageObject.takeScreenshot("negative-search-text-no-matching-results.png");
+        pageObject.takeScreenshot("negative-search-text-no-results.png");
     }
 }

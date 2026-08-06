@@ -44,7 +44,7 @@ public class ViewArticleOnWikipediaStepDefinitions {
 
     @Then("the test should complete successfully")
     public void theTestShouldCompleteSuccessfully() {
-        pageObject.takeScreenshot("test-completed.png");
+        pageObject.takeScreenshot("wikipedia-test-result.png");
     }
 
     @After

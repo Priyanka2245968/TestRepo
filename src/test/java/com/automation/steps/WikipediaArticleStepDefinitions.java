@@ -27,10 +27,18 @@ public class WikipediaArticleStepDefinitions {
     @When("I execute step {int}: {string}")
     public void executeStep(int stepNumber, String description) {
         switch (stepNumber) {
-            case 1 -> pageObject.navigateToWikipedia();
-            case 2 -> pageObject.searchForTerm("HTML Tutorial");
-            case 3 -> pageObject.clickSearchButton();
+            case 1:
+                pageObject.navigateToWikipedia();
+                break;
+            case 2:
+                pageObject.searchForTerm(description);
+                break;
+            case 3:
+                pageObject.clickSearchButton();
+                break;
             // Add more cases for additional steps
+            default:
+                throw new RuntimeException("Invalid step number: " + stepNumber);
         }
     }
 
