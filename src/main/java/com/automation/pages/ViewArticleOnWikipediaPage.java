@@ -13,11 +13,13 @@ public class ViewArticleOnWikipediaPage {
     private final Page page;
     private final Locator searchInput;
     private final Locator searchButton;
+    private final Locator searchResults;
 
     public ViewArticleOnWikipediaPage(BaseTestManager testManager) {
         this.page = testManager.getPage();
         this.searchInput = page.locator("#searchInput");
         this.searchButton = page.locator("button[type='submit']");
+        this.searchResults = page.locator(".mw-search-results");
     }
 
     public void navigateToWikipedia() {
@@ -32,6 +34,11 @@ public class ViewArticleOnWikipediaPage {
     public void clickSearchButton() {
         System.out.println("\ud83d\udccd Click 'Search' button");
         searchButton.click();
+    }
+
+    public void clickTopSearchResult() {
+        System.out.println("\ud83d\udccd Click top search result");
+        searchResults.locator("a").first().click();
     }
 
     public void waitForErrorMessage() {
