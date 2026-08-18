@@ -37,17 +37,17 @@ public class ViewArticleOnWikipediaPage {
     public void verifyArticlePageLoaded() {
         System.out.println("📍 Verify the article page has loaded");
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        page.waitForURL("**/HTML");
+        page.waitUntil(() -> page.url().contains("/wiki/HTML"), 10000);
     }
 
     public void verifyArticleHeadingDisplayed() {
         System.out.println("📍 Verify the article heading is displayed");
-        articleHeading.waitFor(new Locator.WaitForOptions().setTimeout(10000));
-        org.testng.Assert.assertTrue(articleHeading.isVisible(), "Article heading is not visible");
+        assert articleHeading.isVisible();
+        assert articleHeading.textContent().equals("HTML");
     }
 
     public void takeScreenshot(String filename) {
         System.out.println("📷 Taking screenshot: " + filename);
-        page.screenshot(new com.microsoft.playwright.Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().withPath(filename));
     }
 }
