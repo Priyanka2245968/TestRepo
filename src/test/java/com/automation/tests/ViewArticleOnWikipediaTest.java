@@ -8,7 +8,7 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
     @Test
     public void testViewArticleOnWikipediaHappyPath() throws Exception {
-        System.out.println("✨ Starting 'View Article on Wikipedia' Happy Path Test");
+        System.out.println("\u2728 Starting 'View Article on Wikipedia' Happy Path Test");
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToGoogleHomepage();
         pageObject.verifyGoogleLogoVisible();
@@ -16,18 +16,18 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.enterSearchTerm("baby doll");
         pageObject.clickSearchButton();
         pageObject.takeScreenshot("testng-screenshot-" + System.currentTimeMillis() + ".png");
-        System.out.println("✅ 'View Article on Wikipedia' Happy Path Test completed successfully!");
+        System.out.println("\u2705 'View Article on Wikipedia' Happy Path Test completed successfully!");
     }
 
     @Test
     public void testViewArticleOnWikipediaNegativeScenario1() throws Exception {
-        System.out.println("✨ Starting 'View Article on Wikipedia' Negative Scenario 1 Test");
+        System.out.println("\u2728 Starting 'View Article on Wikipedia' Negative Scenario 1 Test");
         ViewArticleOnWikipediaPage pageObject = new ViewArticleOnWikipediaPage(this);
         pageObject.navigateToGoogleHomepage();
         pageObject.enterSearchTerm("");
         pageObject.clickSearchButton();
         pageObject.verifyErrorMessageDisplayed();
         pageObject.takeScreenshot("testng-screenshot-" + System.currentTimeMillis() + ".png");
-        System.out.println("✅ 'View Article on Wikipedia' Negative Scenario 1 Test completed successfully!");
+        System.out.println("\u2705 'View Article on Wikipedia' Negative Scenario 1 Test completed successfully!");
     }
 }
