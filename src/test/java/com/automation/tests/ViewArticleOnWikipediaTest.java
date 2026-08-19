@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 public class ViewArticleOnWikipediaTest extends BaseTestManager {
 
     @Test
-    public void testViewArticleOnWikipedia() throws Exception {
+    public void testViewArticleOnWikipedia() {
         System.out.println("✨ Starting View Article on Wikipedia Test");
         System.out.println("🌐 Navigating to: https://www.wikipedia.org");
 
@@ -18,7 +18,6 @@ public class ViewArticleOnWikipediaTest extends BaseTestManager {
         pageObject.clickSearchButton();
         pageObject.verifyArticlePageLoaded();
         pageObject.verifyArticleContentVisible();
-
         pageObject.takeScreenshot("testng-screenshot-" + System.currentTimeMillis() + ".png");
         System.out.println("✅ Test completed successfully!");
     }
