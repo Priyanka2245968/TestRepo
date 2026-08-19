@@ -40,12 +40,7 @@ public class ViewArticleOnWikipediaPage {
 
     public void verifyArticleContentVisible() {
         System.out.println("📍 Verify article content is visible");
-        Locator articleContent = page.locator("#bodyContent");
+        Locator articleContent = page.locator("#mw-content-text");
         assert articleContent.isVisible() : "Article content is not visible";
-    }
-
-    public void takeScreenshot(String filename) {
-        System.out.println("📸 Taking screenshot: " + filename);
-        page.screenshot(new com.microsoft.playwright.Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
     }
 }
