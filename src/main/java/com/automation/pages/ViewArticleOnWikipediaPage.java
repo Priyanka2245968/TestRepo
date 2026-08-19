@@ -50,8 +50,8 @@ public class ViewArticleOnWikipediaPage {
         Assert.assertTrue(errorMessage.isVisible(), "Error message is not visible");
     }
 
-    public void takeScreenshot(String filename) {
+        public void takeScreenshot(String filename) {
         System.out.println("📸 Taking screenshot: " + filename);
-        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(filename));
+        page.screenshot(new com.microsoft.playwright.Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
     }
 }
