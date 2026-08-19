@@ -3,6 +3,7 @@ package com.automation.pages;
 import com.automation.base.BaseTestManager;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.options.LoadState;
+import org.testng.Assert;
 
 public class ViewArticleOnWikipediaPage {
     private final BaseTestManager testManager;
@@ -40,19 +41,17 @@ public class ViewArticleOnWikipediaPage {
     }
 
     public void verifyArticlePageLoaded() {
-        System.out.println("📍 Verify article page loaded");
-        articleTitle.waitFor(new Locator.WaitForOptions().setTimeout(10000));
-        org.testng.Assert.assertTrue(articleTitle.isVisible(), "Article title is not visible");
+        System.out.println("👌 Verify article page loaded");
+        Assert.assertTrue(articleTitle.isVisible(), "Article title is not visible");
     }
 
     public void verifyErrorMessageDisplayed() {
-        System.out.println("📍 Verify error message is displayed");
-        errorMessage.waitFor(new Locator.WaitForOptions().setTimeout(5000));
-        org.testng.Assert.assertTrue(errorMessage.isVisible(), "Error message is not visible");
+        System.out.println("👌 Verify error message is displayed");
+        Assert.assertTrue(errorMessage.isVisible(), "Error message is not visible");
     }
 
     public void takeScreenshot(String filename) {
-        System.out.println("📍 Taking screenshot: " + filename);
-        page.screenshot(new com.microsoft.playwright.Page.ScreenshotOptions().setPath(java.nio.file.Paths.get(filename)));
+        System.out.println("📸 Taking screenshot: " + filename);
+        page.screenshot(new com.microsoft.playwright.options.ScreenshotOptions().setPath(filename));
     }
 }
