@@ -20,12 +20,14 @@ public class ViewArticleOnWikipediaPage {
     public void verifyGoogleLogoVisible() {
         System.out.println("📍 Verify Google logo is visible");
         page.waitForLoadState(LoadState.NETWORKIDLE);
-        page.locator("//img[@alt='Google'], //img[contains(@src, 'logo')], //img[contains(@alt, 'logo')]").first().waitFor(new Locator.WaitForOptions().setTimeout(10000));
+        Locator logoLocator = page.locator("//img[@alt='Google'], //img[contains(@src, 'logo')], //img[contains(@alt, 'logo')]").first();
+        assert logoLocator.isVisible() : "Google logo is not visible";
     }
 
     public void verifySearchBoxPresent() {
         System.out.println("📍 Verify search box is present");
-        page.locator("textarea[name=\"q\"], input[name=\"q\"]").first().waitFor(new Locator.WaitForOptions().setTimeout(5000));
+        Locator searchBoxLocator = page.locator("textarea[name=\"q\"], input[name=\"q\"]").first();
+        assert searchBoxLocator.isVisible() : "Search box is not present";
     }
 
     public void takeScreenshot(String filename) {
